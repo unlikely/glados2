@@ -1,12 +1,35 @@
 require 'spec_helper'
 
 describe Door do
-  it "should not take an empty name" do
-    d = Door.new
-    #door.should_not be_valid
+
+  describe "Door should be created when" do
+    it "has non empty :name that is unique" do
+      door = Door.new
+      d.name = "a unique non empty name"
+      d.should be_valid
+    end
   end
 
-  it "has a unique name"
+  describe "Door should not be created when" do
+    it "has an empty :name" do
+      d = Door.new
+      d.name = " "
+      d.should_not be_valid
+    end
+  end
+
+  it "has a duplicate name" do
+    door = Door.new
+    door.name = "name"
+    door.save
+    door2 = Door.new
+    door2.name = "name"
+    door2.should_not be_valid
+  end
+
+  it "has_many door_keys" do
+  end
+  
   it "permits entry_to? door"
     it "is false for wrong user"
     it "is false for wrong door"
