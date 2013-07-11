@@ -7,12 +7,12 @@ gem 'rails', '3.2.13'
 gem 'sqlite3'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '>=2.11.0'
 end
 
 group :test do
-  gem 'rspec-rails', '~> 2.0'
-  gem 'factory_girl_rails'
+  gem 'rspec-rails', '>=2.11.0'
+  gem 'factory_girl_rails', :require => false
   gem 'capybara'
 end
 

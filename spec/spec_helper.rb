@@ -3,11 +3,14 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'rspec/rails'
 require 'capybara/rspec'
+#require 'factory_girl_rails'
 # Requires supporting ruby files with custom matchers and macros, etc,
+
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
-FactoryGirl.find_definitions
+#FactoryGirl.find_definitions
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -17,7 +20,7 @@ RSpec.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
-
+  config.include Capybara::DSL
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -31,9 +34,14 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
+  # Use color in STDOUT
+  config.color_enabled = true
+# Use color not only in STDOUT but also in pagers and files
+  config.tty = true
+  config.formatter = :documentation
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
+#  config.order = "random"
 end

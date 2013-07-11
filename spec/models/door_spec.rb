@@ -5,8 +5,8 @@ describe Door do
   describe "Door should be created when" do
     it "has non empty :name that is unique" do
       door = Door.new
-      d.name = "a unique non empty name"
-      d.should be_valid
+      door.name = "a unique non empty name"
+      door.should be_valid
     end
   end
 
@@ -28,8 +28,11 @@ describe Door do
   end
 
   it "has_many door_keys" do
+    door = Door.new
+    door_key = DoorKey.new
+    door.door_keys = [ door_key ]
   end
-  
+
   it "permits entry_to? door"
     it "is false for wrong user"
     it "is false for wrong door"
