@@ -5,31 +5,29 @@ describe Door do
   describe "Door should be created when" do
     it "has non empty :name that is unique" do
       door = FactoryGirl.build :door
-      door.name = "a unique non empty name"
       door.should be_valid
     end
   end
 
   describe "Door should not be created when" do
     it "has an empty :name" do
-      d = Door.new
-      d.name = " "
-      d.should_not be_valid
+      door = FactoryGirl.build :door
+      door.name = " "
+      door.should_not be_valid
     end
   end
 
   it "has a duplicate name" do
-    door = Door.new
-    door.name = "name"
+    door = FactoryGirl.build :door
     door.save
-    door2 = Door.new
-    door2.name = "name"
+    door2 = FactoryGirl.build :door
+    door2.name = door.name
     door2.should_not be_valid
   end
 
   it "has_many door_keys" do
-    door = Door.new
-    door_key = DoorKey.new
+    door = FactoryGirl.build :door 
+    door_key = FactoryGirl.build :door_key
     door.door_keys = [ door_key ]
   end
 
