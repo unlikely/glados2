@@ -4,7 +4,7 @@ describe Door do
 
   describe "Door should be created when" do
     it "has non empty :name that is unique" do
-      door = Door.new
+      door = FactoryGirl.build :door
       door.name = "a unique non empty name"
       door.should be_valid
     end

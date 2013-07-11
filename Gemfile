@@ -6,13 +6,14 @@ gem 'rails', '3.2.13'
 
 gem 'sqlite3'
 
-group :development, :test do
+group :test, :development do
   gem 'rspec-rails', '>=2.11.0'
+#  gem 'factory_girl_rails'
 end
 
 group :test do
   gem 'rspec-rails', '>=2.11.0'
-  gem 'factory_girl_rails', :require => false
+  gem 'factory_girl_rails', '4.1.0' 
   gem 'capybara'
 end
 
