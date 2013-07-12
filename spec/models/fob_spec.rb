@@ -1,18 +1,28 @@
 require 'spec_helper'
 
 describe Fob do
-  # same question I had for last model spec.. wow plus super dizzy.. need to stop makes no sense now.. counter was fast
+  # same question I had for last model spec.. basically testing that my FG is working..
   describe "Fob should be created when" do
-  it "has non empty and unique key" do
-    fob = FactoryGirl.build :fob
+    it "has non empty and unique key" do
+      fob = build(:fob)
+    end
   end
+
+  describe "Fob creation fails when"do
+
+    it "has an empty key" do
+      fob = build(:fob)
+      fob.key = " "
+      fob.should_not be_valid
+    end
   end
-  describe "Fob creation fails when"
-    it "has an empty key"
-    it "has a non-unique key"
 
-  describe "Fob associations belong"
-  it "belongs to user"
-
-
+  describe "Fob association" do
+    it "belongs to a user" do
+      user = build(:user)
+      fob = build(:fob)
+      fob.user = user
+      fob.user.should == user
+    end
+  end
 end
