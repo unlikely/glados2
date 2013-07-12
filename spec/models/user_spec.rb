@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe User do
-
+# Feels useless? Just testing that Factory and model works
   describe "should be created when" do
     it ":name is non-empty" do
-      user = User.new
-      user.name = "test name"
+      user = FactoryGirl.build :user
       user.should be_valid
+      p user.name
     end
   end
 
