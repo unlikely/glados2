@@ -2,34 +2,41 @@ require 'spec_helper'
 
 describe DoorKey do
 
-  describe "should be created when" do
+  describe "should save when" do
     it ":user and :door are non-empty" do
-      door_key = FactoryGirl.build :door_key 
+      door_key = build(:door_key)
       door_key.should be_valid
     end
   end
 
 # Testing to see if the join table takes a nil.. should I test empty too?
-  describe "door_keys should not be saved when" do
-    it ":user is nil" do
-      door_key = FactoryGirl.build :door_key
-      door_key.user_id = nil
+  describe "door_keys should not save when" do
+    it ":user is empty" do
+      door_key = build(:door_key)
+      door_key.user_id = " "
       door_key.should_not be_valid
     end
 
-    it ":door is nil"do
-      door_key = FactoryGirl.build :door_key
-      door_key.door_id = nil
+    it ":door is empty" do
+      door_key = build(:door_key)
+      door_key.door_id = " "
       door_key.should_not be_valid
     end
   end
 
-  # I have a question for this one.. by doing the first test I do the belongs_to and I'm checking that if one is nil doesn't save
-  it "belongs_to :user" do
+  describe "DoorKey association" do
+    it "belongs_to :user" do
+      user = build(:user)
+      door_key = build(:door_key)
+      door_key.user = user
+      door_key.user.should == user
+    end
 
-  end
-
-  it "belongs_to :door" do
-
+    it "belongs_to :door" do
+      door = build(:door)
+      door_key = build(:door_key)
+      door_key.door = door
+      door_key.door.should == door
+    end
   end
 end

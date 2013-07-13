@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe User do
 # Feels useless? Just testing that Factory and model works
-  describe "should be created when" do
+  describe "should save when" do
     it ":name is non-empty" do
       user = build(:user)
       user.should be_valid
     end
   end
 
-  describe "should fail creation when" do
+  describe "should not save when" do
     it ":name is empty" do
       user= build(:user)
       user.name = " "
@@ -33,9 +33,8 @@ describe User do
       dk = build(:door_key)
       dk2 = build(:door_key)
       user.door_keys = [ dk ]
-      user.door_keys << [ dk ]
-      user.should be_valid
+      user.door_keys << [ dk2 ]
+      user.door_keys.should == [ dk , dk2 ]
      end
    end
-
 end
