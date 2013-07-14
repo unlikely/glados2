@@ -34,7 +34,7 @@ describe Door do
 
   describe "permits entry_to?" do
     # how to improve name in meaningful way?
-    it "has a valid :fob assoc to :user assoc to :door_key assoc to :door" do
+    it "has a fob authorized for a door" do
       door_key = create(:door_key)
       fob = build(:fob)
       fob.user = door_key.user
@@ -52,7 +52,7 @@ describe Door do
       fob.user = user
       fob.save
       door = door_key.door
-      door.entry_to?(fob).should_not be_nil
+      door.entry_to?(fob).should be_false
     end
 
     it "for invalid :door" do
@@ -61,24 +61,22 @@ describe Door do
       fob.user = door_key.user
       fob.save
       door = create(:door)
-      door.entry_to?(fob).should_not be_nil
+      door.entry_to?(fob).should be_false
     end
 
     it "for invalid :fob" do
       door_key = create(:door_key)
       fob = create(:fob)
       door = door_key.door
-      door.entry_to?(fob).should_not be_nil
+      door.entry_to?(fob).should be_false
     end
 
 # Unable to reproduce Scotts bug with empty database
-    it "for nill :user found" do
-    end
-    it "for nil :door_key" do
+    it "for invalid :door_key" do
       door = create(:door)
       user = create(:user)
       fob = create(:fob)
-      door.entry_to?(fob).should_not be_nil
+      door.entry_to?(fob).should be_false
     end
   end
 end

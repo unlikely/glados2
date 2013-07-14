@@ -9,14 +9,10 @@ class DoorSecurityController < ApplicationController
       fob   = Fob.find(params[:fob][:fob_id])
       user = fob.user
       if door.entry_to?(fob) == true
-        flash[:notice] = "blah blah"
-       # flash.now[:success] = "Welcome to nobolab #{user.name}"
-        render 'open'
+        flash.now[:success] = "Welcome to nobolab #{user.name}"
       else
-        flash.now[:error] = "Sorry! You are not authorized to access"
+        flash.now[:error]   = "You are not authorized for this door. Please contact an administrator."
       end
-
-     # flash.success = "Welcome to nobolab #{user.name}"
     end
   end
 

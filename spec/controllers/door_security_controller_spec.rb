@@ -16,7 +16,7 @@ describe DoorSecurityController do
     end
   end
 
-  describe "GET with form data" do
+  describe "GET on form submit" do
     before(:each) do
       dk = create(:door_key)
       @door = dk.door
@@ -34,14 +34,22 @@ describe DoorSecurityController do
     it "finds a :fob from params id" do
       assigns(:fobs).should eq([ @fob ])
     end
-
-    it "renders flash[:error] if :fob not authorized for door" do
-
-      flash.now[:error].should = "Sorry you are not authorized for the #{@door.name}, #{@user.name}"
-    end
+# Question about adding tests for empty fobs and/or injected null fobs
+# Business decision of dealing with fobs that exist without an attached user
 
     it "renders flash[:success] if :fob authorized for door" do
       flash.now[:success].should == "Welcome to nobolab #{@user.name}"
     end
   end
+
+  describe "Get from form" do
+    it "renders flash[:error] if :fob not authorized for door" do
+      @door = create(:door)
+      @fob = create(:fob)
+      get :open, :fob => {:fob_id => @fob.id}, :door => {:door_id => @door.id}
+      fob = create(:fob)
+      flash.now[:error].should == "You are not authorized for this door. Please contact an administrator."
+    end
+  end
+
 end

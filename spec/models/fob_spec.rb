@@ -6,6 +6,7 @@ describe Fob do
   describe "Fob should be created when" do
     it "has non empty and unique key" do
       fob = build(:fob)
+      fob.should be_valid
     end
   end
 
@@ -30,6 +31,11 @@ describe Fob do
       fob = build(:fob)
       fob.user = user
       fob.user.should == user
+    end
+
+    it "should still work with no user" do
+      fob = build(:fob)
+      fob.should be_valid
     end
   end
 end

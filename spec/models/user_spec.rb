@@ -19,7 +19,7 @@ describe User do
 
 # We discussed only including one test.. probably overkill to do the multiple inputs..
   describe "associations are present and could have_many" do
-    it ":fobs if user has fob" do
+    it ":fobs if user has fobs" do
       user = build(:user)
       fob = build(:fob)
       fob2 = build(:fob)
