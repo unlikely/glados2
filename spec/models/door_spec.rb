@@ -52,7 +52,7 @@ describe Door do
       fob.user = user
       fob.save
       door = door_key.door
-      door.entry_to?(fob).should == false
+      door.entry_to?(fob).should_not be_nil
     end
 
     it "for invalid :door" do
@@ -61,14 +61,14 @@ describe Door do
       fob.user = door_key.user
       fob.save
       door = create(:door)
-      door.entry_to?(fob).should == false
+      door.entry_to?(fob).should_not be_nil
     end
 
     it "for invalid :fob" do
       door_key = create(:door_key)
       fob = create(:fob)
       door = door_key.door
-      door.entry_to?(fob).should == false
+      door.entry_to?(fob).should_not be_nil
     end
 
 # Unable to reproduce Scotts bug with empty database
@@ -76,8 +76,9 @@ describe Door do
     end
     it "for nil :door_key" do
       door = create(:door)
+      user = create(:user)
       fob = create(:fob)
-      door.entry_to?(fob).should == false
+      door.entry_to?(fob).should_not be_nil
     end
   end
 end

@@ -4,20 +4,19 @@ class DoorSecurityController < ApplicationController
     @doors  = Door.all
     @fobs   = Fob.all
 
-    if(params.has_key?(:fob) && params.has_key?(:doors))
+    if(params.has_key?(:fob) && params.has_key?(:door))
       door  = Door.find(params[:door][:door_id])
       fob   = Fob.find(params[:fob][:fob_id])
       user = fob.user
-      flash.notice = "blahblah"
-#      if door.entry_to?(fob)
-#        flash[:notice] = "blah blah"
-#        flash.now[:success] = "Welcome to nobolab #{user.name}"
-#        render 'open'
-#      else
-#        flash.now[:error] = "Sorry! You are not authorized to access #{door.name}, #{user.name}"
-#      end
+      if door.entry_to?(fob) == true
+        flash[:notice] = "blah blah"
+       # flash.now[:success] = "Welcome to nobolab #{user.name}"
+        render 'open'
+      else
+        flash.now[:error] = "Sorry! You are not authorized to access"
+      end
 
-      flash.success = "Welcome to nobolab #{user.name}"
+     # flash.success = "Welcome to nobolab #{user.name}"
     end
   end
 
