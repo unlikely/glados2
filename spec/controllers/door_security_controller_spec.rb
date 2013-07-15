@@ -28,11 +28,11 @@ describe DoorSecurityController do
     end
 
     it "finds a :door from params id" do
-      assigns(:doors).should eq([ @door ])
+      assigns(:door).should eq( @door )
     end
 
     it "finds a :fob from params id" do
-      assigns(:fobs).should eq([ @fob ])
+      assigns(:fob).should eq( @fob )
     end
 # Question about adding tests for empty fobs and/or injected null fobs
 # Business decision of dealing with fobs that exist without an attached user
