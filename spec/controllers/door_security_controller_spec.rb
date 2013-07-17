@@ -4,13 +4,13 @@ describe DoorSecurityController do
 
   describe "GET populates dropdown variables" do
     it "from Door" do
-      door = create(:door)
+      door = Door.create(name: "doorname1")
       get :open
       assigns(:doors).should eq([ door ])
     end
 
     it "from Fob" do
-      fob = create(:fob)
+      fob = Fob.create(key: "smelly")
       get :open
       assigns(:fobs).should eq([ fob ])
     end
@@ -18,11 +18,9 @@ describe DoorSecurityController do
 
   describe "GET on form submit" do
     before(:each) do
-      dk = create(:door_key)
+      dk = DoorKey.create(user: User.new(name: "name1"), door: Door.new(name: "doorname2"))
       @door = dk.door
-      @fob = build(:fob)
-      @fob.user = dk.user
-      @fob.save
+      @fob = Fob.create(key: "smelly2", user: dk.user)
       @user = @fob.user
       get :open, :fob => {:fob_id => @fob.id}, :door => {:door_id => @door.id}
     end
@@ -44,10 +42,9 @@ describe DoorSecurityController do
 
   describe "Get from form" do
     it "renders flash[:error] if :fob not authorized for door" do
-      @door = create(:door)
-      @fob = create(:fob)
+      @door = Door.create(name: "doorname3") 
+      @fob = Fob.create(key: "smelly3")
       get :open, :fob => {:fob_id => @fob.id}, :door => {:door_id => @door.id}
-      fob = create(:fob)
       flash.now[:error].should == "You are not authorized for this door. Please contact an administrator."
     end
   end

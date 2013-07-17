@@ -1,8 +1,10 @@
 class Door < ActiveRecord::Base
+  attr_accessible :name
+
   has_many :door_keys
   validates :name, :presence => true, :uniqueness => true
 
-  def entry_to?(fob)
+  def permitting_entry_to?(fob)
     if (door_keys.empty? || fob.user.nil?)
       return false
     elsif fob.user.door_keys.empty?

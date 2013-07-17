@@ -3,8 +3,10 @@ require 'spec_helper'
 describe DoorKey do
 
   describe "should save when" do
-    it ":user and :door are non-empty" do
-      door_key = build(:door_key)
+    it "has non-empty :user and :door" do
+      user = User.new(name: "name")
+      door = Door.new(name: "a door")
+      door_key = DoorKey.new(user: user, door: door)
       door_key.should be_valid
     end
   end
@@ -12,30 +14,30 @@ describe DoorKey do
 # Testing to see if the join table takes a nil.. should I test empty too?
   describe "door_keys should not save when" do
     it ":user is empty" do
-      door_key = build(:door_key)
-      door_key.user_id = " "
+      door = Door.new(name: "a door2")
+      door_key = DoorKey.new(door: door)
       door_key.should_not be_valid
     end
 
     it ":door is empty" do
-      door_key = build(:door_key)
-      door_key.door_id = " "
+      user = User.new(name: "name2")
+      door_key = DoorKey.new(user: user)
       door_key.should_not be_valid
     end
   end
 
   describe "DoorKey association" do
     it "belongs_to :user" do
-      user = build(:user)
-      door_key = build(:door_key)
-      door_key.user = user
+      user = User.new(name: "name3")
+      door = Door.new(name: "a door3")
+      door_key = DoorKey.new(user: user, door: door)
       door_key.user.should == user
     end
 
     it "belongs_to :door" do
-      door = build(:door)
-      door_key = build(:door_key)
-      door_key.door = door
+      user = User.new(name: "name4")
+      door = Door.new(name: "a door4")
+      door_key = DoorKey.new(user: user, door: door)
       door_key.door.should == door
     end
   end
