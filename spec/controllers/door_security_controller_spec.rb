@@ -22,7 +22,7 @@ describe DoorSecurityController do
       @door = dk.door
       @fob = Fob.create(key: "smelly2", user: dk.user)
       @user = @fob.user
-      get :open, :fob => {:fob_id => @fob.id}, :door => {:door_id => @door.id}
+      get :open, :fob => {:id => @fob.id}, :door => {:id => @door.id}
     end
 
     it "finds a :door from params id" do
@@ -44,7 +44,7 @@ describe DoorSecurityController do
     it "renders flash[:error] if :fob not authorized for door" do
       @door = Door.create(name: "doorname3") 
       @fob = Fob.create(key: "smelly3")
-      get :open, :fob => {:fob_id => @fob.id}, :door => {:door_id => @door.id}
+      get :open, :fob => {:id => @fob.id}, :door => {:id => @door.id}
       flash.now[:error].should == "You are not authorized for this door. Please contact an administrator."
     end
   end

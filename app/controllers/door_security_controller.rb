@@ -5,8 +5,8 @@ class DoorSecurityController < ApplicationController
     @fobs   = Fob.all
 
     if(params.has_key?(:fob) && params.has_key?(:door))
-      @door  = Door.find(params[:door][:door_id])
-      @fob   = Fob.find(params[:fob][:fob_id])
+      @door  = Door.find(params[:door][:id])
+      @fob   = Fob.find(params[:fob][:id])
       user = @fob.user
       if @door.permitting_entry_to?(@fob) == true
         flash.now[:success] = "Welcome to nobolab #{user.name}"
