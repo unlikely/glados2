@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130713115939) do
+ActiveRecord::Schema.define(:version => 20130722151627) do
 
   create_table "door_keys", :force => true do |t|
-    t.integer  "user_id",    :null => false
+    t.integer  "person_id",  :null => false
     t.integer  "door_id",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -30,10 +30,10 @@ ActiveRecord::Schema.define(:version => 20130713115939) do
     t.string   "key",        :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "user_id"
+    t.integer  "person_id"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "people", :force => true do |t|
     t.string   "name",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

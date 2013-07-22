@@ -25,7 +25,7 @@ describe Door do
   describe "Door association" do
     it "has_many door_keys" do
       door = Door.new(name: "name3")
-      door_key = DoorKey.new(door: door, user:  User.new(name: "name1"))
+      door_key = DoorKey.new(door: door, person:  Person.new(name: "name1"))
       door.door_keys = [ door_key ]
     end
   end
@@ -33,46 +33,46 @@ describe Door do
   describe "permitting_entry_to?" do
     it "has a fob authorized for a door" do
       door = Door.new(name: "name4")
-      user = User.new(name: "name2")
-      door_key = DoorKey.create(door: door, user: user)
-      fob = Fob.new(key: "poop3",user: user)
+      person = Person.new(name: "name2")
+      door_key = DoorKey.create(door: door, person: person)
+      fob = Fob.new(key: "poop3",person: person)
       door.permitting_entry_to?(fob).should be_true
     end
 
-    it "is false for a wrong :user" do
+    it "is false for a wrong :person" do
       door = Door.new(name: "name5")
-      user = User.new(name: "name3")
-      door_key = DoorKey.create(door: door, user: User.new(name: "name4"))
-      fob = Fob.new(key: "poop4",user: user)
+      person = Person.new(name: "name3")
+      door_key = DoorKey.create(door: door, person: Person.new(name: "name4"))
+      fob = Fob.new(key: "poop4",person: person)
       door.permitting_entry_to?(fob).should be_false
     end
 
     it "is false for a wrong :door" do
       door = Door.new(name: "name6")
-      user = User.new(name: "name4")
-      door_key = DoorKey.create(door: Door.new(name: "name7"), user: user)
-      fob = Fob.new(key: "poop", user: user)
+      person = Person.new(name: "name4")
+      door_key = DoorKey.create(door: Door.new(name: "name7"), person: person)
+      fob = Fob.new(key: "poop", person: person)
       door.permitting_entry_to?(fob).should be_false
     end
 
     it "is false for a wrong :fob" do
       door = Door.new(name: "name7")
-      user = User.new(name: "name5")
-      door_key = DoorKey.create(door: door, user: user)
-      fob = Fob.new(key: "blalsb", user: User.new(name: "name6"))
+      person = Person.new(name: "name5")
+      door_key = DoorKey.create(door: door, person: person)
+      fob = Fob.new(key: "blalsb", person: Person.new(name: "name6"))
       door.permitting_entry_to?(fob).should be_false
     end
 
 # Unable to reproduce Scotts bug with empty database
     it "is false for wrong door_key" do
       door = Door.new(name: "name8")
-      user = User.new(name: "name6")
-      door_key = DoorKey.create(door: Door.new(name: "name9"), user: User.new(name: "name7"))
-      fob = Fob.new(key: "asdblalsb", user: user)
+      person = Person.new(name: "name6")
+      door_key = DoorKey.create(door: Door.new(name: "name9"), person: Person.new(name: "name7"))
+      fob = Fob.new(key: "asdblalsb", person: person)
       door.permitting_entry_to?(fob).should be_false
     end
 
-    it "is false for missing user" do
+    it "is false for missing person" do
       door = Door.new(name: "name9")
       fob = Fob.new(key: "monkeydo")
       door.permitting_entry_to?(fob).should be_false

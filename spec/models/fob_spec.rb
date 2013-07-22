@@ -22,13 +22,13 @@ describe Fob do
   end
 
   describe "Fob association" do
-    it "belongs to a user" do
-      user = User.new(name: "name1")
-      fob = Fob.new(key: "key2", user: user)
-      fob.user.should == user
+    it "belongs to a person" do
+      person = Person.new(name: "name1")
+      fob = Fob.new(key: "key2", person: person)
+      fob.person.should == person
     end
 
-    it "should still work with no user" do
+    it "should still work with no person" do
       fob = Fob.new(key: "poop")
       fob.should be_valid
     end
