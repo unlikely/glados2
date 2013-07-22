@@ -18,10 +18,10 @@ describe DoorSecurityController do
 
   describe "GET on form submit" do
     before(:each) do
-      dk = DoorKey.create(user: User.new(name: "name1"), door: Door.new(name: "doorname2"))
+      dk = DoorKey.create(person: Person.new(name: "name1"), door: Door.new(name: "doorname2"))
       @door = dk.door
-      @fob = Fob.create(key: "smelly2", user: dk.user)
-      @user = @fob.user
+      @fob = Fob.create(key: "smelly2", person: dk.person)
+      @person = @fob.person
       get :open, :fob => {:id => @fob.id}, :door => {:id => @door.id}
     end
 
@@ -33,10 +33,10 @@ describe DoorSecurityController do
       assigns(:fob).should eq( @fob )
     end
 # Question about adding tests for empty fobs and/or injected null fobs
-# Business decision of dealing with fobs that exist without an attached user
+# Business decision of dealing with fobs that exist without an attached person
 
     it "renders flash[:success] if :fob authorized for door" do
-      flash.now[:success].should == "Welcome to nobolab #{@user.name}"
+      flash.now[:success].should == "Welcome to nobolab #{@person.name}"
     end
   end
 

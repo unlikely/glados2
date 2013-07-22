@@ -7,9 +7,9 @@ class DoorSecurityController < ApplicationController
     if(params.has_key?(:fob) && params.has_key?(:door))
       @door  = Door.find(params[:door][:id])
       @fob   = Fob.find(params[:fob][:id])
-      user = @fob.user
+      person = @fob.person
       if @door.permitting_entry_to?(@fob) == true
-        flash.now[:success] = "Welcome to nobolab #{user.name}"
+        flash.now[:success] = "Welcome to nobolab #{person.name}"
       else
         flash.now[:error]   = "You are not authorized for this door. Please contact an administrator."
       end

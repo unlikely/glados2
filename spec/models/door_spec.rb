@@ -63,7 +63,6 @@ describe Door do
       door.permitting_entry_to?(fob).should be_false
     end
 
-# Unable to reproduce Scotts bug with empty database
     it "is false for wrong door_key" do
       door = Door.new(name: "name8")
       person = Person.new(name: "name6")
