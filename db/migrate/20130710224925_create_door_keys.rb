@@ -5,7 +5,7 @@ class CreateDoorKeys < ActiveRecord::Migration
       t.integer :user_id, null: false
       t.integer :door_id, null: false
       t.timestamps
-    end 
+    end
   end
 
   def down
