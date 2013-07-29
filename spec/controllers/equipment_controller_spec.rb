@@ -79,9 +79,10 @@ describe EquipmentController do
      end
 
      it "creates new :equipment given valid params" do
+       mycount = Equipment.count
        equip = { :make => "blah", :model => "driver"}
        post :create, :equipment => equip
-       Equipment.all.size.should == 1
+       Equipment.count.should == 1+mycount
      end
 
      it "renders #new if :equipment not  saved"do
@@ -98,35 +99,41 @@ describe EquipmentController do
    end
 
    describe "PUT #update" do
-     it "remders #show if updated" do
+     it "remders #show if updated equipment" do
         equipment = Equipment.create(make: "blah", model: "model")
         attr = { :make => "toyota", :model => "rav"}
         put :update,:id => equipment.id, :equipment => attr
         response.should redirect_to(equipment_path)
      end
 
-     it "flash.now :success not nil" do
+     it "flash.now :success not nil if updated equipment" do
        equipment = Equipment.create(make: "blah2", model: "model2")
        attr = { :make => "toy", :model => "blah" }
        put :update, :id => equipment.id, :equipment => attr
        flash.now[:success].should_not be_nil
      end
 
-     it "render #edit if not updated" do
+     it "render #edit if equipment not updated" do
        equipment = Equipment.create(make: "blah4", model: "new model")
        attr = { :make => "ota", :model => "" }
        put :update, :id =>equipment.id, :equipment => attr
        response.should render_template('edit')
      end
 
-     it "flash.now :error not nil" do
+     it "flash.now :error not nil if equipment not updated" do
        equipment = Equipment.create(make: "new make4", model: "a model")
        attr = { :make => "", :model => "blah" }
        put :update, :id => equipment, :equipment => attr
        flash.now[:error].should_not be_nil
      end
 
-     it "remders #show if updated" do
+     it "flash.now :error not nil if id not found" do
+       attr = { :make => "", :model => "blah" }
+       put :update, :id => 99999999999, :equipment => attr
+       flash.now[:error].should_not be_nil
+     end
+
+     it "remders #show if equipment updated" do
         equipment = Equipment.create(make: "toyota", model: "camry")
         new_model = "new camry"
         attr = { :make => "toyota", :model => new_model}
@@ -135,4 +142,35 @@ describe EquipmentController do
         equipment.model.should == new_model
      end
    end
+
+   describe "DELETE #destroy" do
+     it "renders #index if successfully deleted" do
+       equipment = Equipment.create(make: "vw", model: "tijuana")
+       delete :destroy, :id => equipment.id
+       expect(response).to render_template('index')
+     end
+
+     it "can't find :equipment if deleted" do
+       equipment = Equipment.create(make: 'vw', model: 'tuareg')
+       delete :destroy, :id => equipment.id
+       Equipment.find_by_id(equipment.id).should be_nil
+     end
+
+     it "should flash :success when deleted" do
+        equipment = Equipment.create(make: "toyota", model: "4door")
+        delete :destroy, :id => equipment.id
+        flash.now[:success].should_not be_nil
+     end
+
+     it "should render #index if :id not found or failed delete" do
+        delete :destroy, :id => 99999999999999
+        expect(response).to render_template('index')
+     end
+
+     it "should flash :error if failed to delete" do
+        delete :destroy, :id => 999999999999
+        flash.now[:error].should_not be_nil
+     end
+   end
+
 end

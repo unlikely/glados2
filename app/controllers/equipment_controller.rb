@@ -36,13 +36,23 @@ class EquipmentController < ApplicationController
 
   def update
     @equip = Equipment.find_by_id(params[:id])
-    if @equip.update_attributes(params[:equipment])
+    if @equip.present? && @equip.update_attributes(params[:equipment])
       flash.now[:success] = "Equipment successfully updated"
-      redirect_to equipment_path()
+      redirect_to equipment_path
     else
       flash.now[:error] = "The equipment was not updated please try inputing again"
       render 'edit'
     end
   end
 
+  def destroy
+    @equip = Equipment.find_by_id(params[:id])
+    if @equip.present? && @equip.destroy && @equip.destroyed?
+      flash.now[:success] = "Equipment successfully deleted"
+      render 'index'
+    else
+      flash.now[:error] = "Equipment could not be found or deleted"
+      render 'index'
+    end
+  end
 end
