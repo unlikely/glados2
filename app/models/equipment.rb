@@ -3,4 +3,5 @@ class Equipment < ActiveRecord::Base
 
   validates :model, :presence => true
   validates :make, :presence => true
+  validates :replacement_cost, :numericality => true, :allow_nil => true
 end

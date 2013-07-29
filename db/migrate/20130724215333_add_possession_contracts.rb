@@ -5,6 +5,7 @@ class AddPossessionContracts < ActiveRecord::Migration
       t.integer :equipment_id,  null: false
       t.string  :type,          null: false
       t.integer :payment
+      t.date    :expires
       t.timestamps
     end
   end

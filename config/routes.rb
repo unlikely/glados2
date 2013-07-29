@@ -13,6 +13,8 @@ Glados2::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   #
+  resources :people
+  resources :equipment
   match '/open' => 'door_security#open'
 
   # Sample resource route with options:

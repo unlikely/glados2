@@ -1,0 +1,21 @@
+<%=form_for(@equip) do |f| %>
+<p>
+<%=f.label :model %>
+<%=f.text_field :model %>
+</p>
+<p>
+<%=f.label :make %>
+<%=f.text_field :make %>
+</p>
+<p>
+<%=f.label :replacement_cost %>
+<%=f.text_field :replacement_cost %>
+</p>
+<p>
+<%=f.label :serial_number %>
+<%=f.text_field :serial_number %>
+</p>
+<p>
+<%= f.submit %>
+</p>
+<% end %>

@@ -1,0 +1,12 @@
+<h1> Update your name </h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@person) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.submit "Save Changed", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

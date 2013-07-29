@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20130724215333) do
     t.integer  "equipment_id", :null => false
     t.string   "type",         :null => false
     t.integer  "payment"
+    t.date     "expires"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end

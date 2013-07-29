@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <tr>
+    <th> ID </th>
+    <th> Equipment Model </th>
+    <th> Equipment Make </th>
+    <th> Replacement Cost </th>
+    <th> Serial Number </th>
+  </tr>
+  <%@equip.each do |piece| %>
+    <tr>
+      <td><%= piece.id =%>
+    <td> <%= piece.model =%></td>
+    <td> <%= piece.make =%></td>
+    <td> <%= piece.replacement_cost =%> </td>
+    <td> <%= piece.serial_number =%> </td>
+    <td><%= link_to "Edit", edit_equipment_path(piece.id)  %></td>
+    <td><%= link_to "Delete", equipment_path(piece.id), :confirm => "Are you sure?", :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
