@@ -27,7 +27,7 @@ class PeopleController < ApplicationController
   end
 
   def show
-    @person = Person.find(params[:id])
+    @person = Person.find_by_id(params[:id])
     if @person.nil?
       flash.now[:error] = "The person you are looking for does not exist or the id was invalid"
       render "index"
@@ -37,7 +37,13 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    @person = Person.find(params[:id])
+    @person = Person.find_by_id(params[:id])
+    if @person.nil?
+      flash.now[:error] = "The person you are looking for does not exist or the id was invalid"
+      render 'index'
+    else
+      render 'edit'
+    end
   end
 
   def update
@@ -50,4 +56,5 @@ class PeopleController < ApplicationController
       redirect_to edit_person_path(@person)
     end
   end
-end
+  end
+

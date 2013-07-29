@@ -7,24 +7,42 @@ class EquipmentController < ApplicationController
     @equip = Equipment.new
   end
 
+  def edit
+   @equip = Equipment.find_by_id(params[:id])
+   if @equip.nil?
+     flash.now[:error] = "The equipment you are looking for was not found or the id was invalid"
+     render equipmenet_path
+   end
+  end
+
+  def show
+    @equip = Equipment.find_by_id(params[:id])
+    if @equip.nil?
+      flash.now[:error] = "The Equipment you are looking for does not exist"
+      redirect_to equipment_path
+    end
+  end
+
   def create
-    @equip = Equipment.new(params[:equip])
+    @equip = Equipment.new(params[:equipment])
     if @equip.save
-      flash.now[:success] = "Equipment successfully added"
-      render :action => 'show', :id => @equip.id
+      flash.now[:success] = "#{@equip.make} was successfully created"
+      render 'show'
     else
-      flash.now[:error] = "Adding equipment failed due to missing or incorrect information!"
+      flash.now[:error] = "We were unable to save your equipment"
       render 'new'
     end
   end
 
-  def show
-    @equip = Equipment.find(params[:id])
-    if @equip.nil?
-      flash.now[:error] = "The Equipment you are looking for does not exist"
-      render "index"
+  def update
+    @equip = Equipment.find_by_id(params[:id])
+    if @equip.update_attributes(params[:equipment])
+      flash.now[:success] = "Equipment successfully updated"
+      redirect_to equipment_path()
     else
-      @equip
+      flash.now[:error] = "The equipment was not updated please try inputing again"
+      render 'edit'
     end
   end
+
 end

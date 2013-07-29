@@ -27,52 +27,112 @@ describe EquipmentController do
     end
   end
 
-  describe "POST #create" do
-    it "should render #show if :equip created" do
-      @equip = { :model => "vw", :make => "golf"}
-      post :create, :equip => @equip
-      expect(response).to render_template("show")
-    end
-
-    it "should flash :success if :equip created" do
-      @equip = { :model => "poise", :model => "wings" }
-      post :create, :equip => @equip
-      flash.now[:success].should_not be_nil
-    end
-
-    it "should render #new if :equip creation failed" do
-      @equip = { :model => "", :model => "light" }
-      post :create, :equip => @equip
-      expect(response).to render_template("new")
-    end
-
-    it "should flash :error if :equip not created" do
-      @equip = { :model => "toyota", :model => "" }
-      post :create, :equip => @equip
-      flash.now[:error].should_not be_nil
-    end
-  end
   describe "GET #show" do
     it "should render #show if params :id" do
-      @equip = Equipment.create(make: "lbah", model: "one model")
-      get :show, :id => @equip.id
-      expect(response).to render_template("show")
+      equipment = Equipment.create(make: "lbah", model: "one model")
+      get :show, :id => equipment.id
+      expect(response).to render_template('show')
     end
 
     it "should take params :id and find a :person" do
-      @equip = Equipment.create(make: "amonkey", model: "wrench")
-      get :show, :id => @equip.id
-      assigns(:equip).should == @equip
+      equipment = Equipment.create(make: "amonkey", model: "wrench")
+      get :show, :id => equipment.id
+      assigns(:equip).should == equipment
     end
 
-    it "should render #index if params :id not found" do
+    it "renders #index if params :id not found" do
       get :show, :id => 11111111
-      expect(response).to render_template("index")
+      expect(response).to redirect_to(equipment_path)
     end
 
-    it "should flash :error if params :id not found" do
+    it "flashes :error if params :id not found" do
       get :show, :id => 11113434434
       flash.now[:error].should_not be_nil
     end
   end
+
+  describe "GET #edit" do
+    it "renders #edit with params :id" do
+      equip = Equipment.create(make: "monkey2", model: "a model")
+      get :edit, :id => equip.id
+      expect(response).to render_template("edit")
+    end
+
+    it "takes params :id" do
+      equip = Equipment.create(make: "monkey3", model: "another model")
+      get :edit, :id => equip.id
+      assigns(:equip).should == equip
+    end
+  end
+
+   describe "POST #create" do
+     it "renders #show if :equipment created" do
+       equip = { :make => "monkey2", :model => "model 3" }
+       post :create, :equipment => equip
+       expect(response).to render_template('show')
+     end
+
+     it "flashes :success if :equipment created" do
+      equip = { :make => "blahlklkj", :model => "chiwhahah"}
+      post :create, :equipment => equip
+      flash.now[:success].should_not be_nil
+     end
+
+     it "creates new :equipment given valid params" do
+       equip = { :make => "blah", :model => "driver"}
+       post :create, :equipment => equip
+       Equipment.all.size.should == 1
+     end
+
+     it "renders #new if :equipment not  saved"do
+       equip = { :make => "", :model => "labadoodle"}
+       post :create, :equipment => equip
+       expect(response).to render_template('new')
+     end
+
+     it "flashes :error if :equipment not created" do
+       equip = { :make => "doggy", :model => ""}
+       post :create, :equipment => equip
+       flash.now[:error].should_not be_nil
+     end
+   end
+
+   describe "PUT #update" do
+     it "remders #show if updated" do
+        equipment = Equipment.create(make: "blah", model: "model")
+        attr = { :make => "toyota", :model => "rav"}
+        put :update,:id => equipment.id, :equipment => attr
+        response.should redirect_to(equipment_path)
+     end
+
+     it "flash.now :success not nil" do
+       equipment = Equipment.create(make: "blah2", model: "model2")
+       attr = { :make => "toy", :model => "blah" }
+       put :update, :id => equipment.id, :equipment => attr
+       flash.now[:success].should_not be_nil
+     end
+
+     it "render #edit if not updated" do
+       equipment = Equipment.create(make: "blah4", model: "new model")
+       attr = { :make => "ota", :model => "" }
+       put :update, :id =>equipment.id, :equipment => attr
+       response.should render_template('edit')
+     end
+
+     it "flash.now :error not nil" do
+       equipment = Equipment.create(make: "new make4", model: "a model")
+       attr = { :make => "", :model => "blah" }
+       put :update, :id => equipment, :equipment => attr
+       flash.now[:error].should_not be_nil
+     end
+
+     it "remders #show if updated" do
+        equipment = Equipment.create(make: "toyota", model: "camry")
+        new_model = "new camry"
+        attr = { :make => "toyota", :model => new_model}
+        put :update,:id => equipment.id, :equipment => attr
+        equipment.reload
+        equipment.model.should == new_model
+     end
+   end
 end
