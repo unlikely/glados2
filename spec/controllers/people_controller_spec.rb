@@ -55,7 +55,7 @@ describe PeopleController do
       mycount = Person.count
       person = { :name => "terti"}
       post :create, :person => person
-      Person.count.should == 1+mycount
+      Person.count.should == 1 + mycount
     end
   end
 
