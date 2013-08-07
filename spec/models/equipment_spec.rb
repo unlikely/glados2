@@ -32,7 +32,7 @@ describe Equipment do
   describe "associations" do
     it "save when has one :possession_contract" do
       equip = Equipment.new(model: "sander2", make: "jose")
-      pos_contract = PossessionContract.new(equipment: equip, person: Person.new(name: "idon't care"),type: "hammer")
+      pos_contract = PossessionContract.new(equipment: equip, person: Person.new(name: "idon't care"),contract_type: "hammer")
       pos_contract.equipment.should == equip
     end
   end

@@ -59,5 +59,22 @@ class PeopleController < ApplicationController
       render 'index'
     end
   end
-end
 
+  def index_equipment_possession_on_date
+    @date = params[:date]
+    if @date.blank?
+      @date = Date.today.strftime('%m/%d/%Y')
+    else
+      begin
+        @date = Date.strftime(params[:date],'%m/%d/%Y')
+      rescue
+        flash.now[:error] = @date
+        render 'error'
+      end
+    end
+    @people = Person.all
+    if @people.empty?
+      flash.now[:error] = "No people in your database"
+    end
+  end
+end

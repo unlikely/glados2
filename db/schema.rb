@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724215333) do
+ActiveRecord::Schema.define(:version => 20130801202600) do
 
   create_table "door_keys", :force => true do |t|
     t.integer  "person_id",  :null => false
@@ -49,13 +49,13 @@ ActiveRecord::Schema.define(:version => 20130724215333) do
   end
 
   create_table "possession_contracts", :force => true do |t|
-    t.integer  "person_id",    :null => false
-    t.integer  "equipment_id", :null => false
-    t.string   "type",         :null => false
+    t.integer  "person_id",     :null => false
+    t.integer  "equipment_id",  :null => false
+    t.string   "contract_type", :null => false
     t.integer  "payment"
     t.date     "expires"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
 end

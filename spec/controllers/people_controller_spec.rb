@@ -172,13 +172,60 @@ describe PeopleController do
 
     it "flashes :error if :person not found" do
       delete :destroy, :id => 999889009878888
-      flash.now[:error].should_not be_nil
-    end
+      flash.now[:error].should_not be_nil    end
+    it "can't find :person if deleted" do:w
 
-    it "can't find :person if deleted" do
       person = Person.create(name: "malakalai")
       delete :destroy, :id=> person.id
       Person.find_by_id(person.id).should be_nil
+    end
+  end
+
+  describe "GET #show_equipment_possession_on_date"
+  describe "GET #index_equipment_possession_on_date" do
+    it "renders index_equipment_possession when successful" do
+      person = Person.new(name: "firstname")
+      equipment = Equipment.new(model: "model1", make: "make1")
+      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease")
+      get :index_equipment_possession_on_date
+      expect(response).to render_template('index_equipment_possession')
+    end
+
+    it "assigns :people if people own equipment on_date" do
+       person     = Person.create(name: "firstname2")
+       person2    = Person.create(name: "name2")
+       equipment  = Equipment.new(model: "model2", make: "make2")
+       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease")
+       get :index_equipment_possession_on_date
+       assigns(:people).should == [ person, person2 ]
+    end
+
+    it "flashes :error if no people returned" do
+       get :index_equipment_possession_on_date
+       flash.now[:error].should_not be_nil
+    end
+
+    it "assigns :date todays date when no date passed" do
+      get :index_equipment_possession_on_date
+      assigns(:date).should == Date.today.strftime('%m/%d/%Y')
+    end
+
+    it "assigns :date when correctly formated date params" do
+      date = '07/20/2013'
+      get :index_equipment_possession_on_date, :date => date
+      assigns(:date).should == date
+    end
+
+    it "renders error template if date incorrect" do
+      date = '2013/5'
+      get :index_equipment_possession_on_date, :date => date
+      expect(response).to render_template('error')
+    end
+
+    it "flashes :error if incorrectly formatted params date passed" do
+      date = '2013/5'
+      get :index_equipment_possession_on_date, :date => date
+      flash.now[:error].should_not be_nil
     end
   end
 end
