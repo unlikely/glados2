@@ -18,13 +18,14 @@ module ApplicationHelper
   end
 
   def lease_total_payments(people)
-    total = 0
+    @total = 0
     people.each do | person |
       person.possession_contracts.each do | pos |
-        if (pos.contract_type == "lease") && (pos.expires.present?) && (pos.expires >= date)
-          total += pos.payment
+        if (pos.contract_type == "lease") && (pos.expires.present?)
+          @total += pos.payment
         end
       end
     end
+    return @total
   end
 end

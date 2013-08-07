@@ -63,12 +63,12 @@ class PeopleController < ApplicationController
   def index_equipment_possession_on_date
     @date = params[:date]
     if @date.blank?
-      @date = Date.today.strftime('%m/%d/%Y')
+      @date = Date.today
     else
       begin
-        @date = Date.strftime(params[:date],'%m/%d/%Y')
-      rescue
-        flash.now[:error] = @date
+        @date = Date.strptime(params[:date],'%m/%d/%Y')
+      rescue ArgumentError
+        flash.now[:error] = "Invalid Date"
         render 'error'
       end
     end

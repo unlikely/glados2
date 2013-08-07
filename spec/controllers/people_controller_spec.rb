@@ -207,12 +207,12 @@ describe PeopleController do
 
     it "assigns :date todays date when no date passed" do
       get :index_equipment_possession_on_date
-      assigns(:date).should == Date.today.strftime('%m/%d/%Y')
+      assigns(:date).should == Date.today
     end
 
     it "assigns :date when correctly formated date params" do
-      date = '07/20/2013'
-      get :index_equipment_possession_on_date, :date => date
+      date = Date.new(2013,3,24)
+      get :index_equipment_possession_on_date, :date => '3/24/2013'
       assigns(:date).should == date
     end
 

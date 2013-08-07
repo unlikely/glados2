@@ -32,7 +32,7 @@ describe ApplicationHelper do
       pos_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "lease",payment: 65, expires: '09/05/2013')
       pos_contract3 = PossessionContract.create(person: person, equipment: equipment3, contract_type: "borrow",payment: 65)
       people = Person.all
-      lease_total_payments(people, date).should == (pos_contract.payment + pos_contract2.payment)
+      lease_total_payments(people).should == (pos_contract.payment + pos_contract2.payment)
     end
   end
 
