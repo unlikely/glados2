@@ -181,7 +181,82 @@ describe PeopleController do
     end
   end
 
-  describe "GET #show_equipment_possession_on_date"
+  describe "GET #show_equipment_possession_on_date" do
+    it "renders show_equipment_possession when successful" do
+      person = Person.new(name: "a new name")
+      equipment = Equipment.new(make: "vw", model: "golf")
+      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", expires: Date.today)
+      get :show_equipment_possession_on_date, :id => person.id
+      expect(response).to render_template('show_equipment_possession')
+    end
+
+    it "assigns :possession_contracts if correct params[:id] passed"do
+      person = Person.new(name: "person 34")
+      equipment = Equipment.new(make: "vw", model: "jetta")
+      equipment2 = Equipment.new(make: "dewalt", model: "impact drill")
+      expires = Date.today
+      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", expires: expires + 10.days)
+      possession_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "lease", expires: expires - 10.days)
+      get :show_equipment_possession_on_date, :id => person.id
+      assigns(:possession_contracts).should == [ possession_contract ]
+    end
+
+    it "assigns :possession_contracts with correct contracts passed"do
+      person = Person.new(name: "person 35")
+      person2 = Person.new(name: "person 36")
+      equipment = Equipment.new(make: "husky", model: "tape measure")
+      equipment2 = Equipment.new(make: "husky", model: "tool box")
+      expires = Date.today
+      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", expires: expires + 10.days)
+      possession_contract2 = PossessionContract.create(person: person2, equipment: equipment2, contract_type: "lease", expires: expires + 10.days)
+      get :show_equipment_possession_on_date, :id => person.id
+      assigns(:possession_contracts).should_not == [ possession_contract2 ]
+    end
+
+    it "assigns :person if correct params[:id] passed" do
+      person = Person.create(name: "matrix")
+      get :show_equipment_possession_on_date, :id => person.id
+      assigns(:person).should == person
+    end
+
+    it "flashes :error if :person not found or invalid" do
+      get :show_equipment_possession_on_date, :id => 100000000000
+      flash.now[:error].should_not be_nil
+    end
+
+    it "flashes :error if no possession_contracts found" do
+      get :show_equipment_possession_on_date, :id => 111111111111
+      flash.now[:error].should_not be_nil
+    end
+
+    it "assigns :date todays date when no date in query string" do
+      person = Person.create(name: "lohan")
+      get :show_equipment_possession_on_date, :id => person.id
+      assigns(:date).should == Date.today
+    end
+
+    it "assigns :date when correctly formatted date params" do
+      date = Date.new(2000,5,5)
+      person = Person.create(name: "adium")
+      get :show_equipment_possession_on_date, :id => person.id, :date => "5/5/2000"
+      assigns(:date).should == date
+    end
+
+    it "renders error template if date params incorrect format" do
+      person = Person.create(name: "husky")
+      date = '2003/27'
+      get :show_equipment_possession_on_date, :id => person.id, :date => date
+      expect(response).to render_template('error')
+    end
+
+    it "flashes :error if date params incorrect format" do
+      person = Person.create(name: "mr clean")
+      date = '24444/09'
+      get :show_equipment_possession_on_date, :id => person.id, :date => date
+      flash.now[:error].should_not be_nil
+    end
+  end
+
   describe "GET #index_equipment_possession_on_date" do
     it "renders index_equipment_possession when successful" do
       person = Person.new(name: "firstname")
@@ -191,21 +266,24 @@ describe PeopleController do
       expect(response).to render_template('index_equipment_possession')
     end
 
-    it "assigns :people if people own equipment on_date" do
-       person     = Person.create(name: "firstname2")
-       person2    = Person.create(name: "name2")
-       equipment  = Equipment.new(model: "model2", make: "make2")
-       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease")
+    it "assigns :possession_contracts with correct contracts with default date" do
+       person     = Person.create(name: "firstnames3")
+       person2    = Person.create(name: "namer3")
+       equipment  = Equipment.new(model: "model3", make: "make3")
+       equipment2  = Equipment.new(model: "mode4", make: "makes4")
+       expires = Date.today
+       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", expires: (expires + 10.days))
+       possession_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "lease", expires: (expires - 10.days))
        get :index_equipment_possession_on_date
-       assigns(:people).should == [ person, person2 ]
+       assigns(:possession_contracts).should == [ possession_contract ]
     end
 
-    it "flashes :error if no people returned" do
+    it "flashes :error if no possession_contracts returned" do
        get :index_equipment_possession_on_date
        flash.now[:error].should_not be_nil
     end
 
-    it "assigns :date todays date when no date passed" do
+    it "assigns :date todays date when no params date" do
       get :index_equipment_possession_on_date
       assigns(:date).should == Date.today
     end
@@ -216,13 +294,13 @@ describe PeopleController do
       assigns(:date).should == date
     end
 
-    it "renders error template if date incorrect" do
+    it "renders error template if date params incorrect format" do
       date = '2013/5'
       get :index_equipment_possession_on_date, :date => date
       expect(response).to render_template('error')
     end
 
-    it "flashes :error if incorrectly formatted params date passed" do
+    it "flashes :error if date params incorrect format" do
       date = '2013/5'
       get :index_equipment_possession_on_date, :date => date
       flash.now[:error].should_not be_nil

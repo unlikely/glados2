@@ -60,6 +60,30 @@ class PeopleController < ApplicationController
     end
   end
 
+  def show_equipment_possession_on_date
+    @person = Person.find_by_id(params[:id])
+    @date   = params[:date]
+    if @person.nil?
+      flash.now[:error] = "Ther person you are looking for does not exist or the id was invalid"
+      render 'error' and return
+    end
+    if @date.blank?
+      @date = Date.today
+    else
+      begin
+        @date = Date.strptime(params[:date], '%m/%d/%Y')
+      rescue ArgumentError
+        flash.now[:error] = "Invalid Date"
+        render 'error' and return
+      end
+    end
+    @possession_contracts = @person.possession_contracts.where("(expires >= ?) OR ( expires IS NULL)", @date)
+    if @possession_contracts.empty?
+      flash.now[:error] = "No contracts found"
+      render 'error' and return
+    end
+  end
+
   def index_equipment_possession_on_date
     @date = params[:date]
     if @date.blank?
@@ -72,9 +96,9 @@ class PeopleController < ApplicationController
         render 'error'
       end
     end
-    @people = Person.all
-    if @people.empty?
-      flash.now[:error] = "No people in your database"
+    @possession_contracts = PossessionContract.where("(expires >= ?) OR ( expires IS NULL)", @date)
+    if @possession_contracts.empty?
+      flash.now[:error] = "No contracts in your database"
     end
   end
 end
