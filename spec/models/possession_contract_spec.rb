@@ -3,9 +3,14 @@ require 'spec_helper'
 describe PossessionContract do
   describe "should save when" do
     it "has non_empty :contract_type, :person and :equipment, integer :payment, :expires" do
-      pos_contract = PossessionContract.new(contract_type: "lease", payment: 500, expires: Date.today, person: Person.new(name: "tarti"), equipment: Equipment.new(model: "phillips", make: "norelco"))
+      pos_contract = PossessionContract.new(contract_type: "sale", payment: 10, expires: Date.today, person: Person.new(name: "tarti"), equipment: Equipment.new(model: "phillips", make: "norelco"))
       pos_contract.should be_valid
     end
+
+    it "has all non_empty fields AND :contract_type is lease and has :expires, :payments filled" do
+      pos_contract = PossessionContract.new(contract_type: "lease", payment: 500, expires: Date.today, person: Person.new(name: "ssarti"), equipment: Equipment.new(model: "some companys", make: "razor"))
+      pos_contract.should be_valid
+     end
   end
 
   describe "should not save when" do
@@ -27,6 +32,21 @@ describe PossessionContract do
       pos_contract = PossessionContract.new(person: Person.new(name: "tarti"), equipment: Equipment.new(model: "altima", make: "nissan"))
       pos_contract.should_not be_valid
     end
+
+    it "has :contract_type lease but no :expires" do
+      person = Person.new(name: "david")
+      equipment = Equipment.new(make: "husky", model: "drill")
+      possession_contract = PossessionContract.new(person: person, equipment: equipment, contract_type: "lease", payment: 500)
+      possession_contract.should_not be_valid
+    end
+
+    it "has :contract_type lease but no :payment" do
+      person = Person.new(name: "davidi2")
+      equipment = Equipment.new(make: "husky", model: "drawers")
+      possession_contract = PossessionContract.new(person: person, equipment: equipment, contract_type: "lease", expires: Date.today)
+      possession_contract.should_not be_valid
+    end
+
     it "has a :contract_type that's not in our list" do
       pos_contract = PossessionContract.new(contract_type: "buy", person: Person.new(name: "tartella"), equipment: Equipment.new(model: "poopy", make: "head"))
       pos_contract.should_not be_valid

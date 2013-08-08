@@ -46,7 +46,7 @@ describe Person do
     it ":has_many equipment through :possession_contract" do
       person = Person.new(name: "another new name")
       equipment = Equipment.new(model: "impact drill", make: "carbon fiber")
-      pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease")
+      pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease",payment: 35, expires: Date.today)
       person.equipment.should == [ equipment ]
     end
   end
