@@ -63,6 +63,16 @@ describe EquipmentController do
       get :edit, :id => equip.id
       assigns(:equip).should == equip
     end
+
+    it "renders #index if :equipment not found" do
+      get :edit, :id => 897987989798
+      expect(response).to redirect_to(equipment_path)
+    end
+
+    it "flashes :error if :equipment not found" do
+      get :edit, :id => 889976666666
+      flash.now[:error].should_not be_nil
+    end
   end
 
    describe "POST #create" do
@@ -147,7 +157,7 @@ describe EquipmentController do
      it "renders #index if successfully deleted" do
        equipment = Equipment.create(make: "vw", model: "tijuana")
        delete :destroy, :id => equipment.id
-       expect(response).to render_template('index')
+       expect(response).to redirect_to(equipment_index_path)
      end
 
      it "can't find :equipment if deleted" do
@@ -162,14 +172,16 @@ describe EquipmentController do
         flash.now[:success].should_not be_nil
      end
 
-     it "should render #index if :id not found or failed delete" do
-        delete :destroy, :id => 99999999999999
-        expect(response).to render_template('index')
+     it "should render back to referrer if the delete failed" do
+       request.env["HTTP_REFERER"] = "www.blah.com"
+       delete :destroy, :id => 99999999999999
+       expect(response).to redirect_to("www.blah.com")
      end
 
      it "should flash :error if failed to delete" do
-        delete :destroy, :id => 999999999999
-        flash.now[:error].should_not be_nil
+       request.env["HTTP_REFERER"] = "www.blah.com"
+       delete :destroy, :id => 999999999999
+       flash.now[:error].should_not be_nil
      end
    end
 

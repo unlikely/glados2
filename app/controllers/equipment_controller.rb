@@ -3,6 +3,14 @@ class EquipmentController < ApplicationController
     @equip = Equipment.all
   end
 
+  def show
+    @equip = Equipment.find_by_id(params[:id])
+    if @equip.nil?
+      flash.now[:error] = "The Equipment you are looking for does not exist"
+      redirect_to equipment_path
+    end
+  end
+
   def new
     @equip = Equipment.new
   end
@@ -11,16 +19,8 @@ class EquipmentController < ApplicationController
    @equip = Equipment.find_by_id(params[:id])
    if @equip.nil?
      flash.now[:error] = "The equipment you are looking for was not found or the id was invalid"
-     render equipmenet_path
+     redirect_to equipment_path
    end
-  end
-
-  def show
-    @equip = Equipment.find_by_id(params[:id])
-    if @equip.nil?
-      flash.now[:error] = "The Equipment you are looking for does not exist"
-      redirect_to equipment_path
-    end
   end
 
   def create
@@ -49,10 +49,10 @@ class EquipmentController < ApplicationController
     @equip = Equipment.find_by_id(params[:id])
     if @equip.present? && @equip.destroy && @equip.destroyed?
       flash.now[:success] = "Equipment successfully deleted"
-      render 'index'
+      redirect_to equipment_index_path
     else
       flash.now[:error] = "Equipment could not be found or deleted"
-      render 'index'
+      redirect_to request.referrer
     end
   end
 end
