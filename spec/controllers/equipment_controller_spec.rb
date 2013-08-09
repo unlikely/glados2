@@ -40,12 +40,12 @@ describe EquipmentController do
       assigns(:equip).should == equipment
     end
 
-    it "renders #index if params :id not found" do
+    it "renders #index if params :id invalid or not found" do
       get :show, :id => 11111111
       expect(response).to redirect_to(equipment_path)
     end
 
-    it "flashes :error if params :id not found" do
+    it "flashes :error if params :id invalid or not found" do
       get :show, :id => 11113434434
       flash.now[:error].should_not be_nil
     end
@@ -99,7 +99,16 @@ describe EquipmentController do
    end
 
    describe "PUT #update" do
-     it "remders #show if updated equipment" do
+     it "updates :equipment given proper params" do
+        equipment = Equipment.create(make: "toyota", model: "camry")
+        new_model = "new camry"
+        attr = { :make => "toyota", :model => new_model}
+        put :update, :id => equipment.id, :equipment => attr
+        equipment.reload
+        equipment.model.should == new_model
+     end
+
+     it "renders #show if updated equipment" do
         equipment = Equipment.create(make: "blah", model: "model")
         attr = { :make => "toyota", :model => "rav"}
         put :update,:id => equipment.id, :equipment => attr
@@ -127,19 +136,10 @@ describe EquipmentController do
        flash.now[:error].should_not be_nil
      end
 
-     it "flash.now :error not nil if id not found" do
+     it "flash.now :error not nil :if id not found" do
        attr = { :make => "", :model => "blah" }
        put :update, :id => 99999999999, :equipment => attr
        flash.now[:error].should_not be_nil
-     end
-
-     it "remders #show if equipment updated" do
-        equipment = Equipment.create(make: "toyota", model: "camry")
-        new_model = "new camry"
-        attr = { :make => "toyota", :model => new_model}
-        put :update,:id => equipment.id, :equipment => attr
-        equipment.reload
-        equipment.model.should == new_model
      end
    end
 

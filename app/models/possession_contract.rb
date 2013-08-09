@@ -6,7 +6,7 @@ class PossessionContract < ActiveRecord::Base
     SALE     = 'sale'
   ]
 
-  attr_accessible :contract_type, :person, :equipment, :payment, :expires
+  attr_accessible :contract_type, :person, :equipment, :payment, :expires, :person_id, :equipment_id
   belongs_to :person
   belongs_to :equipment
 

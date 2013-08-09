@@ -17,6 +17,7 @@ Glados2::Application.routes.draw do
   get 'people/equipment', to: 'people#index_equipment_possession_on_date'
   resources :people
   resources :equipment
+  resources :possession_contracts
   match '/open' => 'door_security#open'
 
   # Sample resource route with options:

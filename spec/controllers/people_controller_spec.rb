@@ -153,7 +153,7 @@ describe PeopleController do
   end
 
   describe "DELETE #destroy" do
-    it "finds :person from params :id" do
+    it "flashes :success when deleted" do
       person = Person.create(name: "third")
       delete :destroy, :id=> person.id
       flash.now[:success].should_not be_nil
@@ -170,11 +170,12 @@ describe PeopleController do
       expect(response).to render_template('index')
     end
 
-    it "flashes :error if :person not found" do
+    it "flashes :error if failed to delete" do
       delete :destroy, :id => 999889009878888
-      flash.now[:error].should_not be_nil    end
-    it "can't find :person if deleted" do:w
+      flash.now[:error].should_not be_nil
+    end
 
+    it "successfully deleted :person" do
       person = Person.create(name: "malakalai")
       delete :destroy, :id=> person.id
       Person.find_by_id(person.id).should be_nil

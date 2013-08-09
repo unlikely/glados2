@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <tr>
+    <th> ID </th>
+    <th> Equipment ID </th>
+    <th> Person ID </th>
+    <th> Contract Type</th>
+    <th> Payment if any </th>
+    <th> Expires </th>
+  </tr>
+    <tr>
+      <td><%= @possession_contract.id %></td>
+    <td> <%= @possession_contract.equipment_id %></td>
+    <td> <%= @possession_contract.person_id %></td>
+    <td> <%= @possession_contract.contract_type %> </td>
+    <td> <%= number_to_currency(@possession_contract.payment) %> </td>
+    <td> <%= @possession_contract.expires %> </td>
+    <td><%= link_to "Edit", edit_possession_contract_path(@possession_contract.id)  %></td>
+    <td><%= link_to "Delete", possession_contract_path(@possession_contract.id), :confirm => "Are you sure?", :method => :delete %></td>
+  </tr>
+</table>
