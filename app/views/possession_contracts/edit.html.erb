@@ -1,5 +1,6 @@
 <h1> Update your name </h1>
 <%=form_for(@possession_contract) do |f| %>
+  <%= render 'shared/error_messages', :object_errors => @possession_contract %>
 <p>
 <%= f.label :person_id %>
 <%= f.collection_select(:person_id, Person.all, :id, :name) %>

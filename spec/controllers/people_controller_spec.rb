@@ -22,7 +22,7 @@ describe PeopleController do
 
     it "builds new person" do
       get :new
-      assigns(:person).id.should eq(nil)
+      assigns(:person).new_record?.should be_true
     end
   end
 
@@ -33,10 +33,10 @@ describe PeopleController do
       flash.now[:success].should_not be_nil
     end
 
-    it "renders #show if :person created" do
+    it "redirect to #show if :person created" do
       person = {:name => "nutella"}
       post :create, :person => person
-      expect(response).to render_template("show")
+      expect(response).to redirect_to(person_path(Person.last))
     end
 
     it "renderes #new if missing information" do
@@ -222,39 +222,44 @@ describe PeopleController do
 
     it "flashes :error if :person not found or invalid" do
       get :show_equipment_possession_on_date, :id => 100000000000
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
+    end
+
+    it "redirects to #index if :person not found or invalid" do
+      get :show_equipment_possession_on_date, :id => 98797978979797
+      expect(response).to redirect_to(people_equipment_path)
     end
 
     it "flashes :error if no possession_contracts found" do
       get :show_equipment_possession_on_date, :id => 111111111111
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
 
-    it "assigns :date todays date when no date in query string" do
+    it "assigns :date todays date when no date provided" do
       person = Person.create(name: "lohan")
       get :show_equipment_possession_on_date, :id => person.id
       assigns(:date).should == Date.today
     end
 
-    it "assigns :date when correctly formatted date params" do
+    it "assigns :date when correct date params" do
       date = Date.new(2000,5,5)
       person = Person.create(name: "adium")
       get :show_equipment_possession_on_date, :id => person.id, :date => "5/5/2000"
       assigns(:date).should == date
     end
 
-    it "renders error template if date params incorrect format" do
+    it "redirect to #show_equipment_possession_on_date if date incorrect" do
       person = Person.create(name: "husky")
       date = '2003/27'
       get :show_equipment_possession_on_date, :id => person.id, :date => date
-      expect(response).to render_template('error')
+      expect(response).to redirect_to(show_person_equipment_path(person.id))
     end
 
     it "flashes :error if date params incorrect format" do
       person = Person.create(name: "mr clean")
       date = '24444/09'
       get :show_equipment_possession_on_date, :id => person.id, :date => date
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 
@@ -264,7 +269,7 @@ describe PeopleController do
       equipment = Equipment.new(model: "model1", make: "make1")
       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease")
       get :index_equipment_possession_on_date
-      expect(response).to render_template('index_equipment_possession')
+      expect(response).to redirect_to(people_equipment_path)
     end
 
     it "assigns :possession_contracts with correct contracts with default date" do
@@ -281,7 +286,12 @@ describe PeopleController do
 
     it "flashes :error if no possession_contracts returned" do
        get :index_equipment_possession_on_date
-       flash.now[:error].should_not be_nil
+       flash[:error].should_not be_nil
+    end
+
+    it "redirects to #index_equipment_possession_on_date when no possession_contracts returned" do
+      get :index_equipment_possession_on_date
+      expect(response).to redirect_to(people_equipment_path)
     end
 
     it "assigns :date todays date when no params date" do
@@ -298,7 +308,7 @@ describe PeopleController do
     it "renders error template if date params incorrect format" do
       date = '2013/5'
       get :index_equipment_possession_on_date, :date => date
-      expect(response).to render_template('error')
+      expect(response).to redirect_to(people_equipment_path)
     end
 
     it "flashes :error if date params incorrect format" do

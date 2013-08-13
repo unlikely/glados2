@@ -10,7 +10,7 @@
   $(function() {
   $('#glados3').datepicker().on("changeDate",
 function(dateText, inst) {
-  window.location = 'http://localhost:3000/people/' + <%= @person.id %> + '/equipment?date=' + dateText.format("mm/dd/yy");
+window.location = '<%= show_person_equipment_path(@person.id) %>' + '?date=' + dateText.format("mm/dd/yyyy");
   });
   });
   </script>

@@ -1,4 +1,5 @@
 <%=form_for(@equip) do |f| %>
+  <%= render 'shared/error_messages', :object_errors => @equip %>
 <p>
 <%=f.label :model %>
 <%=f.text_field :model %>

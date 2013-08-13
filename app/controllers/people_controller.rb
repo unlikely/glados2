@@ -11,7 +11,7 @@ class PeopleController < ApplicationController
     @person = Person.new(params[:person])
     if @person.save
       flash.now[:success] = "#{@person.name} has been added"
-      render 'show'
+      redirect_to person_path(@person)
     else
       flash.now[:error] = "We were unable to add the person due to missing or incorrect information"
       render 'new'
@@ -64,8 +64,8 @@ class PeopleController < ApplicationController
     @person = Person.find_by_id(params[:id])
     @date   = params[:date]
     if @person.nil?
-      flash.now[:error] = "Ther person you are looking for does not exist or the id was invalid"
-      render 'error' and return
+      flash[:error] = "Ther person you are looking for does not exist or the id was invalid"
+      redirect_to people_equipment_path and return
     end
     if @date.blank?
       @date = Date.today
@@ -73,14 +73,14 @@ class PeopleController < ApplicationController
       begin
         @date = Date.strptime(params[:date], '%m/%d/%Y')
       rescue ArgumentError
-        flash.now[:error] = "Invalid Date"
-        render 'error' and return
+        flash[:error] = "Invalid Date"
+        redirect_to show_person_equipment_path(@person.id) and return
       end
     end
     @possession_contracts = @person.possession_contracts.where("(expires >= ?) OR ( expires IS NULL)", @date)
     if @possession_contracts.empty?
-      flash.now[:error] = "No contracts found"
-      render 'error' and return
+      flash[:error] = "No contracts found"
+      redirect_to people_equipment_path and return
     end
   end
 
@@ -92,13 +92,14 @@ class PeopleController < ApplicationController
       begin
         @date = Date.strptime(params[:date],'%m/%d/%Y')
       rescue ArgumentError
-        flash.now[:error] = "Invalid Date"
-        render 'error'
+        flash[:error] = "Invalid Date"
+        redirect_to people_equipment_path and return
       end
     end
     @possession_contracts = PossessionContract.where("(expires >= ?) OR ( expires IS NULL)", @date)
     if @possession_contracts.empty?
-      flash.now[:error] = "No contracts in your database"
+      flash[:error] = "No contracts in your database"
+      redirect_to people_equipment_path and return
     end
   end
 end

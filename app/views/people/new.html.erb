@@ -1,5 +1,6 @@
 <%= form_for(@person)  do |f| %>
   <p>
+  <%= render 'shared/error_messages', :object_errors => @person %>
   <%= f.label :name %><br>
   <%= f.text_field :name %><br>
   </p>
