@@ -23,8 +23,8 @@ describe Equipment do
       equip = Equipment.new(model: "sander", make: " ")
       equip.should_not be_valid
     end
-    it "has non Int value" do
-      equip = Equipment.new(model: "belt", make: "slider", replacement_cost: "decimal being rounded")
+    it "replacement_cost has a decimal value" do
+      equip = Equipment.new(model: "belt", make: "slider", replacement_cost: 0.7)
       equip.should_not be_valid
     end
   end

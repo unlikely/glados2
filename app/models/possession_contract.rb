@@ -10,14 +10,15 @@ class PossessionContract < ActiveRecord::Base
   belongs_to :person
   belongs_to :equipment
 
-  validates_numericality_of :payment, :only_integer => true, :allow_blank => true
   validates :contract_type,      :presence => true
   validates :person,    :presence => true
   validates :equipment, :presence => true
   validates_inclusion_of :contract_type, :in => ALL_CONTRACT_TYPES, :message => "Value not accepted"
+  validates_numericality_of :payment, :only_integer => true, :allow_blank => true
   validates_presence_of :payment, :if => :contract_type_is_lease?
   validates_presence_of :expires, :if => :contract_type_is_lease?
 
+  private
   def contract_type_is_lease?
     contract_type == "lease"
   end

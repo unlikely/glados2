@@ -79,13 +79,13 @@ describe EquipmentController do
      it "renders #show if :equipment created" do
        equip = { :make => "monkey2", :model => "model 3" }
        post :create, :equipment => equip
-       expect(response).to render_template('show')
+       expect(response).to redirect_to(equipment_path(Equipment.last))
      end
 
      it "flashes :success if :equipment created" do
       equip = { :make => "blahlklkj", :model => "chiwhahah"}
       post :create, :equipment => equip
-      flash.now[:success].should_not be_nil
+      flash[:success].should_not be_nil
      end
 
      it "creates new :equipment given valid params" do
@@ -118,18 +118,18 @@ describe EquipmentController do
         equipment.model.should == new_model
      end
 
-     it "renders #show if updated equipment" do
+     it "redirect_to #show if updated equipment" do
         equipment = Equipment.create(make: "blah", model: "model")
         attr = { :make => "toyota", :model => "rav"}
         put :update,:id => equipment.id, :equipment => attr
-        response.should redirect_to(equipment_path)
+        response.should redirect_to(equipment_path(equipment))
      end
 
-     it "flash.now :success not nil if updated equipment" do
+     it "flash :success not nil if updated equipment" do
        equipment = Equipment.create(make: "blah2", model: "model2")
        attr = { :make => "toy", :model => "blah" }
        put :update, :id => equipment.id, :equipment => attr
-       flash.now[:success].should_not be_nil
+       flash[:success].should_not be_nil
      end
 
      it "render #edit if equipment not updated" do
@@ -169,7 +169,7 @@ describe EquipmentController do
      it "should flash :success when deleted" do
         equipment = Equipment.create(make: "toyota", model: "4door")
         delete :destroy, :id => equipment.id
-        flash.now[:success].should_not be_nil
+        flash[:success].should_not be_nil
      end
 
      it "should render back to referrer if the delete failed" do

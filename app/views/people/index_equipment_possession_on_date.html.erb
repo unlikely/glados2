@@ -11,7 +11,7 @@
   $(function() {
   $('#glados3').datepicker().on("changeDate",
 function(dateText, inst) {
-  window.location = 'http://localhost:3000/people/' + <%= @person.id %> + '/equipment?date=' + dateText.format("mm/dd/yyyy");
+window.location = '<%= people_equipment_path %>' + '?date=' + dateText.format("mm/dd/yyyy");
   });
   });
   </script>

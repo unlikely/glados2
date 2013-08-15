@@ -26,8 +26,8 @@ class EquipmentController < ApplicationController
   def create
     @equip = Equipment.new(params[:equipment])
     if @equip.save
-      flash.now[:success] = "#{@equip.make} was successfully created"
-      render 'show'
+      flash[:success] = "#{@equip.make} was successfully created"
+      redirect_to equipment_path(@equip)
     else
       flash.now[:error] = "We were unable to save your equipment"
       render 'new'
@@ -37,8 +37,8 @@ class EquipmentController < ApplicationController
   def update
     @equip = Equipment.find_by_id(params[:id])
     if @equip.present? && @equip.update_attributes(params[:equipment])
-      flash.now[:success] = "Equipment successfully updated"
-      redirect_to equipment_path
+      flash[:success] = "Equipment successfully updated"
+      redirect_to equipment_path(@equip)
     else
       flash.now[:error] = "The equipment was not updated please try inputing again"
       render 'edit'
@@ -48,7 +48,7 @@ class EquipmentController < ApplicationController
   def destroy
     @equip = Equipment.find_by_id(params[:id])
     if @equip.present? && @equip.destroy && @equip.destroyed?
-      flash.now[:success] = "Equipment successfully deleted"
+      flash[:success] = "Equipment successfully deleted"
       redirect_to equipment_index_path
     else
       flash.now[:error] = "Equipment could not be found or deleted"
