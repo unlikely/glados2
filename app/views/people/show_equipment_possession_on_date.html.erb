@@ -4,7 +4,7 @@
 <div class = "row">
   <div class="span5"><h3>Equipment for <%=@person.name%> </h3></div>
   <div class="span4 offset4"><h3>Report for: <%= @date %></h3></div>
-  <div class="span5"><h3>Showing <span class="badge" style="background-color:#0000FF;"><%= @possession_contracts.count %></span> items</h3></div>
+  <div class="span5"><h3>Showing <%= @possession_contracts.count %> items</h3></div>
 </div>
 <script type="text/javascript">
   $(function() {
@@ -31,7 +31,8 @@ window.location = '<%= show_person_equipment_path(@person.id) %>' + '?date=' + d
     <td border="1"> <%= number_to_currency(pos_contract.payment) %></td>
   </tr>
   <% end %>
+  <tr>
+    <td colspan=4> </td>
+    <td>Total <%= number_to_currency(lease_total_payments(@possession_contracts))  %></td>
+  </tr>
 </table>
-<div class = "row">
-  <div class="span3 offset9" style="color:red;">  Total <%= number_to_currency(lease_total_payments(@possession_contracts))  %></div>
-</div>

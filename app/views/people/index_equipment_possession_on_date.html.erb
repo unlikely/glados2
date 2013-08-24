@@ -4,7 +4,7 @@
 <div class = "row">
   <div class="span3"><h3>Equipment for Lab </h3></div>
   <div class="span4 offset5"><h3>Report for: <%= @date %></h3></div>
-  <div class="span5"><h3>Showing <span class="badge" style="background-color:#0000FF;"><%= @possession_contracts.count %></span> items</h3></div>
+  <div class="span5"><h3>Showing <span><%= aggregate_possession_contracts(@people).count %></span> items</h3></div>
 </div>
 
 <script type="text/javascript">
@@ -18,22 +18,17 @@ window.location = '<%= people_equipment_path %>' + '?date=' + dateText.format("m
 
 <table class="table table-striped", border="1">
   <tr>
-    <th> Make </th>
-    <th> Model </th>
-    <th> Serial Number </th>
-    <th> Contract Type </th>
+    <th> Name </th>
     <th> Amount Owed</th>
   </tr>
-    <% @possession_contracts.each do | pos_contract | %>
+    <% @people.each do | person | %>
    <tr>
-    <td> <%= pos_contract.equipment.make %> </td>
-    <td> <%= pos_contract.equipment.model %> </td>
-    <td> <%= pos_contract.equipment.serial_number %> </td>
-    <td> <%= pos_contract.contract_type  %> </td>
-    <td border="1"> <%= number_to_currency(pos_contract.payment) %></td>
+    <td> <%= link_to person.name, show_person_equipment_path(person.id) %> </td>
+    <td border="1"> <%= number_to_currency(lease_total_payments(person.possession_contracts))  %> </td>
   </tr>
   <% end %>
+   <tr>
+    <td colspan=1> </td>
+    <td border="1"> Total <%= number_to_currency(lease_total_payments(aggregate_possession_contracts(@people)))  %> </td>
+  </tr>
 </table>
-<div class = "row">
-  <div class="span3 offset9" style="color:red;">  Total <%= number_to_currency(lease_total_payments(@possession_contracts))  %></div>
-</div>

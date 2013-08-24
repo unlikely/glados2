@@ -56,5 +56,4 @@ class PossessionContractsController < ApplicationController
     end
   end
 
-
 end

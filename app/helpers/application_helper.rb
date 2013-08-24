@@ -12,4 +12,11 @@ module ApplicationHelper
         return 0
       end
     end
+
+  def aggregate_possession_contracts(people)
+    (people || []).map do |person|
+      person.possession_contracts
+    end.flatten
+  end
 end
+

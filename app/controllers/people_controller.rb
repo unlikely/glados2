@@ -96,8 +96,8 @@ class PeopleController < ApplicationController
         redirect_to people_equipment_path and return
       end
     end
-    @possession_contracts = PossessionContract.where("(expires >= ?) OR ( expires IS NULL)", @date)
-    if @possession_contracts.empty?
+    @people = Person.joins(:possession_contracts).where("(expires >= ?) OR ( expires IS NULL)", @date).uniq(:person)
+    if @people.empty?
       flash[:error] = "No contracts in your database"
       redirect_to people_equipment_path and return
     end

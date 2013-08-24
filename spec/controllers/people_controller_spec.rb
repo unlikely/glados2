@@ -274,14 +274,23 @@ describe PeopleController do
 
     it "assigns :possession_contracts with correct contracts with default date" do
        person     = Person.create(name: "firstnames3")
-       person2    = Person.create(name: "namer3")
+       person2    = Person.create(name: "another name")
+       person3    = Person.create(name: "yet another")
        equipment  = Equipment.new(model: "model3", make: "make3")
        equipment2  = Equipment.new(model: "mode4", make: "makes4")
+       equipment3  = Equipment.new(model: "new model", make: "new make")
        expires = Date.today
-       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "sale", expires: (expires + 10.days))
-       possession_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "sale", expires: (expires - 10.days))
+       possession_contract = PossessionContract.create(person: person,
+                            equipment: equipment, contract_type: "sale",
+                            expires: (expires + 10.days))
+       possession_contract2 = PossessionContract.create(person: person,
+                               equipment: equipment2, contract_type: "sale",
+                               expires: (expires - 10.days))
+       possession_contract3 = PossessionContract.create(person: person3,
+                            equipment: equipment, contract_type: "borrow",
+                            expires: (expires + 20.days))
        get :index_equipment_possession_on_date
-       assigns(:possession_contracts).should == [ possession_contract ]
+       assigns(:people).should == [ person , person3]
     end
 
     it "flashes :error if no possession_contracts returned" do
