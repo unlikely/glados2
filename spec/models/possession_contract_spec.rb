@@ -78,11 +78,13 @@ describe PossessionContract do
 
   describe "currency helpers" do
     it "payment converts cents to dollars" do
-      a_payment = 500
+      a_payment = 505
       person = Person.new(name: "person")
       equip = Equipment.new(make: "vw", model: "golfette")
-      pos_contract = PossessionContract.new(contract_type: "lease", expires: Date.today, payment_cents: a_payment, person: person, equipment: equip)
-      pos_contract.payment.should == (a_payment/100)
+      pos_contract = PossessionContract.create(contract_type: "lease",
+                      expires: Date.today, payment_cents: a_payment,
+                      person: person, equipment: equip)
+      pos_contract.payment.should == (a_payment.to_f / 100)
     end
 
     it "payment converts dollars to cents on save" do

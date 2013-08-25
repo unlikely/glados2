@@ -19,10 +19,10 @@ class PossessionContractsController < ApplicationController
     @possession_contract = PossessionContract.new(params[:possession_contract])
     if @possession_contract.save
       flash.now[:success] = "Contract was successfully updated."
-      render 'show'
+      redirect_to possession_contracts_path
     else
       flash.now[:error] = "We were unable to save your contract udpate"
-      render 'new'
+      redirect_to new_possession_contract_path, :possession_contract => @possession_contract
     end
   end
 
@@ -30,7 +30,7 @@ class PossessionContractsController < ApplicationController
     @possession_contract = PossessionContract.find_by_id(params[:id])
     if @possession_contract.nil?
       flash.now[:error] = "The contract you are looking for was not found."
-      render :index
+      redirect_to possession_contracts_path
     end
   end
 
@@ -38,10 +38,10 @@ class PossessionContractsController < ApplicationController
     @possession_contract = PossessionContract.find_by_id(params[:id])
     if @possession_contract.present? && @possession_contract.update_attributes(params[:possession_contract])
       flash.now[:success] = "Contract sucessfully updated"
-      redirect_to possession_contract_path(@possession_contract)
+      redirect_to possession_contracts_path
     else
       flash.now[:error] = "The contract was not updated please try again"
-      render :edit
+      redirect_to edit_possession_contract_path(@possession_contract)
     end
   end
 

@@ -39,10 +39,10 @@ describe PeopleController do
       expect(response).to redirect_to(person_path(Person.last))
     end
 
-    it "renderes #new if missing information" do
+    it "redirects to #new if missing information" do
       person = {:name => ""}
       post :create, :person => person
-      expect(response).to render_template("new")
+      expect(response).to redirect_to(new_person_path)
     end
 
     it "flashes :error if :person not created" do
@@ -96,7 +96,7 @@ describe PeopleController do
       assigns(:person).should == person
     end
 
-    it "render #index if params :id not found" do
+    it "redirect to #index if params :id not found" do
       get :show, :id => 232390808908
       expect(response).to render_template("index")
     end
@@ -108,11 +108,11 @@ describe PeopleController do
   end
 
   describe "PUT #update" do
-    it "redirect to #show if :person udpated" do
+    it "redirect to #index if :person udpated" do
       person = Person.create(name: "one more name")
       attr   = { :name => "new name2" }
       put :update, :id => person.id, :person => attr
-      response.should redirect_to(person_path(person))
+      response.should redirect_to(people_path)
     end
 
     it "flash :success if :person updated" do
@@ -122,7 +122,7 @@ describe PeopleController do
       flash.now[:success].should_not be_nil
     end
 
-    it "renders #show if :person updated" do
+    it ":person name is updated" do
       person = Person.create(name: "another p")
       name = "pppppp"
       attr = { :name => name }
@@ -131,17 +131,11 @@ describe PeopleController do
       person.name.should == name
     end
 
-    it "renders #edit if failed :person update" do
+    it "redirects to #edit if failed :person update" do
       person = Person.create(name: "second name")
       invalid_attr = { :name => "" }
       put :update, :id => person.id, :person => invalid_attr
-      response.should render_template('edit')
-    end
-
-    it "renders #index if :id does not exist" do
-      attr   = { :name => "new name" }
-      put :update, :id => 8899999009, :person => attr
-      flash.now[:error].should_not be_nil
+      response.should redirect_to(edit_person_path)
     end
 
     it "flashes :error if :person update failed" do

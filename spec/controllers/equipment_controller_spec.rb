@@ -79,7 +79,7 @@ describe EquipmentController do
      it "renders #show if :equipment created" do
        equip = { :make => "monkey2", :model => "model 3" }
        post :create, :equipment => equip
-       expect(response).to redirect_to(equipment_path(Equipment.last))
+       expect(response).to redirect_to(equipment_index_path)
      end
 
      it "flashes :success if :equipment created" do
@@ -95,10 +95,10 @@ describe EquipmentController do
        Equipment.count.should == 1+mycount
      end
 
-     it "renders #new if :equipment not  saved"do
+     it "redirects to #new if :equipment not  saved" do
        equip = { :make => "", :model => "labadoodle"}
        post :create, :equipment => equip
-       expect(response).to render_template('new')
+       expect(response).to render_template(new_equipment_path)
      end
 
      it "flashes :error if :equipment not created" do
@@ -118,11 +118,11 @@ describe EquipmentController do
         equipment.model.should == new_model
      end
 
-     it "redirect_to #show if updated equipment" do
+     it "redirect_to #index if updated equipment" do
         equipment = Equipment.create(make: "blah", model: "model")
         attr = { :make => "toyota", :model => "rav"}
         put :update,:id => equipment.id, :equipment => attr
-        response.should redirect_to(equipment_path(equipment))
+        response.should redirect_to(equipment_index_path)
      end
 
      it "flash :success not nil if updated equipment" do
@@ -132,11 +132,11 @@ describe EquipmentController do
        flash[:success].should_not be_nil
      end
 
-     it "render #edit if equipment not updated" do
+     it "redirect_to #edit if equipment not updated" do
        equipment = Equipment.create(make: "blah4", model: "new model")
        attr = { :make => "ota", :model => "" }
        put :update, :id =>equipment.id, :equipment => attr
-       response.should render_template('edit')
+       response.should redirect_to(edit_equipment_path(equipment))
      end
 
      it "flash.now :error not nil if equipment not updated" do
@@ -146,11 +146,6 @@ describe EquipmentController do
        flash.now[:error].should_not be_nil
      end
 
-     it "flash.now :error not nil :if id not found" do
-       attr = { :make => "", :model => "blah" }
-       put :update, :id => 99999999999, :equipment => attr
-       flash.now[:error].should_not be_nil
-     end
    end
 
    describe "DELETE #destroy" do

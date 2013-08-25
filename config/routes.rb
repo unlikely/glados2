@@ -13,6 +13,7 @@ Glados2::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   #
+  root :to => 'welcome#index'
   get 'people/:id/equipment', to: 'people#show_equipment_possession_on_date', as: 'show_person_equipment'
   get 'people/equipment', to: 'people#index_equipment_possession_on_date'
   resources :people

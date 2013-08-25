@@ -23,10 +23,10 @@ class PossessionContract < ActiveRecord::Base
   end
 
   def payment
-   if self.payment_cents.zero?
+   if self.payment_cents.nil?
       self.payment_cents
     else
-      self.payment_cents / 100
+      self.payment_cents.to_f / 100.0
     end
   end
 

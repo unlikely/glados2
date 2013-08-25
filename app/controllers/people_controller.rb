@@ -14,7 +14,7 @@ class PeopleController < ApplicationController
       redirect_to person_path(@person)
     else
       flash.now[:error] = "We were unable to add the person due to missing or incorrect information"
-      render 'new'
+      redirect_to new_person_path, :person => @person
     end
   end
 
@@ -32,7 +32,7 @@ class PeopleController < ApplicationController
     @person = Person.find_by_id(params[:id])
     if @person.nil?
       flash.now[:error] = "The person you are looking for does not exist or the id was invalid"
-      render 'index'
+      redirect_to 'index'
     else
       render 'edit'
     end
@@ -42,10 +42,10 @@ class PeopleController < ApplicationController
     @person = Person.find_by_id(params[:id])
     if @person.present? && @person.update_attributes(params[:person])
       flash[:success] = "Person updated"
-      redirect_to person_path
+      redirect_to people_path
     else
       flash[:error] = "Update unsuccessful"
-      render 'edit'
+      redirect_to edit_person_path(@person)
     end
   end
 
@@ -64,7 +64,7 @@ class PeopleController < ApplicationController
     @person = Person.find_by_id(params[:id])
     @date   = params[:date]
     if @person.nil?
-      flash[:error] = "Ther person you are looking for does not exist or the id was invalid"
+      flash[:error] = "The person you are looking for does not exist or the id was invalid"
       redirect_to people_equipment_path and return
     end
     if @date.blank?

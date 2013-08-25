@@ -52,12 +52,12 @@ describe PossessionContractsController do
   end
 
   describe "POST #create" do
-    it "renders #show :possession_contract successfully created" do
+    it "rendirect_to #index :possession_contract successfully created" do
       person = Person.create(name: "jon doe")
       equipment = Equipment.create(make: "dewalt", model: "driver")
       possession = { :contract_type => "lease", :payment => "500", :expires => "11/06/2014", :person_id => person.id, :equipment_id => equipment.id }
       post :create, :possession_contract => possession
-      expect(response).to render_template('show')
+      expect(response).to redirect_to(possession_contracts_path)
     end
 
     it "flashes :success if :possession_contract created" do
@@ -82,7 +82,7 @@ describe PossessionContractsController do
       equipment = Equipment.create(make: "new make2", model: "run out of models2")
       possession = { :contract_type => "", :person_id => person.id.to_s, :equipment_id => equipment.id.to_s }
       post :create, :possession_contract => possession
-      expect(response).to render_template('new')
+      expect(response).to redirect_to(new_possession_contract_path)
     end
 
     it "flashes :error if :possession_contract not created" do
@@ -115,7 +115,7 @@ describe PossessionContractsController do
 
     it "renders #index if :id not found" do
       get :edit, :id => 9999999999
-      expect(response).to render_template('index')
+      expect(response).to redirect_to(possession_contracts_path)
     end
 
     it "flashes an error if :id not found" do
@@ -125,13 +125,13 @@ describe PossessionContractsController do
   end
 
   describe "PUT #update" do
-    it "renders #show if :possessession_contract updated" do
+    it "redirects to #index if :possessession_contract updated" do
       person = Person.new(name: "a new name")
       equipment = Equipment.new(make: "lowes", model: "belter")
       possession_contract = PossessionContract.create(person: person, equipment:  equipment, contract_type: "lease", payment: 780, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "lease", :payment => 100, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
-      expect(response).to redirect_to(possession_contract_path)
+      expect(response).to redirect_to(possession_contracts_path)
     end
 
     it "updates :possession_contract if given proper params" do
@@ -154,13 +154,13 @@ describe PossessionContractsController do
       flash.now[:success].should_not be_nil
     end
 
-    it "renders #edit if :possession_contract is not updated" do
+    it "redirects to #edit if :possession_contract is not updated" do
       person = Person.new(name: "a new name5")
       equipment = Equipment.new(make: "new make", model: "new model")
       possession_contract = PossessionContract.create(person: person, equipment:  equipment, contract_type: "lease", payment: 4677, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 998, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
-      expect(response).to render_template('edit')
+      expect(response).to redirect_to(edit_possession_contract_path(possession_contract))
     end
 
     it "flashes :error if :possession_contract is not udpated" do
@@ -171,14 +171,6 @@ describe PossessionContractsController do
       put :update, :id => possession_contract.id, :possession_contract => attr
       flash.now[:error].should_not be_nil
     end
-
-     it "flashes :error if :id not found" do
-      person = Person.create(name: "another name")
-      equipment = Equipment.create(make: "another make", model: "another model")
-      attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 8887, :person_id => person.id, :equipment_id => equipment.id }
-      put :update, :id => 667788888, :possession_contract => attr
-      flash.now[:error].should_not be_nil
-     end
   end
 
   describe "DELETE #destroy" do

@@ -27,10 +27,10 @@ class EquipmentController < ApplicationController
     @equip = Equipment.new(params[:equipment])
     if @equip.save
       flash[:success] = "#{@equip.make} was successfully created"
-      redirect_to equipment_path(@equip)
+      redirect_to equipment_index_path
     else
       flash.now[:error] = "We were unable to save your equipment"
-      render 'new'
+      render new_equipment_path
     end
   end
 
@@ -38,10 +38,10 @@ class EquipmentController < ApplicationController
     @equip = Equipment.find_by_id(params[:id])
     if @equip.present? && @equip.update_attributes(params[:equipment])
       flash[:success] = "Equipment successfully updated"
-      redirect_to equipment_path(@equip)
+      redirect_to equipment_index_path
     else
       flash.now[:error] = "The equipment was not updated please try inputing again"
-      render 'edit'
+      redirect_to edit_equipment_path(@equip)
     end
   end
 

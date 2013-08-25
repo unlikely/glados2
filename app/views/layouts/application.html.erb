@@ -8,12 +8,46 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container">
-  <% flash.each do |key, value| %>
-    <div class="alert alert-<%= key %>"><%= value %></div>
-  <% end %>
-  <%= yield %>
-  <%= debug(params) if Rails.env.development? %>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+<a class="brand" href="#">Glados 2</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href=<%= root_path %>><i class="icon-home icon-white"></i> Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">People <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href=<%= people_path %>>Index</a></li>
+                  <li><a href=<%= new_person_path %>>New</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Equipment <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href=<%= equipment_index_path %>>Index</a></li>
+                    <li><a href=<%= new_equipment_path %>>New</a></li>
+                  </ul>
+            </li>
+           <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Possession Contracts <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href=<%= possession_contracts_path %>>Index</a></li>
+                    <li><a href=<%= new_possession_contract_path %>>New</a></li>
+                  </ul>
+            </li>
+            <li><a href=<%= people_equipment_path %>>Onwership Report</a></li>
+
+        </ul>
+      </div>
+
+        <% flash.each do |key, value| %>
+           <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+      <%= yield %>
+      <%= debug(params) if Rails.env.development? %>
+      </div>
+    </div>
   </div>
 </body>
 </html>

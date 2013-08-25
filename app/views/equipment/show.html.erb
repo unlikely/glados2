@@ -5,6 +5,8 @@
     <th> Equipment Make </th>
     <th> Replacement Cost </th>
     <th> Serial Number </th>
+    <th> Edit </th>
+    <th> Delete </th>
   </tr>
     <tr>
       <td><%= @equip.id =%>
@@ -12,5 +14,7 @@
     <td> <%= @equip.make =%></td>
     <td> <%= @equip.replacement_cost =%> </td>
     <td> <%= @equip.serial_number =%> </td>
+    <td> <%= link_to "Edit", edit_equipment_path(@equip.id) %> </td>
+    <td> <%= link_to "Delete", equipment_path(@equip.id), :confirm => "Are you sure?", :method => :delete %></td>
   </tr>
 </table>
