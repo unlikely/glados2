@@ -1,16 +1,14 @@
-<h1> Update your name </h1>
-
 <div class="row">
   <div class="span6 offset3">
   <%=form_for(@equip) do |f| %>
   <%= render 'shared/error_messages', :object_errors => @equip %>
   <p>
-    <%=f.label :model %>
-    <%=f.text_field :model %>
-  </p>
-  <p>
     <%=f.label :make %>
     <%=f.text_field :make %>
+  </p>
+  <p>
+    <%=f.label :model %>
+    <%=f.text_field :model %>
   </p>
   <p>
     <%=f.label :replacement_cost %>

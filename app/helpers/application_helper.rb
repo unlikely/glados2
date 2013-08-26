@@ -3,7 +3,7 @@ module ApplicationHelper
     @total = 0
     if possession_contracts.present?
       possession_contracts.each do |pos|
-        if (pos.contract_type == "lease") && (pos.expires.present?)
+        if (pos.contract_type == "a lease") && (pos.expires.present?)
           @total += pos.payment
         end
       end

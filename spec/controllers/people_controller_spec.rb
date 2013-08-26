@@ -190,8 +190,8 @@ describe PeopleController do
       equipment = Equipment.create(make: "vw", model: "jetta")
       equipment2 = Equipment.create(make: "dewalt", model: "impact drill")
       expires = Date.today
-      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "donation", expires: expires + 10.days)
-      possession_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "donation", expires: expires - 10.days)
+      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "a donation", expires: expires + 10.days)
+      possession_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "a donation", expires: expires - 10.days)
       get :show_equipment_possession_on_date, :id => person.id
       assigns(:possession_contracts).should == [ possession_contract ]
     end
@@ -261,7 +261,7 @@ describe PeopleController do
     it "renders index_equipment_possession when successful" do
       person = Person.new(name: "firstname")
       equipment = Equipment.new(model: "model1", make: "make1")
-      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease")
+      possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "a lease")
       get :index_equipment_possession_on_date
       expect(response).to redirect_to(people_equipment_path)
     end
@@ -275,10 +275,10 @@ describe PeopleController do
        equipment3  = Equipment.create(model: "new model", make: "new make")
        expires = Date.today
        possession_contract = PossessionContract.create(person: person,
-                            equipment: equipment, contract_type: "sale",
+                            equipment: equipment, contract_type: "a sale",
                             expires: (expires + 10.days))
        possession_contract2 = PossessionContract.create(person: person,
-                               equipment: equipment2, contract_type: "sale",
+                               equipment: equipment2, contract_type: "a sale",
                                expires: (expires - 10.days))
        possession_contract3 = PossessionContract.create(person: person3,
                             equipment: equipment3, contract_type: "borrow",

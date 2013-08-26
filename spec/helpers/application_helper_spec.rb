@@ -9,8 +9,8 @@ describe ApplicationHelper do
       equipment = Equipment.create(model: "amonkdye", make: "6/8")
       equipment2 = Equipment.create(model: "odb", make: "hand")
       equipment3 = Equipment.create(model: "third", make: "make3")
-      pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", payment: 500, expires: '11/05/2013')
-      pos_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "lease",payment: 65, expires: '09/05/2013')
+      pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "a lease", payment: 500, expires: '11/05/2013')
+      pos_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "a lease",payment: 65, expires: '09/05/2013')
       pos_contract3 = PossessionContract.create(person: person, equipment: equipment3, contract_type: "borrow",payment: 65)
       possession_contracts = PossessionContract.all
       lease_total_payments(possession_contracts).should == (pos_contract.payment + pos_contract2.payment)
@@ -30,8 +30,8 @@ describe ApplicationHelper do
       date = Date.today
       equipment = Equipment.create(model: "ape", make: "grand")
       equipment2 = Equipment.create(model: "ape2", make: "grand2")
-      pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", payment: 500, expires: '11/05/2013')
-      pos_contract2 = PossessionContract.create(person: person2, equipment: equipment2, contract_type: "lease",payment: 65, expires: '09/05/2013')
+      pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "a lease", payment: 500, expires: '11/05/2013')
+      pos_contract2 = PossessionContract.create(person: person2, equipment: equipment2, contract_type: "a lease",payment: 65, expires: '09/05/2013')
       people = [person, person2]
       p pos_contract
       contracts = helper.aggregate_possession_contracts(people)

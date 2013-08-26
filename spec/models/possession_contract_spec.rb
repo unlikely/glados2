@@ -3,14 +3,14 @@ require 'spec_helper'
 describe PossessionContract do
   describe "should save when" do
     it "has non_empty :contract_type, :person and :equipment, integer :payment, :expires" do
-      pos_contract = PossessionContract.create(contract_type: "sale", payment: 10,
+      pos_contract = PossessionContract.create(contract_type: "a sale", payment: 10,
                                             expires: Date.today, person: Person.new(name: "tarti"),
                                             equipment: Equipment.create(model: "phillips", make: "norelco"))
       pos_contract.should be_valid
     end
 
     it "has all non_empty fields AND :contract_type is lease and has :expires, :payments filled" do
-      pos_contract = PossessionContract.new(contract_type: "lease", payment: 500,
+      pos_contract = PossessionContract.new(contract_type: "a lease", payment: 500,
                                             expires: Date.today,
                                             person: Person.new(name: "ssarti"),
                                             equipment: Equipment.create(model: "some companys", make: "razor"))
@@ -20,13 +20,13 @@ describe PossessionContract do
 
   describe "should not save when" do
     it "has empty :person" do
-      pos_contract = PossessionContract.new(contract_type: "sale",
+      pos_contract = PossessionContract.new(contract_type: "a sale",
                        equipment: Equipment.new(model: "fire", make: "hydrant"))
       pos_contract.should_not be_valid
     end
 
     it "has 0 :payment and lease contract_type" do
-      pos_contract = PossessionContract.new(payment: 0, contract_type: "lease",
+      pos_contract = PossessionContract.new(payment: 0, contract_type: "a lease",
                          person: Person.new(name: "wildfire"), equipment: Equipment.create(model: "hydrant", make: "fire"))
       pos_contract.should_not be_valid
     end
@@ -45,7 +45,7 @@ describe PossessionContract do
       person = Person.new(name: "david")
       equipment = Equipment.new(make: "husky", model: "drill")
       possession_contract = PossessionContract.new(person: person,
-                                                   equipment: equipment, contract_type: "lease",
+                                                   equipment: equipment, contract_type: "a lease",
                                                    payment: 500)
       possession_contract.should_not be_valid
     end
@@ -54,7 +54,7 @@ describe PossessionContract do
       person = Person.new(name: "davidi2")
       equipment = Equipment.new(make: "husky", model: "drawers")
       possession_contract = PossessionContract.create(person: person,
-                                                   equipment: equipment, contract_type: "lease",
+                                                   equipment: equipment, contract_type: "a lease",
                                                    expires: Date.today)
       possession_contract.should_not be_valid
     end
@@ -71,14 +71,14 @@ describe PossessionContract do
     it "belongs_to :person" do
       person = Person.new(name: "p1")
       equip = Equipment.new(make: "norelco", model: "razer")
-      pos_contract = PossessionContract.new(contract_type: "lease", person: person, equipment: equip)
+      pos_contract = PossessionContract.new(contract_type: "a lease", person: person, equipment: equip)
       pos_contract.person.should == person
     end
 
     it "belongs_to :equipment" do
       person = Person.new(name: "p2")
       equip = Equipment.new(make: "vw", model: "golf")
-      pos_contract = PossessionContract.new(contract_type: "sale", person: person, equipment: equip)
+      pos_contract = PossessionContract.new(contract_type: "a sale", person: person, equipment: equip)
       pos_contract.equipment.should == equip
     end
 
@@ -98,7 +98,7 @@ describe PossessionContract do
       a_payment = 505
       person = Person.new(name: "person")
       equip = Equipment.new(make: "vw", model: "golfette")
-      pos_contract = PossessionContract.create(contract_type: "lease",
+      pos_contract = PossessionContract.create(contract_type: "a lease",
                       expires: Date.today, payment_cents: a_payment,
                       person: person, equipment: equip)
       pos_contract.payment.should == (a_payment.to_f / 100)
@@ -108,7 +108,7 @@ describe PossessionContract do
       a_payment = 50.5
       person = Person.new(name: "person")
       equip = Equipment.new(make: "poop", model: "jetta")
-      pos_contract = PossessionContract.create(contract_type: "lease",
+      pos_contract = PossessionContract.create(contract_type: "a lease",
                                             expires: Date.today, payment: a_payment,
                                             person: person, equipment: equip)
       pos_contract.payment_cents.should == (a_payment * 100).to_i
