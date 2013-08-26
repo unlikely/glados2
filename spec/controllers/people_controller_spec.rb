@@ -178,8 +178,8 @@ describe PeopleController do
 
   describe "GET #show_equipment_possession_on_date" do
     it "renders show_equipment_possession when successful" do
-      person = Person.new(name: "a new name")
-      equipment = Equipment.new(make: "vw", model: "golf")
+      person = Person.create(name: "a new name")
+      equipment = Equipment.create(make: "vw", model: "golf")
       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "borrow", expires: Date.today)
       get :show_equipment_possession_on_date, :id => person.id
       expect(response).to render_template('show_equipment_possession')
@@ -187,8 +187,8 @@ describe PeopleController do
 
     it "assigns :possession_contracts if correct params[:id] passed"do
       person = Person.new(name: "person 34")
-      equipment = Equipment.new(make: "vw", model: "jetta")
-      equipment2 = Equipment.new(make: "dewalt", model: "impact drill")
+      equipment = Equipment.create(make: "vw", model: "jetta")
+      equipment2 = Equipment.create(make: "dewalt", model: "impact drill")
       expires = Date.today
       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "donation", expires: expires + 10.days)
       possession_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "donation", expires: expires - 10.days)
@@ -199,8 +199,8 @@ describe PeopleController do
     it "assigns :possession_contracts with correct contracts passed"do
       person = Person.new(name: "person 35")
       person2 = Person.new(name: "person 36")
-      equipment = Equipment.new(make: "husky", model: "tape measure")
-      equipment2 = Equipment.new(make: "husky", model: "tool box")
+      equipment = Equipment.create(make: "husky", model: "tape measure")
+      equipment2 = Equipment.create(make: "husky", model: "tool box")
       expires = Date.today
       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "borrow", expires: expires + 10.days)
       possession_contract2 = PossessionContract.create(person: person2, equipment: equipment2, contract_type: "borrow", expires: expires + 10.days)
@@ -270,9 +270,9 @@ describe PeopleController do
        person     = Person.create(name: "firstnames3")
        person2    = Person.create(name: "another name")
        person3    = Person.create(name: "yet another")
-       equipment  = Equipment.new(model: "model3", make: "make3")
-       equipment2  = Equipment.new(model: "mode4", make: "makes4")
-       equipment3  = Equipment.new(model: "new model", make: "new make")
+       equipment  = Equipment.create(model: "model3", make: "make3")
+       equipment2  = Equipment.create(model: "mode4", make: "makes4")
+       equipment3  = Equipment.create(model: "new model", make: "new make")
        expires = Date.today
        possession_contract = PossessionContract.create(person: person,
                             equipment: equipment, contract_type: "sale",
@@ -281,7 +281,7 @@ describe PeopleController do
                                equipment: equipment2, contract_type: "sale",
                                expires: (expires - 10.days))
        possession_contract3 = PossessionContract.create(person: person3,
-                            equipment: equipment, contract_type: "borrow",
+                            equipment: equipment3, contract_type: "borrow",
                             expires: (expires + 20.days))
        get :index_equipment_possession_on_date
        assigns(:people).should == [ person , person3]

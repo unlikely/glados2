@@ -3,12 +3,17 @@ require 'spec_helper'
 describe PossessionContract do
   describe "should save when" do
     it "has non_empty :contract_type, :person and :equipment, integer :payment, :expires" do
-      pos_contract = PossessionContract.new(contract_type: "sale", payment_cents: 10, expires: Date.today, person: Person.new(name: "tarti"), equipment: Equipment.new(model: "phillips", make: "norelco"))
+      pos_contract = PossessionContract.create(contract_type: "sale", payment: 10,
+                                            expires: Date.today, person: Person.new(name: "tarti"),
+                                            equipment: Equipment.create(model: "phillips", make: "norelco"))
       pos_contract.should be_valid
     end
 
     it "has all non_empty fields AND :contract_type is lease and has :expires, :payments filled" do
-      pos_contract = PossessionContract.new(contract_type: "lease", payment: 500, expires: Date.today, person: Person.new(name: "ssarti"), equipment: Equipment.new(model: "some companys", make: "razor"))
+      pos_contract = PossessionContract.new(contract_type: "lease", payment: 500,
+                                            expires: Date.today,
+                                            person: Person.new(name: "ssarti"),
+                                            equipment: Equipment.create(model: "some companys", make: "razor"))
       pos_contract.should be_valid
      end
   end
@@ -73,6 +78,16 @@ describe PossessionContract do
       equip = Equipment.new(make: "vw", model: "golf")
       pos_contract = PossessionContract.new(contract_type: "sale", person: person, equipment: equip)
       pos_contract.equipment.should == equip
+    end
+
+    it "has one unique equipment" do
+      person  = Person.new(name: "dv")
+      equip  = Equipment.new(make: "dog", model: "retriever")
+      posession = PossessionContract.create(person: person, equipment: equip,
+                                            contract_type: "borrow")
+      possession2 = PossessionContract.create(person: person, equipment: equip,
+                                              contract_type: "borrow")
+      possession2.should_not be_valid
     end
   end
 

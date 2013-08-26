@@ -6,9 +6,9 @@ describe ApplicationHelper do
     it "returns total lease amounts" do
       person = Person.new(name: "lease testing name")
       date = Date.today
-      equipment = Equipment.new(model: "amonkdye", make: "6/8")
-      equipment2 = Equipment.new(model: "odb", make: "hand")
-      equipment3 = Equipment.new(model: "third", make: "make3")
+      equipment = Equipment.create(model: "amonkdye", make: "6/8")
+      equipment2 = Equipment.create(model: "odb", make: "hand")
+      equipment3 = Equipment.create(model: "third", make: "make3")
       pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", payment: 500, expires: '11/05/2013')
       pos_contract2 = PossessionContract.create(person: person, equipment: equipment2, contract_type: "lease",payment: 65, expires: '09/05/2013')
       pos_contract3 = PossessionContract.create(person: person, equipment: equipment3, contract_type: "borrow",payment: 65)
@@ -28,8 +28,8 @@ describe ApplicationHelper do
       person = Person.new(name: "lease testing name")
       person2 = Person.new(name: "new name")
       date = Date.today
-      equipment = Equipment.new(model: "ape", make: "grand")
-      equipment2 = Equipment.new(model: "ape2", make: "grand2")
+      equipment = Equipment.create(model: "ape", make: "grand")
+      equipment2 = Equipment.create(model: "ape2", make: "grand2")
       pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "lease", payment: 500, expires: '11/05/2013')
       pos_contract2 = PossessionContract.create(person: person2, equipment: equipment2, contract_type: "lease",payment: 65, expires: '09/05/2013')
       people = [person, person2]

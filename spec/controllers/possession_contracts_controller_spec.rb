@@ -3,13 +3,17 @@ require 'spec_helper'
 describe PossessionContractsController do
   describe "GET #index" do
     it "populates :possession_contracts" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "person1"), equipment: Equipment.new(make: "apple", model: "macbook"), contract_type: "lease", payment: 200093, expires: Date.today)
+      possession_contract = PossessionContract.create(person: Person.new(name: "person1"),
+                             equipment: Equipment.create(make: "apple", model: "macbook"),
+                             contract_type: "lease", payment: 200093, expires: Date.today)
       get :index
       assigns(:possession_contracts).should == [ possession_contract ]
     end
 
     it "renders the #index" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "person2"), equipment: Equipment.new(make: "apple", model: "air"), contract_type: "sale", payment: 200093, expires: Date.today)
+      possession_contract = PossessionContract.create(person: Person.new(name: "person2"),
+                              equipment: Equipment.create(make: "apple", model: "air"),
+                              contract_type: "sale", payment: 200093, expires: Date.today)
       get :index
       expect(response).to render_template('index')
     end
@@ -17,13 +21,18 @@ describe PossessionContractsController do
 
   describe "GET #show" do
     it "should render #show if valid params :id" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "person3"), equipment: Equipment.new(make: "microsoft", model: "surface"), contract_type: "sale", payment: 2000, expires: Date.today)
+      possession_contract = PossessionContract.create(person: Person.new(name: "person3"),
+                               equipment: Equipment.create(make: "microsoft", model: "surface"),
+                               contract_type: "sale", payment: 2000, expires: Date.today)
       get :show, :id => possession_contract.id
       expect(response).to render_template('show')
     end
 
     it "should take params :id and find a :possession_contract if valid person" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "person4"), equipment: Equipment.new(make: "microsoft2", model: "blahsurface"), contract_type: "lease", payment: 2093, expires: Date.today)
+      possession_contract = PossessionContract.create(person: Person.new(name: "person4"),
+                              equipment: Equipment.create(make: "microsoft2",
+                              model: "blahsurface"), contract_type: "lease",
+                              payment: 2093, expires: Date.today)
       get :show, :id => possession_contract.id
       assigns(:possession_contract).should == possession_contract
     end
@@ -98,7 +107,7 @@ describe PossessionContractsController do
     it "renders #edit if params :id is correct" do
       possession_contract = PossessionContract.create(
         person: Person.new(name: "person6"),
-        equipment: Equipment.new(make: "monkey", model: "do"),
+        equipment: Equipment.create(make: "monkey", model: "do"),
         contract_type: "borrow", payment: 88, expires: Date.today)
       get :edit, :id => possession_contract.id
       expect(response).to render_template('edit')
@@ -107,7 +116,7 @@ describe PossessionContractsController do
     it "takes an :id params and find associated possession_contract" do
       possession_contract = PossessionContract.create(
         person: Person.new(name: "person7"),
-        equipment: Equipment.new(make: "dog", model: "retriever"),
+        equipment: Equipment.create(make: "dog", model: "retriever"),
         contract_type: "sale", payment: 788, expires: Date.today)
       get :edit, :id  => possession_contract.id.to_s
       assigns(:possession_contract).should == possession_contract
@@ -127,8 +136,9 @@ describe PossessionContractsController do
   describe "PUT #update" do
     it "redirects to #index if :possessession_contract updated" do
       person = Person.new(name: "a new name")
-      equipment = Equipment.new(make: "lowes", model: "belter")
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment, contract_type: "lease", payment: 780, expires: Date.today)
+      equipment = Equipment.create(make: "lowes", model: "belter")
+      possession_contract = PossessionContract.create(person: person, equipment:  equipment,
+                               contract_type: "lease", payment: 780, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "lease", :payment => 100, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
       expect(response).to redirect_to(possession_contracts_path)
@@ -136,9 +146,10 @@ describe PossessionContractsController do
 
     it "updates :possession_contract if given proper params" do
       person = Person.new(name: "another name")
-      equipment = Equipment.new(make: "make44", model: "model69")
+      equipment = Equipment.create(make: "make44", model: "model69")
       contract_type = "sale"
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment, contract_type: "borrow", payment: 780, expires: Date.today)
+      possession_contract = PossessionContract.create(person: person, equipment:  equipment,
+                             contract_type: "borrow", payment: 780, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => contract_type, :payment => 20, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
       possession_contract.reload
@@ -147,8 +158,9 @@ describe PossessionContractsController do
 
     it "flash.now :success is not nil if :possession_contract is updated" do
       person = Person.new(name: "a new name4")
-      equipment = Equipment.new(make: "hd", model: "ladder")
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment, contract_type: "sale", payment: 9978665, expires: Date.today)
+      equipment = Equipment.create(make: "hd", model: "ladder")
+      possession_contract = PossessionContract.create(person: person, equipment:  equipment,
+                              contract_type: "sale", payment: 9978665, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "lease", :payment => 1000, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
       flash.now[:success].should_not be_nil
@@ -156,8 +168,9 @@ describe PossessionContractsController do
 
     it "redirects to #edit if :possession_contract is not updated" do
       person = Person.new(name: "a new name5")
-      equipment = Equipment.new(make: "new make", model: "new model")
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment, contract_type: "lease", payment: 4677, expires: Date.today)
+      equipment = Equipment.create(make: "new make", model: "new model")
+      possession_contract = PossessionContract.create(person: person, equipment:  equipment,
+                                contract_type: "lease", payment: 4677, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 998, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
       expect(response).to redirect_to(edit_possession_contract_path(possession_contract))
@@ -165,8 +178,9 @@ describe PossessionContractsController do
 
     it "flashes :error if :possession_contract is not udpated" do
       person = Person.new(name: "a new name7")
-      equipment =  Equipment.new(make: "new make3", model: "new model4")
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment, contract_type: "sale", payment: 657, expires: Date.today)
+      equipment =  Equipment.create(make: "new make3", model: "new model4")
+      possession_contract = PossessionContract.create(person: person, equipment: equipment,
+                               contract_type: "sale", payment: 657, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 8887, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
       flash.now[:error].should_not be_nil
@@ -175,7 +189,9 @@ describe PossessionContractsController do
 
   describe "DELETE #destroy" do
     it "renders #index if successfully deleted" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "YAN3"), equipment: Equipment.new(make: "another make", model: "another model"), contract_type: "lease", payment: 666, expires: Date.today)
+      possession_contract = PossessionContract.create(person: Person.new(name: "YAN3"),
+                               equipment: Equipment.create(make: "another make", model: "another model"),
+                               contract_type: "lease", payment: 666, expires: Date.today)
       delete :destroy, :id => possession_contract.id
       expect(response).to redirect_to(possession_contracts_path)
     end
@@ -183,7 +199,7 @@ describe PossessionContractsController do
     it "successfully deleted possession_contract for that id" do
       possession_contract = PossessionContract.create(
         person: Person.new(name: "YAN2"),
-        equipment: Equipment.new(make: "chicita", model: "banana"),
+        equipment: Equipment.create(make: "chicita", model: "banana"),
         contract_type: "lease", payment: 4995, expires: Date.today)
       delete :destroy, :id => possession_contract.id
       PossessionContract.find_by_id(possession_contract.id).should be_nil
@@ -192,7 +208,7 @@ describe PossessionContractsController do
     it "flashes :success when deleted" do
       possession_contract = PossessionContract.create(
         person: Person.new(name: "yet another"),
-        equipment: Equipment.new(make: "orange", model: "air"), contract_type: "sale",
+        equipment: Equipment.create(make: "orange", model: "air"), contract_type: "sale",
         payment: 45, expires: Date.today)
       delete :destroy, :id => possession_contract.id
       flash.now[:success].should_not be_nil

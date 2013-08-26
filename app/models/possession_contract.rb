@@ -6,13 +6,13 @@ class PossessionContract < ActiveRecord::Base
     SALE     = 'sale'
   ]
 
-  attr_accessible :contract_type, :payment, :person, :equipment, :payment_cents, :expires, :person_id, :equipment_id
+  attr_accessible :contract_type, :payment, :person,:equipment, :equipment_id, :payment_cents, :expires, :person_id, :equipment_id
   belongs_to :person
   belongs_to :equipment
 
   validates :contract_type,      :presence => true
   validates :person,    :presence => true
-  validates :equipment, :presence => true
+  validates :equipment_id, :presence => true, :uniqueness => true
   validates_inclusion_of :contract_type, :in => ALL_CONTRACT_TYPES, :message => "Value not accepted"
   validates_numericality_of :payment_cents, :only_integer => true, :allow_blank => true
   validates :payment_cents, :presence => true, :numericality => {:only_integer => true} , :if => :contract_type_is_lease?
