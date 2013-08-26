@@ -19,7 +19,11 @@ class PossessionContract < ActiveRecord::Base
   validates_presence_of :expires, :if => :contract_type_is_lease?
 
   def payment=(value)
-    self.payment_cents = (value.to_f * 100).to_i
+    if value.to_i == 0
+      self.payment_cents = 0
+    else
+      self.payment_cents = (value.to_f * 100).to_i
+    end
   end
 
   def payment

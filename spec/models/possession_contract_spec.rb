@@ -25,8 +25,10 @@ describe PossessionContract do
       pos_contract.should_not be_valid
     end
 
-    it "has non integer :payment" do
-      pos_contract = PossessionContract.new(payment_cents: 500.79, contract_type: "lease", person: Person.new(name: "wildfire"), equipment: Equipment.new(model: "hydrant", make: "fire"))
+    it "has 0 :payment and lease contract_type" do
+      pos_contract = PossessionContract.new(payment: 0, contract_type: "lease",
+                         person: Person.new(name: "wildfire"), equipment: Equipment.create(model: "hydrant", make: "fire"))
+      pos_contract.should_not be_valid
     end
 
     it "has empty :equipment" do

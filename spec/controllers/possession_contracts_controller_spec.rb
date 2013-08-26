@@ -74,7 +74,7 @@ describe PossessionContractsController do
       equipment = Equipment.create(make: "norelco", model: "impact hammer")
       possession = { :contract_type => "sale", :person_id => person.id.to_s, :equipment_id => equipment.id.to_s }
       post :create, :possession_contract => possession
-      flash.now[:success].should_not be_nil
+      flash[:success].should_not be_nil
     end
 
     it "creates new :possession_contract provided valid params" do
@@ -99,7 +99,7 @@ describe PossessionContractsController do
       equipment = Equipment.create(make: "new make3", model: "run out of models3")
       possession = { :contract_type => "", :person_id => person.id.to_s, :equipment_id => equipment.id.to_s }
       post :create, :possession_contract => possession
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 
@@ -129,7 +129,7 @@ describe PossessionContractsController do
 
     it "flashes an error if :id not found" do
       get :edit, :id => 88888888888888
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 
@@ -163,7 +163,7 @@ describe PossessionContractsController do
                               contract_type: "sale", payment: 9978665, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "lease", :payment => 1000, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
-      flash.now[:success].should_not be_nil
+      flash[:success].should_not be_nil
     end
 
     it "redirects to #edit if :possession_contract is not updated" do
@@ -183,7 +183,7 @@ describe PossessionContractsController do
                                contract_type: "sale", payment: 657, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 8887, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 
@@ -211,7 +211,7 @@ describe PossessionContractsController do
         equipment: Equipment.create(make: "orange", model: "air"), contract_type: "sale",
         payment: 45, expires: Date.today)
       delete :destroy, :id => possession_contract.id
-      flash.now[:success].should_not be_nil
+      flash[:success].should_not be_nil
     end
 
     it "should render back to Referrer if :id not found or failed to delete" do
@@ -223,7 +223,7 @@ describe PossessionContractsController do
     it "flashes :error if failed to delete" do
       request.env["HTTP_REFERER"] = possession_contracts_path
       delete :destroy, :id => 9927687638268
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 end

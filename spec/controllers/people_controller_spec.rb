@@ -30,13 +30,13 @@ describe PeopleController do
     it "flashes :success if :person created" do
       person = {:name => "tarti"}
       post :create, :person => person
-      flash.now[:success].should_not be_nil
+      flash[:success].should_not be_nil
     end
 
     it "redirect to #show if :person created" do
       person = {:name => "nutella"}
       post :create, :person => person
-      expect(response).to redirect_to(person_path(Person.last))
+      expect(response).to redirect_to(people_path)
     end
 
     it "redirects to #new if missing information" do
@@ -48,7 +48,7 @@ describe PeopleController do
     it "flashes :error if :person not created" do
       person = {:name => ""}
       post :create, :person => person
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
 
     it "creates new :person given valid params" do
@@ -72,14 +72,14 @@ describe PeopleController do
       expect(response).to render_template("show")
      end
 
-    it "render #index if params :id not found" do
+    it "redirect #index if params :id not found" do
       get :show, :id => 2323232233
-      expect(response).to render_template("index")
+      expect(response).to redirect_to(people_path)
     end
 
     it "flashes :error if person not found" do
       get :show, :id => 9899898
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 
@@ -98,12 +98,12 @@ describe PeopleController do
 
     it "redirect to #index if params :id not found" do
       get :show, :id => 232390808908
-      expect(response).to render_template("index")
+      expect(response).to redirect_to(people_path)
     end
 
     it "flash :error if person not found" do
       get :show, :id => 989989888887
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 
@@ -119,7 +119,7 @@ describe PeopleController do
       person = Person.create(name: "one more name2")
       attr   = { :name => "new name" }
       put :update, :id => person.id, :person => attr
-      flash.now[:success].should_not be_nil
+      flash[:success].should_not be_nil
     end
 
     it ":person name is updated" do
@@ -142,7 +142,7 @@ describe PeopleController do
       person = Person.create(name: "second name22")
       invalid_attr = { :name => "" }
       put :update, :id => person.id, :person => invalid_attr
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 
@@ -150,7 +150,7 @@ describe PeopleController do
     it "flashes :success when deleted" do
       person = Person.create(name: "third")
       delete :destroy, :id=> person.id
-      flash.now[:success].should_not be_nil
+      flash[:success].should_not be_nil
     end
 
     it "redirects to #index once :person deleted" do
@@ -161,12 +161,12 @@ describe PeopleController do
 
     it "renders #index if :person not found" do
       delete :destroy, :id => 77777777777888888
-      expect(response).to render_template('index')
+      expect(response).to redirect_to(people_path)
     end
 
     it "flashes :error if failed to delete" do
       delete :destroy, :id => 999889009878888
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
 
     it "successfully deleted :person" do

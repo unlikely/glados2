@@ -10,10 +10,10 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(params[:person])
     if @person.save
-      flash.now[:success] = "#{@person.name} has been added"
-      redirect_to person_path(@person)
+      flash[:success] = "#{@person.name} has been added"
+      redirect_to people_path
     else
-      flash.now[:error] = "We were unable to add the person due to missing or incorrect information"
+      flash[:error] = "We were unable to add the person due to missing or incorrect information"
       redirect_to new_person_path, :person => @person
     end
   end
@@ -21,8 +21,8 @@ class PeopleController < ApplicationController
   def show
     @person = Person.find_by_id(params[:id])
     if @person.nil?
-      flash.now[:error] = "The person you are looking for does not exist or the id was invalid"
-      render "index"
+      flash[:error] = "The person you are looking for does not exist or the id was invalid"
+      redirect_to people_path
     else
       @person
     end
@@ -31,8 +31,8 @@ class PeopleController < ApplicationController
   def edit
     @person = Person.find_by_id(params[:id])
     if @person.nil?
-      flash.now[:error] = "The person you are looking for does not exist or the id was invalid"
-      redirect_to 'index'
+      flash[:error] = "The person you are looking for does not exist or the id was invalid"
+      redirect_to people_path
     else
       render 'edit'
     end
@@ -52,11 +52,11 @@ class PeopleController < ApplicationController
   def destroy
     @person = Person.find_by_id(params[:id])
     if @person.present? && @person.destroy
-      flash.now[:success] = "Person successfully deleted"
+      flash[:success] = "Person successfully deleted"
       redirect_to people_path
     else
-      flash.now[:error] = "Person not deleted"
-      render 'index'
+      flash[:error] = "Person not deleted"
+      redirect_to people_path
     end
   end
 

@@ -18,10 +18,10 @@ class PossessionContractsController < ApplicationController
   def create
     @possession_contract = PossessionContract.new(params[:possession_contract])
     if @possession_contract.save
-      flash.now[:success] = "Contract was successfully updated."
+      flash[:success] = "Contract was successfully updated."
       redirect_to possession_contracts_path
     else
-      flash.now[:error] = "We were unable to save your contract udpate"
+      flash[:error] = "We were unable to save your contract udpate"
       redirect_to new_possession_contract_path, :possession_contract => @possession_contract
     end
   end
@@ -29,7 +29,7 @@ class PossessionContractsController < ApplicationController
   def edit
     @possession_contract = PossessionContract.find_by_id(params[:id])
     if @possession_contract.nil?
-      flash.now[:error] = "The contract you are looking for was not found."
+      flash[:error] = "The contract you are looking for was not found."
       redirect_to possession_contracts_path
     end
   end
@@ -37,10 +37,10 @@ class PossessionContractsController < ApplicationController
   def update
     @possession_contract = PossessionContract.find_by_id(params[:id])
     if @possession_contract.present? && @possession_contract.update_attributes(params[:possession_contract])
-      flash.now[:success] = "Contract sucessfully updated"
+      flash[:success] = "Contract sucessfully updated"
       redirect_to possession_contracts_path
     else
-      flash.now[:error] = "The contract was not updated please try again"
+      flash[:error] = "The contract was not updated please try again"
       redirect_to edit_possession_contract_path(@possession_contract)
     end
   end
@@ -48,10 +48,10 @@ class PossessionContractsController < ApplicationController
   def destroy
     @possession_contract = PossessionContract.find_by_id(params[:id])
     if @possession_contract.present? && @possession_contract.destroy && @possession_contract.destroyed?
-      flash.now[:success] = "Contract successfully deleted"
+      flash[:success] = "Contract successfully deleted"
       redirect_to possession_contracts_path
     else
-      flash.now[:error] = "Contract not deleted please try it again"
+      flash[:error] = "Contract not deleted please try it again"
       redirect_to request.referrer
     end
   end
