@@ -25,8 +25,8 @@ describe PossessionContract do
       pos_contract.should_not be_valid
     end
 
-    it "has 0 :payment and lease contract_type" do
-      pos_contract = PossessionContract.new(payment: 0, contract_type: "a lease",
+    it "has 0 :payment and contract_type of a lease" do
+      pos_contract = PossessionContract.create(payment: "0", contract_type: "a lease",
                          person: Person.new(name: "wildfire"), equipment: Equipment.create(model: "hydrant", make: "fire"))
       pos_contract.should_not be_valid
     end

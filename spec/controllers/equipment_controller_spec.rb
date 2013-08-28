@@ -25,6 +25,12 @@ describe EquipmentController do
       get :new
       assigns(:equip).id.should eq(nil)
     end
+
+    it "if :equips passed in then don't create Equipment.new" do
+      equip_params = {:make => "a make", :model => "a model"}
+      get :new, :equip => equip_params
+      assigns(:equip).make.should eq("a make")
+    end
   end
 
   describe "GET #show" do
@@ -98,13 +104,13 @@ describe EquipmentController do
      it "redirects to #new if :equipment not  saved" do
        equip = { :make => "", :model => "labadoodle"}
        post :create, :equipment => equip
-       expect(response).to render_template(new_equipment_path)
+       expect(response).to redirect_to(new_equipment_path)
      end
 
      it "flashes :error if :equipment not created" do
        equip = { :make => "doggy", :model => ""}
        post :create, :equipment => equip
-       flash.now[:error].should_not be_nil
+       flash[:error].should_not be_nil
      end
    end
 

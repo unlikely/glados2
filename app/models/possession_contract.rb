@@ -15,7 +15,8 @@ class PossessionContract < ActiveRecord::Base
   validates :equipment_id, :presence => true, :uniqueness => true
   validates_inclusion_of :contract_type, :in => ALL_CONTRACT_TYPES, :message => "Value not accepted"
   validates_numericality_of :payment_cents, :only_integer => true, :allow_blank => true
-  validates :payment_cents, :presence => true, :numericality => {:only_integer => true} , :if => :contract_type_is_lease?
+  validates :payment_cents, :presence => true,
+    :numericality => {:only_integer => true, :greater_than => 0} , :if => :contract_type_is_lease?
   validates_presence_of :expires, :if => :contract_type_is_lease?
 
   def payment=(value)

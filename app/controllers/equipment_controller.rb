@@ -12,7 +12,13 @@ class EquipmentController < ApplicationController
   end
 
   def new
-    @equip = Equipment.new
+    any_equip = params[:equip]
+    p any_equip
+    if any_equip.nil?
+      @equip = Equipment.new
+    else
+      @equip = Equipment.new(any_equip)
+    end
   end
 
   def edit
@@ -29,8 +35,8 @@ class EquipmentController < ApplicationController
       flash[:success] = "#{@equip.make} was successfully created"
       redirect_to equipment_index_path
     else
-      flash.now[:error] = "We were unable to save your equipment"
-      render new_equipment_path
+      flash[:error] = "We were unable to save your equipment"
+      redirect_to new_equipment_path, :equip => @equip
     end
   end
 
