@@ -221,7 +221,7 @@ describe PeopleController do
 
     it "redirects to #index if :person not found or invalid" do
       get :show_equipment_possession_on_date, :id => 98797978979797
-      expect(response).to redirect_to(people_equipment_path)
+      expect(response).to render_template('index_equipment_possession_on_date')
     end
 
     it "flashes :error if no possession_contracts found" do
@@ -263,10 +263,10 @@ describe PeopleController do
       equipment = Equipment.new(model: "model1", make: "make1")
       possession_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "a lease")
       get :index_equipment_possession_on_date
-      expect(response).to redirect_to(people_equipment_path)
+      expect(response).to render_template('index_equipment_possession_on_date')
     end
 
-    it "assigns :possession_contracts with correct contracts with default date" do
+    it "assigns :people with correct contracts on default date" do
        person     = Person.create(name: "firstnames3")
        person2    = Person.create(name: "another name")
        person3    = Person.create(name: "yet another")
@@ -287,14 +287,14 @@ describe PeopleController do
        assigns(:people).should == [ person , person3]
     end
 
-    it "flashes :error if no possession_contracts returned" do
+    it "flashes :error if no :people found" do
        get :index_equipment_possession_on_date
-       flash[:error].should_not be_nil
+       flash.now[:error].should_not be_nil
     end
 
-    it "redirects to #index_equipment_possession_on_date when no possession_contracts returned" do
+    it "renders #index_equipment_possession_on_date when no possession_contracts returned" do
       get :index_equipment_possession_on_date
-      expect(response).to redirect_to(people_equipment_path)
+      expect(response).to render_template("index_equipment_possession_on_date")
     end
 
     it "assigns :date todays date when no params date" do
@@ -317,7 +317,7 @@ describe PeopleController do
     it "flashes :error if date params incorrect format" do
       date = '2013/5'
       get :index_equipment_possession_on_date, :date => date
-      flash.now[:error].should_not be_nil
+      flash[:error].should_not be_nil
     end
   end
 end

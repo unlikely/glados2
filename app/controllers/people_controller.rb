@@ -64,8 +64,8 @@ class PeopleController < ApplicationController
     @person = Person.find_by_id(params[:id])
     @date   = params[:date]
     if @person.nil?
-      flash[:error] = "The person you are looking for does not exist or the id was invalid"
-      redirect_to people_equipment_path and return
+      flash.now[:error] = "The person you are looking for does not exist or the id was invalid"
+      render 'index_equipment_possession_on_date' and return
     end
     if @date.blank?
       @date = Date.today
@@ -73,13 +73,13 @@ class PeopleController < ApplicationController
       begin
         @date = Date.strptime(params[:date], '%m/%d/%Y')
       rescue ArgumentError
-        flash[:error] = "Invalid Date"
-        redirect_to show_person_equipment_path(@person.id) and return
+        flash[:error] = "Invalid date using Today's date"
+        redirect_to show_person_equipment_path(@person.id), :date => Date.today and return
       end
     end
     @possession_contracts = @person.possession_contracts.where("(expires >= ?) OR ( expires IS NULL)", @date)
     if @possession_contracts.empty?
-      flash[:error] = "No contracts found"
+      flash[:error] = "No contracts found or person does not exist!"
       redirect_to people_equipment_path and return
     end
   end
@@ -99,7 +99,7 @@ class PeopleController < ApplicationController
     @people = Person.joins(:possession_contracts).where("(expires >= ?) OR ( expires IS NULL)", @date).uniq(:person)
     if @people.empty?
       flash[:error] = "No contracts in your database"
-      redirect_to people_equipment_path and return
+      render 'index_equipment_possession_on_date' and return
     end
   end
 end
