@@ -1,8 +1,9 @@
 <table class="table table-striped">
   <tr>
     <th> ID </th>
-    <th> Equipment ID </th>
-    <th> Person ID </th>
+    <th> Equipment Make </th>
+    <th> Equipment Model </th>
+    <th> Name </th>
     <th> Contract Type</th>
     <th> Payment if any </th>
     <th> Expires </th>
@@ -12,8 +13,9 @@
   <%@possession_contracts.each do |contract| %>
     <tr>
       <td><%= contract.id =%></td>
-    <td> <%= contract.equipment_id =%></td>
-    <td> <%= contract.person_id =%></td>
+    <td> <%= contract.equipment.make =%></td>
+    <td> <%= contract.equipment.model =%></td>
+    <td> <%= contract.person.name =%></td>
     <td> <%= contract.contract_type =%> </td>
     <td> <%= number_to_currency(contract.payment) =%> </td>
     <td> <%= contract.expires =%> </td>

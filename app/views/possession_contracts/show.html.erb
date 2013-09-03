@@ -1,8 +1,9 @@
 <table class="table table-striped">
   <tr>
     <th> ID </th>
-    <th> Equipment ID </th>
-    <th> Person ID </th>
+    <th> Equipment Make </th>
+    <th> Equipment Model </th>
+    <th> Person Name </th>
     <th> Contract Type</th>
     <th> Payment if any </th>
     <th> Expires </th>
@@ -11,8 +12,9 @@
   </tr>
     <tr>
       <td><%= @possession_contract.id %></td>
-    <td> <%= @possession_contract.equipment_id %></td>
-    <td> <%= @possession_contract.person_id %></td>
+    <td> <%= @possession_contract.equipment.make</td>
+    <td> <%= @possession_contract.equipment.model %></td>
+    <td> <%= @possession_contract.person.name %></td>
     <td> <%= @possession_contract.contract_type %> </td>
     <td> <%= number_to_currency(@possession_contract.payment) %> </td>
     <td> <%= @possession_contract.expires %> </td>
