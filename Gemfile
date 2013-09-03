@@ -6,11 +6,11 @@ gem 'bootstrap-datepicker-rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-#gem 'sqlite3'
 gem 'pg'
 gem 'yaml_db'
 
 group :test, :development do
+  gem 'sqlite3'
   gem 'rspec-rails', '>=2.11.0'
 end
 
