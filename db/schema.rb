@@ -11,7 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130820175743) do
+ActiveRecord::Schema.define(:version => 20130907024941) do
+
+  create_table "agreement_executions", :force => true do |t|
+    t.integer  "person_id",     :null => false
+    t.integer  "agreement_id",  :null => false
+    t.date     "date_signed",   :null => false
+    t.string   "agreement_url", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "agreements", :force => true do |t|
+    t.string  "name",    :null => false
+    t.string  "author",  :null => false
+    t.integer "version", :null => false
+  end
 
   create_table "door_keys", :force => true do |t|
     t.integer  "person_id",  :null => false

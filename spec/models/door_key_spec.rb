@@ -11,7 +11,6 @@ describe DoorKey do
     end
   end
 
-# Testing to see if the join table takes a nil.. should I test empty too?
   describe "door_keys should not save when" do
     it ":person is empty" do
       door = Door.new(name: "a door2")

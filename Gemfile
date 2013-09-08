@@ -5,6 +5,7 @@ gem 'bootstrap-sass', '2.1'
 gem 'bootstrap-datepicker-rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'validate_url'
 
 gem 'pg'
 gem 'yaml_db'
