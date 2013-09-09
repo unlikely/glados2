@@ -82,7 +82,7 @@ describe EquipmentController do
   end
 
    describe "POST #create" do
-     it "renders #show if :equipment created" do
+     it "redirects to #index if :equipment created" do
        equip = { :make => "monkey2", :model => "model 3" }
        post :create, :equipment => equip
        expect(response).to redirect_to(equipment_index_path)

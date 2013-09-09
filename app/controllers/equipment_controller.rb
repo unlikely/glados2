@@ -13,7 +13,6 @@ class EquipmentController < ApplicationController
 
   def new
     any_equip = params[:equip]
-    p any_equip
     if any_equip.nil?
       @equip = Equipment.new
     else

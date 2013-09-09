@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <tr>
+    <th> ID </th>
+    <th> Name </th>
+    <th> Version </th>
+    <th> Author </th>
+    <th> Edit </th>
+    <th> Delete </th>
+  </tr>
+  <% @agreement.each do |article| %>
+    <tr>
+      <td> <%= article.id %> </td>
+      <td> <%= article.name %> </td>
+      <td> <%= article.version %> </td>
+      <td> <%= article.author %> </td>
+      <td> <%= link_to "Edit", edit_agreement_path(article.id) %> </td>
+      <td> <%= link_to "Delete", agreement_path(article.id), :confirm => "Are you sure?", :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>

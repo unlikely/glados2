@@ -61,7 +61,7 @@ describe PossessionContractsController do
   end
 
   describe "POST #create" do
-    it "rendirect_to #index :possession_contract successfully created" do
+    it "redirect_to #index :possession_contract successfully created" do
       person = Person.create(name: "jon doe")
       equipment = Equipment.create(make: "dewalt", model: "driver")
       possession = { :contract_type => "a lease", :payment => "500", :expires => "11/06/2014", :person_id => person.id, :equipment_id => equipment.id }
@@ -122,7 +122,7 @@ describe PossessionContractsController do
       assigns(:possession_contract).should == possession_contract
     end
 
-    it "renders #index if :id not found" do
+    it "redirects to #index if :id not found" do
       get :edit, :id => 9999999999
       expect(response).to redirect_to(possession_contracts_path)
     end
@@ -188,7 +188,7 @@ describe PossessionContractsController do
   end
 
   describe "DELETE #destroy" do
-    it "renders #index if successfully deleted" do
+    it "redirects to #index if successfully deleted" do
       possession_contract = PossessionContract.create(person: Person.new(name: "YAN3"),
                                equipment: Equipment.create(make: "another make", model: "another model"),
                                contract_type: "a lease", payment: 666, expires: Date.today)
@@ -214,7 +214,7 @@ describe PossessionContractsController do
       flash[:success].should_not be_nil
     end
 
-    it "should render back to Referrer if :id not found or failed to delete" do
+    it "should redirect back to Referrer if :id not found or failed to delete" do
       request.env["HTTP_REFERER"] = "www.blah.com"
       delete :destroy, :id => 8797865875687
       expect(response).to redirect_to("www.blah.com")
