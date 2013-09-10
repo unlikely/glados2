@@ -20,6 +20,7 @@ Glados2::Application.routes.draw do
   resources :equipment
   resources :possession_contracts
   resources :agreements
+  resources :agreement_executions
   match '/open' => 'door_security#open'
 
   # Sample resource route with options:
