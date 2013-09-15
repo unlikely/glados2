@@ -1,1 +1,9 @@
-place holder
+<%= semantic_form_for @agreement do |f| %>
+ <%= f.semantic_errors :state %>
+  <%= f.inputs do %>
+    <%= f.input :name , :input_html => { :size => 20, :class => "override-width" }, :label => "Agreement name" %>
+    <%= f.input :author, :as => :select, :collection => Agreement::ALL_AUTHOR_TYPES, :input_html => { :size => 10 } %>
+    <%= f.input :version, :input_html => { :class => "override-width" }%>
+  <% end %>
+  <%= f.actions %>
+<% end %>

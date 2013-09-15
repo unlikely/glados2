@@ -7,6 +7,7 @@ gem 'responders'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'validate_url'
+gem 'formtastic', :git => 'https://github.com/justinfrench/formtastic.git'
 
 gem 'pg'
 gem 'yaml_db'
@@ -18,7 +19,7 @@ end
 
 group :test do
   gem 'rspec-rails', '>=2.11.0'
-  gem 'factory_girl_rails', '4.1.0' 
+  gem 'factory_girl_rails', '4.1.0'
   gem 'capybara'
 end
 

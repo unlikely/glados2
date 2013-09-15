@@ -10,7 +10,7 @@
 <%=f.select(:equipment_id, equipment_make_model_array) %>
 </p>
 <%= f.label :contract_type %>
-<%=f.select(:contract_type, PossessionContract::ALL_CONTRACT_TYPES) %>
+<%=f.select(:contract_type, Agreement::ALL_AUTHOR_TYPES) %>
 </p>
 <p>
 <%=f.label :expires %>
