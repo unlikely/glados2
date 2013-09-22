@@ -145,6 +145,57 @@ describe AgreementsController do
       put :update, :id => agreement.id, :agreement => agreement1
       flash[:error].should_not be_nil
     end
+
+    it "responds to JSON request with JSON content type" do
+      agreement = create(:agreement)
+      name = "a new name"
+      agreement_attributes = {
+        :author => agreement.author,
+        :version => agreement.version,
+        :name => name
+        }
+      xhr :put, :update , :id => agreement.id, :agreement=> agreement_attributes
+      p response.body
+      response.header['content-type'].should include 'json'
+    end
+    
+    it "updates :agreement correctly with valid JSON request" do
+      agreement = create(:agreement)
+      name = "my name is"
+      agreement_attributes = {
+        :author => agreement.author,
+        :version => agreement.version,
+        :name => name
+        }.to_json
+      put :update. :id => agreement.id, :agreement=> agreement_attributes, :format => :json
+      agreement.reload
+      agreement.name.should == name
+    end
+
+    it "responds correct header with valid JSON request" do
+      it "updates :agreement correctly with valid JSON request" do
+      agreement = create(:agreement)
+      name = "my name is"
+      agreement_attributes = {
+        :author => agreement.author,
+        :version => agreement.version,
+        :name => name
+        }.to_json
+      put :update. :id => agreement.id, :agreement=> agreement_attributes, :format => :json
+      expect(response).to be_success
+    end
+
+    it "sends error response when invalid JSON request" do
+      agreement = create(:agreement)
+      name = ""
+      agreement_attributes = {
+        :author => agreement.author,
+        :version => agreement.version,
+        :name => name
+        }.to_json
+      put :update. :id => agreement.id, :agreement=> agreement_attributes, :format => :json
+      expect(response).to be_error
+    end
   end
 
   describe "DELETE #destroy" do

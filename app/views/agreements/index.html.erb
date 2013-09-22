@@ -1,20 +1,22 @@
-<table class="table table-striped">
-  <tr>
-    <th> ID </th>
-    <th> Name </th>
-    <th> Version </th>
-    <th> Author </th>
-    <th> Edit </th>
-    <th> Delete </th>
-  </tr>
-  <% @agreement.each do |article| %>
-    <tr>
-      <td> <%= article.id %> </td>
-      <td> <%= article.name %> </td>
-      <td> <%= article.version %> </td>
-      <td> <%= article.author %> </td>
-      <td> <%= link_to "Edit", edit_agreement_path(article.id) %> </td>
-      <td> <%= link_to "Delete", agreement_path(article.id), :confirm => "Are you sure?", :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="flash-error hidden"></div>
+<div class="flash-success hidden"></div>
+  <div class="row">
+    <div class ="span3"> Name </div>
+    <div class ="span3"> Author </div>
+    <div class ="span3"> Version </div>
+    <div class ="span1"> Delete </div>
+    <div class ="span1 submit"> Submit </div>
+</div>
+<% @agreement.each do |article| %>
+    <div class="row">
+      <%=form_for(article, :html => { :class => "editableform"} ) do |f| %>
+
+          <div class ="span3"><div class= "editable isvisible"><%= article.name %> </div> <div class="editable ishidden"> <%=f.text_field :name, :class => "myformelement" %></div></div>
+          <div class ="span3"><div class= "editable isvisible"><%= article.author %> </div> <div class="editable ishidden"> <%=f.select(:author, Agreement::ALL_AUTHOR_TYPES,{},{:class => "myformelement"}) %></div></div>
+          <div class ="span3"><div class= "editable isvisible"><%= article.version %> </div><div class="editable ishidden"> <%=f.number_field :version, :class => "myformelement" %></div></div>
+          <div class ="span1"><%= link_to "Delete", agreement_path(article.id), :confirm => "Are you sure?", :method => :delete %></div>
+          <div class ="span1 submit"><%= f.submit %></div>
+      <% end %>
+    </div>
+<% end %>
+

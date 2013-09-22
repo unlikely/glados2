@@ -1,0 +1,48 @@
+input.editable-inplace {
+ border-style: none;
+ background: transparent;
+ }
+
+.editable.ishidden {
+ display:none;
+}
+
+.editable.isvisible {
+ display:inherit;
+}
+
+.editible.ishidden.currentelement {
+
+}
+
+.editable.isvisible.formelement {
+
+}
+
+.editable {
+width:130px;
+}
+
+.myformelement.myelement-error {
+border-color:red;
+}
+
+div.flash-success.hidden {
+ display:none;
+ background: lightgreen;
+}
+
+div.flash-success.visible {
+ display:inherit;
+ background: lightgreen;
+}
+
+div.flash-error.hidden {
+ display:none;
+ background: lightred;
+}
+
+div.flash-error.visible {
+ display:inherit;
+ background: lightred;
+ }

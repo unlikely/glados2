@@ -12,6 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
 //= require bootstrap-dropdown
 //= require_tree .

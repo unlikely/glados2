@@ -1,4 +1,6 @@
 class AgreementsController < ApplicationController
+  respond_to :html, :json
+
   def index
     @agreement = Agreement.all
   end
@@ -37,14 +39,14 @@ class AgreementsController < ApplicationController
   end
 
   def update
+    Rails.logger.info("PARAMS: #{params.inspect}")
     @agreement = Agreement.find_by_id(params[:id])
     if @agreement.present? && @agreement.update_attributes(params[:agreement])
-      flash[:success] = "Your agreement was updated"
-      redirect_to agreements_path
+      flash.now[:success] = "Your agreement was updated"
     else
-      flash[:error] = "The agreement you are trying to update does not exist"
-      redirect_to edit_agreement_path(@agreement)
+      flash.now[:error] = "The agreement you are trying to update does not exist"
     end
+      respond_with(@agreement, :location => agreements_path)
   end
 
   def destroy
