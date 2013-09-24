@@ -13,7 +13,12 @@ $(document).ready(function() {
 
     $(".myformelement").change(function(event){
         event.preventDefault();
-        var myvalue = $(this).val();
+        var ctrl = $(this)
+        if( ctrl.is('select') ) {
+            var myvalue = $(this).find('option:selected').text();
+           } else {
+            var myvalue = $(this).val();
+           };
         var myhiddendiv = $(event.target).parent().siblings();
         var valuesToSubmit = $(this).closest('form.editableform').serializeArray();
 

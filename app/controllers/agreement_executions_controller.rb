@@ -1,4 +1,6 @@
 class AgreementExecutionsController < ApplicationController
+  respond_to :html, :json
+
   def index
     @agreement_executions = AgreementExecution.all
   end
@@ -38,11 +40,10 @@ class AgreementExecutionsController < ApplicationController
     @agreement_execution = AgreementExecution.find_by_id(params[:id])
     if @agreement_execution.present? && @agreement_execution.update_attributes(params[:agreement_execution])
       flash[:success] = "Agreement execution correctly updated"
-      redirect_to agreement_executions_path
     else
       flash[:error] = "The agreement execution could not be updated"
-      redirect_to edit_agreement_execution_path(@agreement_execution)
     end
+      respond_with(@agreement_execution, :location => agreement_executions_path)
   end
 
   def destroy

@@ -1,0 +1,24 @@
+<div class="flash-notice hidden"></div>
+<div class ="row">
+  <div class ="span3">Associated Person</div>
+  <div class ="span3">Associated Agreement</div>
+  <div class ="span2">Date Signed</div>
+  <div class ="span3">Signed Document</div>
+  <div class ="span1">Delete</div>
+  <div class ="span1 submit">Submit</div>
+</div>
+<% @agreement_executions.each do |agreement_execution| %>
+  <div class ="row">
+    <%=form_for(agreement_execution, :html => { :class => "editableform"} ) do |f| %>
+      <div class ="span3"><div class ="editable isvisible"><%= agreement_execution.person.name %></div><div class ="editable ishidden"><%= f.collection_select(:person_id, Person.all, :id, :name, {}, {:class => "myformelement"}) %></div> </div>
+      <% agreement_name_and_version = Agreement.all.map { |agreement| [agreement.name + ' v' + agreement.version.to_s, agreement.id] } %>
+      <div class ="span3"><div class ="editable isvisible"><%= agreement_execution.agreement.name + ' v' + agreement_execution.agreement.version.to_s %></div><div class ="editable ishidden"><%= f.select(:agreement_id, agreement_name_and_version,{},{:class => "myformelement"}) %></div></div>
+      <div class ="span2"><div class ="editable isvisible"><%= agreement_execution.date_signed %></div><div class ="editable ishidden"><%=f.text_field :date_signed, :class => "myformelement" %></div></div>
+      <div class ="span3"><div class ="editable isvisible"><%= agreement_execution.agreement_url %></div><div class ="editable ishidden"><%=f.text_field :agreement_url, :class => "myformelement" %></div></div>
+      <div class ="span1"><%= link_to "Delete", agreement_execution_path(agreement_execution.id), :confirm => "Are you sure?", :method => :delete %></div>
+      <div class ="span1 submit"><%= f.submit %></div>
+
+      <% end %>
+  </div>
+<% end %>
+
