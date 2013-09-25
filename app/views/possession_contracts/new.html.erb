@@ -1,26 +1,12 @@
-<%=form_for(@possession_contract) do |f| %>
-  <%= render 'shared/error_messages', :object_errors => @possession_contract %>
-<p>
-<%= f.label :person_id %>
-<%= f.collection_select(:person_id, Person.all, :id, :name) %>
-</p>
-<p>
-<%= f.label :equipment_id %>
-<% equipment_make_model_array = Equipment.all.map { |equipment|  [equipment.make + ' ' + equipment.model, equipment.id] } %>
-<%=f.select(:equipment_id, equipment_make_model_array) %>
-</p>
-<%= f.label :contract_type %>
-<%=f.select(:contract_type, Agreement::ALL_AUTHOR_TYPES) %>
-</p>
-<p>
-<%=f.label :expires %>
-<%=f.date_select( :expires) %>
-</p>
-<p>
-<%=f.label :payment %>
-<%=f.text_field :payment %>
-</p>
-<p>
-<%= f.submit %>
-</p>
+<%= semantic_form_for @possession_contract do |f| %>
+  <% f.semantic_errors :state %>
+  <%= f.inputs do %>
+    <div class="row"><div class="span2">Person: </div><div class="span3"><%= f.input :person, :as => :select, :collection => Person.find(:all, :order => :name), :label=> false %></div></div>
+    <% equipment_make_model_array = Equipment.find(:all, :order => :make).map { |equipment|  [equipment.make + ' ' + equipment.model, equipment.id] } %>
+    <div class="row"><div class="span2">Equipment: </div><div class="span3"><%= f.input :equipment, :as => :select, :collection => equipment_make_model_array , :label=> false %></div></div>
+    <% if false %>    <div class="row"><div class="span2">Contract Type:: </div><div class="span3"><%= f.input :contract_type, :as => :select, :collection => PossessionContract::All_CONTRACT_TYPES, :label=> false %></div></div> <% end %>
+    <div class="row"><div class="span2">Expires: </div><div class="span3"><%= f.input :expires, :as => :date_picker, :label=> false %></div></div>
+    <div class="row"><div class="span2">Dropbox URL: </div><div class="span3"><%= f.input :payment, :as => :string, :label=> false %></div></div>
+  <% end %>
+  <%= f.actions %>
 <% end %>
