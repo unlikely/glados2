@@ -3,8 +3,8 @@ $(document).ready(function() {
         var on_blur_element_value     = mycheck(this);
         var before_blur_element_value = $(this).data("curr_element");
         if(on_blur_element_value == before_blur_element_value) {
-            $(event.target).parent().siblings().attr('class', "editable isvisible");
-            $(event.target).parent().attr('class', "editable ishidden");
+            $(event.target).parent().siblings().removeClass("ishidden").addClass("isvisible");
+            $(event.target).parent().removeClass("isvisible").addClass("ishidden");
             $(this).data("curr_element")
           } else {
             event.preventDefault();
@@ -40,9 +40,8 @@ $(document).ready(function() {
             success: function(message){
               $('div.flash-notice.hidden').text("Your data was updated").attr('class', "div flash-notice flash-success visible");
               $(event.target).removeClass("myelement-error"); // remove red border
-              myhiddendiv.html(myvalue); // update value
-              $(event.target).parent().attr('class', "editable ishidden"); // change class and hide element
-              myhiddendiv.attr('class', "editable isvisible"); //make div with updated value visible
+              $(event.target).parent().removeClass("isvisible").addClass("ishidden");
+              myhiddendiv.html(myvalue).removeClass("ishidden").addClass("isvisible"); // update value
             }
         });
         return false;
@@ -56,10 +55,9 @@ $(document).ready(function() {
         var myvalue = $(this).text();
         $('.myformelement').data("curr_element",myvalue);
         $('div.flash-notice').attr('class', "flash-notice hidden");
-        $('.editable.isvisible.formelement').attr('class', "editable ishidden"); //hide any visible form elements
-        $('.editable.ishidden.currentelement').attr('class', "editable isvisible"); // unhide associated value
-        $(event.target).attr('class', "editable ishidden currentelement"); // hide value and tag it current
-        var newelement = $(event.target).siblings().attr('class', "editable isvisible formelement"); // make form element visible and tag it
+        $('.editable.isvisible.formelement').removeClass("isvisible").addClass("ishidden"); //hide any visible form elements
+        $(event.target).removeClass("isvisible").addClass("currentelement ishidden"); // hide value and tag it current
+        var newelement = $(event.target).siblings().removeClass("ishidden").addClass("isvisible formelement"); // make form element visible and tag it
         newelement.children('.myformelement').focus();
     });
 
