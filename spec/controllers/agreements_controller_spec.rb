@@ -136,7 +136,7 @@ describe AgreementsController do
       agreement = create(:agreement)
       agreement1 = { :author => "Counsel", :version => "5", :name => ""}
       put :update, :id => agreement.id, :agreement => agreement1
-      expect(response).to redirect_to(edit_agreement_path)
+      expect(response).to be_success
     end
 
     it "flash :error is not nil if :agreement not updated" do
@@ -146,19 +146,32 @@ describe AgreementsController do
       flash[:error].should_not be_nil
     end
 
-    it "responds to JSON request with JSON content type" do
+    it "responds to JSON format request and fails" do
       agreement = create(:agreement)
-      name = "a new name"
-      agreement_attributes = {
+      name = ""
+      agreement_attributes = { :id => agreement.id, :format => 'json', :agreement => {
         :author => agreement.author,
         :version => agreement.version,
         :name => name
-        }
-      xhr :put, :update , :id => agreement.id, :agreement=> agreement_attributes
-      p response.body
-      response.header['content-type'].should include 'json'
+        }}
+      put :update, agreement_attributes
+      agreement.reload
+      response.should_not be_success
     end
 
+    it "responds to JSON format request and has successful response" do
+      agreement = create(:agreement)
+      name = "a new name"
+      agreement_attributes = { :id => agreement.id, :format => 'json', :agreement => {
+        :author => agreement.author,
+        :version => agreement.version,
+        :name => name
+        }}
+      put :update, agreement_attributes
+      agreement.reload
+      agreement.name.should == name
+      response.should be_success
+    end
   end
 
   describe "DELETE #destroy" do

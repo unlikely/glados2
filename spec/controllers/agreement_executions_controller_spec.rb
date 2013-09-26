@@ -154,7 +154,7 @@ describe AgreementExecutionsController do
       agreement_execution = create(:agreement_execution, :agreement => agreement, :person => person)
       agreement_execution1 = { :agreement_url => "", :agreement_id => agreement.id, :person_id => person.id, :date_signed => Date.today.to_s }
       put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution1
-      expect(response).to redirect_to(edit_agreement_execution_path(agreement_execution))
+      expect(response).to be_success
     end
 
     it "flash :error is not nil if :agreement_execution not updated" do
@@ -164,6 +164,33 @@ describe AgreementExecutionsController do
       agreement_execution1 = { :agreement_url => "", :agreement_id => agreement.id, :person_id => person.id, :date_signed => Date.today.to_s }
       put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution1
       flash[:error].should_not be_nil
+    end
+
+    it "responds with JSON format request and fails" do
+      agreement_execution = create(:agreement_execution)
+      agreement_url = ""
+      agreement_execution_attributes = { :id => agreement_execution.id, :format => 'json', :agreement_execution => {
+        :agreement_url => agreement_url, :person_id => agreement_execution.person.id,
+        :agreement_id => agreement_execution.agreement.id,
+        :date_signed => agreement_execution.date_signed
+        }}
+      put :update, agreement_execution_attributes
+      agreement_execution.reload
+      response.should_not be_success
+    end
+
+    it "responds with JSON format request and is success (200)" do
+      agreement_execution = create(:agreement_execution)
+      agreement_url = "http://www.somebrandnewurl.com"
+      agreement_execution_attributes = { :id => agreement_execution.id, :format => 'json', :agreement_execution => {
+        :agreement_url => agreement_url, :person_id => agreement_execution.person.id,
+        :agreement_id => agreement_execution.agreement.id,
+        :date_signed => agreement_execution.date_signed
+        }}
+      put :update, agreement_execution_attributes
+      agreement_execution.reload
+      agreement_execution.agreement_url.should == agreement_url
+      response.should be_success
     end
   end
 
