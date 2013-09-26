@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $(".myformelement").blur(function(event){
-        var on_blur_element_value     = $(this).val();
+        var on_blur_element_value     = mycheck(this);
         var before_blur_element_value = $(this).data("curr_element");
         if(on_blur_element_value == before_blur_element_value) {
             $(event.target).parent().siblings().attr('class', "editable isvisible");
@@ -11,17 +11,21 @@ $(document).ready(function() {
           };
     });
 
+    var mycheck = function checkSelect(var1){
+        var ctrl = $(var1)
+        if( ctrl.is('select') ) {
+            var myvalue = $(var1).find('option:selected').text();
+          } else {
+           var myvalue = $(var1).val();
+          };
+        return myvalue
+       }
+
     $(".myformelement").change(function(event){
         event.preventDefault();
-        var ctrl = $(this)
-        if( ctrl.is('select') ) {
-            var myvalue = $(this).find('option:selected').text();
-           } else {
-            var myvalue = $(this).val();
-           };
         var myhiddendiv = $(event.target).parent().siblings();
         var valuesToSubmit = $(this).closest('form.editableform').serializeArray();
-
+        var myvalue = mycheck(this);
         $.ajax({
             type: "PUT",
             url: $(this).closest('form.editableform').attr('action'),
