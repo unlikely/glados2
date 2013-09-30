@@ -120,12 +120,13 @@ describe AgreementExecutionsController do
 
   describe "PUT #update" do
     it "redirects to #index if :agreement_execution updated" do
-      person = create(:person)
-      agreement = create(:agreement)
-      agreement_execution = create(:agreement_execution, :agreement => agreement, :person => person)
-      agreement_execution1 = { :agreement_url => "http://www.blahblah.com", :agreement_id => agreement.id, :person_id => person.id, :date_signed => Date.today.to_s }
-      put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution1
-      expect(response).to redirect_to(agreement_executions_path)
+      #person = create(:person)
+      #agreement = create(:agreement)
+      agreement_execution = create(:agreement_execution)
+      agreement_execution_attr = agreement_execution.attributes.except("created_at", "updated_at", "id")
+      agreement_execution_attr["date_signed"] = Date.today.strftime('%m/%d/%Y')
+      put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr
+      expect(response).to be_success
     end
 
     it "updates :agreement_execution if given proper params" do
@@ -157,6 +158,26 @@ describe AgreementExecutionsController do
       expect(response).to be_success
     end
 
+    it "assigns the date if it received correct date in params" do
+      date = Date.new(2013,11,30)
+      agreement_execution = create(:agreement_execution)
+      agreement_execution_attr = agreement_execution.attributes.except("created_at", "updated_at", "id")
+      p "pre attribute date #{agreement_execution_attr["date_signed"]}"
+      agreement_execution_attr["date_signed"] = "2013-11-30" #dd/mm/yyyy
+      p "post attribute date #{agreement_execution_attr["date_signed"]}"
+      put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr
+      AgreementExecution.find(agreement_execution.id).date_signed.should == date
+    end
+
+    it "flashes error if the date is not correctly format" do
+       agreement_execution = create(:agreement_execution)
+       agreement_execution_attr = agreement_execution.attributes.except("created_at", "updated_at", "id")
+       agreement_execution_attr["date_signed"] = "23/23/2013" #dd/mm/yyyy
+       put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr
+       p AgreementExecution.find(agreement_execution.id).date_signed
+       flash[:error].should_not be_nil
+    end
+
     it "flash :error is not nil if :agreement_execution not updated" do
       person = create(:person)
       agreement = create(:agreement)
@@ -172,7 +193,7 @@ describe AgreementExecutionsController do
       agreement_execution_attributes = { :id => agreement_execution.id, :format => 'json', :agreement_execution => {
         :agreement_url => agreement_url, :person_id => agreement_execution.person.id,
         :agreement_id => agreement_execution.agreement.id,
-        :date_signed => agreement_execution.date_signed
+        :date_signed => agreement_execution.date_signed.to_s
         }}
       put :update, agreement_execution_attributes
       agreement_execution.reload
@@ -185,7 +206,7 @@ describe AgreementExecutionsController do
       agreement_execution_attributes = { :id => agreement_execution.id, :format => 'json', :agreement_execution => {
         :agreement_url => agreement_url, :person_id => agreement_execution.person.id,
         :agreement_id => agreement_execution.agreement.id,
-        :date_signed => agreement_execution.date_signed
+        :date_signed => agreement_execution.date_signed.to_s
         }}
       put :update, agreement_execution_attributes
       agreement_execution.reload
