@@ -8,7 +8,7 @@ gem 'responders'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'validate_url'
 gem 'formtastic', :git => 'https://github.com/justinfrench/formtastic.git'
-
+gem 'jquery_datepicker'
 gem 'pg'
 gem 'yaml_db'
 
@@ -36,7 +36,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'jquery-ui-rails'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

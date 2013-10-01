@@ -162,9 +162,7 @@ describe AgreementExecutionsController do
       date = Date.new(2013,11,30)
       agreement_execution = create(:agreement_execution)
       agreement_execution_attr = agreement_execution.attributes.except("created_at", "updated_at", "id")
-      p "pre attribute date #{agreement_execution_attr["date_signed"]}"
       agreement_execution_attr["date_signed"] = "2013-11-30" #dd/mm/yyyy
-      p "post attribute date #{agreement_execution_attr["date_signed"]}"
       put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr
       AgreementExecution.find(agreement_execution.id).date_signed.should == date
     end
@@ -174,7 +172,6 @@ describe AgreementExecutionsController do
        agreement_execution_attr = agreement_execution.attributes.except("created_at", "updated_at", "id")
        agreement_execution_attr["date_signed"] = "23/23/2013" #dd/mm/yyyy
        put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr
-       p AgreementExecution.find(agreement_execution.id).date_signed
        flash[:error].should_not be_nil
     end
 

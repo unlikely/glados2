@@ -3,7 +3,7 @@ $(document).ready(function() {
         var on_blur_element_value     = mycheck(this);
         var before_blur_element_value = $(this).data("curr_element");
         if(on_blur_element_value == before_blur_element_value) {
-            $(event.target).parent().siblings().removeClass("ishidden").addClass("isvisible");
+            $(event.target).parent().siblings().removeClass("currentelement ishidden").addClass("isvisible");
             $(event.target).parent().removeClass("isvisible").addClass("ishidden");
             $(this).data("curr_element")
           } else {
@@ -21,11 +21,12 @@ $(document).ready(function() {
         return myvalue
        }
 
-    $(".myformelement").change(function(event){
+$(".myformelement").change(function(event){
         event.preventDefault();
         var myhiddendiv = $(event.target).parent().siblings();
         var valuesToSubmit = $(this).closest('form.editableform').serializeArray();
         var myvalue = mycheck(this);
+        var url = $(this).closest('form.editableform').attr('action');
         $.ajax({
             type: "PUT",
             url: $(this).closest('form.editableform').attr('action'),
@@ -40,8 +41,8 @@ $(document).ready(function() {
             success: function(message){
               $('div.flash-notice.hidden').text("Your data was updated").attr('class', "div flash-notice flash-success visible");
               $(event.target).removeClass("myelement-error"); // remove red border
-              $(event.target).parent().removeClass("isvisible").addClass("ishidden");
-              myhiddendiv.html(myvalue).removeClass("ishidden").addClass("isvisible"); // update value
+              var parent = $(event.target).parent().removeClass("isvisible").addClass("ishidden");
+              myhiddendiv.html(myvalue).removeClass("currentelement ishidden").addClass("isvisible"); // update value
             }
         });
         return false;
@@ -60,5 +61,4 @@ $(document).ready(function() {
         var newelement = $(event.target).siblings().removeClass("ishidden").addClass("isvisible formelement"); // make form element visible and tag it
         newelement.children('.myformelement').focus();
     });
-
 });

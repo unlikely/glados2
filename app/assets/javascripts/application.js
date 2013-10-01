@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.ui.all
 //= require jquery_ujs
-//= require bootstrap-datepicker/core
 //= require bootstrap-dropdown
 //= require_tree .
