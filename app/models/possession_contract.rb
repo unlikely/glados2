@@ -1,9 +1,9 @@
 class PossessionContract < ActiveRecord::Base
   ALL_CONTRACT_TYPES = [
-    LEASE    = 'a lease',
-    BORROW   = 'borrow',
-    DONATION = 'a donation',
-    SALE     = 'a sale'
+    LEASE    = 'A Lease',
+    BORROW   = 'Borrow',
+    DONATION = 'A Donation',
+    SALE     = 'A Sale'
   ]
 
   attr_accessible :contract_type, :payment, :person,:equipment, :equipment_id, :payment_cents, :expires, :person_id, :equipment_id
@@ -37,7 +37,7 @@ class PossessionContract < ActiveRecord::Base
 
   private
   def contract_type_is_lease?
-    contract_type == "a lease"
+    contract_type == "A Lease"
   end
 
 end

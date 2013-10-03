@@ -6,6 +6,6 @@ class AgreementExecution < ActiveRecord::Base
   validates :person, :presence => true
   validates :agreement, :presence => true
   validates :date_signed, :presence => true
-  validates :agreement_url, :uniqueness => true, :url => {:allow_blank => false, :message => "Please enter a url in the form of http://www.something.com"}
+  validates :agreement_url, :uniqueness => {message: "The url you entered is already in the system" } , :url => {:allow_blank => false, :message => "Please enter a url in the form of http://www.something.com"}
 
 end

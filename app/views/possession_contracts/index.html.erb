@@ -1,26 +1,25 @@
-<table class="table table-striped">
-  <tr>
-    <th> ID </th>
-    <th> Equipment Make </th>
-    <th> Equipment Model </th>
-    <th> Name </th>
-    <th> Contract Type</th>
-    <th> Payment if any </th>
-    <th> Expires </th>
-    <th> Edit </th>
-    <th> Delete </th>
-  </tr>
+<div class="row"><b>
+    <div class="span1"> ID </div>
+    <div class="span2"> Make </div>
+    <div class="span2"> Model </div>
+    <div class="span2"> Name </div>
+    <div class="span2"> Contract Type</div>
+    <div class="span2"> Payment if any </div>
+    <div class="span2"> Expires </div>
+    <div class="span1"> Edit </div>
+    <div class="span1"> Delete </div>
+  </b>
+</div>
   <%@possession_contracts.each do |contract| %>
-    <tr>
-      <td><%= contract.id =%></td>
-    <td> <%= contract.equipment.make =%></td>
-    <td> <%= contract.equipment.model =%></td>
-    <td> <%= contract.person.name =%></td>
-    <td> <%= contract.contract_type =%> </td>
-    <td> <%= number_to_currency(contract.payment) =%> </td>
-    <td> <%= contract.expires =%> </td>
-    <td><%= link_to "Edit", edit_possession_contract_path(contract.id)  %></td>
-    <td><%= link_to "Delete", possession_contract_path(contract.id), :confirm => "Are you sure?", :method => :delete %></td>
-  </tr>
+<div class="row">
+    <div class="span1"><%= contract.id %></div>
+    <div class="span2"> <%= contract.equipment.make %></div>
+    <div class="span2"> <%= contract.equipment.model %></div>
+    <div class="span2"> <%= contract.person.name %></div>
+    <div class="span2"> <%= contract.contract_type %> </div>
+    <div class="span2"> <%= number_to_currency(contract.payment) %> </div>
+    <div class="span2"> <%= contract.expires %> </div>
+    <div class="span1"><%= link_to "Edit", edit_possession_contract_path(contract.id)  %></div>
+    <div class="span1"><%= link_to "Delete", possession_contract_path(contract.id), :confirm => "Are you sure?", :method => :delete %></div>
+</div>
 <% end %>
-</table>

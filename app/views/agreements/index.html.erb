@@ -1,11 +1,10 @@
-<div class="flash-notice hidden"></div>
-
-  <div class="row">
+<div class ="row"><div class="offset9 span3"><%= link_to "New Agreement", new_agreement_path %></div></div>
+  <div class="row"><b>
     <div class ="span3"> Name </div>
     <div class ="span3"> Author </div>
     <div class ="span3"> Version </div>
     <div class ="span1"> Delete </div>
-    <div class ="span1 submit"> Submit </div>
+    <div class ="span1 submit"> Submit </div></b>
 </div>
 <% @agreement.each do |article| %>
     <div class="row">
@@ -15,7 +14,6 @@
           <div class ="span3"><div class= "editable isvisible"><%= article.version %></div><div class="editable ishidden"> <%=f.text_field :version, :class => "myformelement" %></div></div>
           <div class ="span1"><%= link_to "Delete", agreement_path(article.id), :confirm => "Are you sure?", :method => :delete %></div>
           <div class ="span1 submit"><%= f.submit %></div>
-          <div class ="span1"> Submit </div>
       <% end %>
     </div>
 <% end %>

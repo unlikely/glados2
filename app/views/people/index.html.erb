@@ -1,16 +1,15 @@
-  <table class="table table-striped">
-    <tr>
-      <th> ID </th>
-      <th> Name </th>
-      <th> Edit </th>
-      <th> Delete </th>
-    </tr>
+  <div class ="row"><div class="offset9 span3"><%= link_to "Add a Person", new_person_path %></div></div>
+  <div class="row"><b>
+    <div class ="span1"> ID </div>
+    <div class ="span3"> Name </div>
+    <div class ="span3"> Edit </div>
+    <div class ="span1"> Delete </div>
+</b></div>
 <% @people.each do |person| %>
-  <tr>
-    <td><%= person.id =%></td>
-    <td><%= person.name =%></td>
-    <td><%= link_to "Edit", edit_person_path(person.id)  %></td>
-    <td><%= link_to "Delete", person_path(person.id), :confirm => "Are you sure?", :method => :delete %></td>
-  </tr>
+<div class="row">
+    <div class="span1"><%= person.id =%></div>
+    <div class="span3"><%= person.name =%></div>
+    <div class="span3"><%= link_to "Edit", edit_person_path(person.id)  %></div>
+    <div class="span1"><%= link_to "Delete", person_path(person.id), :confirm => "Are you sure?", :method => :delete %></div>
+</div>
 <% end %>
-</table>
