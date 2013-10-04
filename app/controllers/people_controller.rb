@@ -63,6 +63,7 @@ class PeopleController < ApplicationController
   def show_equipment_possession_on_date
     @person = Person.find_by_id(params[:id])
     @date   = params[:date]
+    p "Date from params #{@date}"
     if @person.nil?
       flash.now[:error] = "The person you are looking for does not exist or the id was invalid"
       render 'index_equipment_possession_on_date' and return
@@ -72,6 +73,7 @@ class PeopleController < ApplicationController
     else
       begin
         @date = Date.strptime(params[:date], '%m/%d/%Y')
+        p "Date parsedif it worked #{@date}"
       rescue ArgumentError
         flash[:error] = "Invalid date using Today's date"
         redirect_to show_person_equipment_path(@person.id), :date => Date.today and return

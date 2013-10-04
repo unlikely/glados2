@@ -1,11 +1,1 @@
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@person) do |f| %>
-      <%= render 'shared/error_messages', :object_errors => @person %>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-
-      <%= f.submit "Save Changed", class: "btn btn-large btn-primary" %>
-    <% end %>
-  </div>
-</div>
+<%= render :partial => "form", :locals => { :person => @person } %>

@@ -1,11 +1,1 @@
-<div class="row">  </div>
-<div class="row">  </div>
-
-  <%= render 'shared/error_messages', :object_errors => @person %>
-<div class="row">
-	<%= form_for(@person)  do |f| %>
- <div class ="span2">Name: </div>
- <div class="span3"><%= f.text_field :name %></div>
- <div class="span2"><%= f.submit %></div>
-</div>
-  <% end %>
+<%= render :partial => "form", :locals => { :person => @person } %>
