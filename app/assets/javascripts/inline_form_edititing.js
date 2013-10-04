@@ -49,7 +49,7 @@ $(".myformelement").change(function(event){
     });
 
     $(".submit").hide();
-    $('div.row:odd').css('background-color', '#f5f5f5' );
+    $('div.row.mytable:odd').css('background-color', '#f5f5f5' );
 
 
     $(".editable.isvisible").dblclick(function(event) {
