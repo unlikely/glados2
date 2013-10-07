@@ -34,11 +34,8 @@ $(".myformelement").change(function(event){
             dataType: "json",
             error: function(xhr){
               var err = $.parseJSON(xhr.responseText).errors
-              console.log(err);
                 for (i in err){
-                  console.log(i)
                   for(n in err[i]){
-                    console.log(err[i][n])
                     $('div.some_alert').append('<div class="alert alert-error">' + i + ': ' + err[i][n] + '</div>');
                   }
                 }
