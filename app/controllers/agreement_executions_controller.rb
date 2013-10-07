@@ -39,19 +39,6 @@ class AgreementExecutionsController < ApplicationController
   def update
     @agreement_execution = AgreementExecution.find_by_id(params[:id])
     agreement_execution_attr = params[:agreement_execution]
- #   agreement_execution_attr["date_signed"] = Date.strptime(params[:agreement_execution][:date_signed], "%m/%d/%Y")
-
- #   if @date.present?
- #     begin
-  #      @date_signed = Date.strptime(params[:agreement_execution][:date_signed], '%m/%d/%Y')
-  #      agreement_execution_attr["date_signed"] = @date_signed
-  #    rescue ArgumentError
-  #      p "you got an error"
-  #      flash[:error] = "Invalid Date Format please use m/d/Y"
-  #    end
-  #  else
-  #    flash[:error] = "Please enter a Date in m/d/Y format"
-  #  end
 
     if @agreement_execution.present? && @agreement_execution.update_attributes(agreement_execution_attr)
       flash[:success] = "Agreement execution correctly updated"

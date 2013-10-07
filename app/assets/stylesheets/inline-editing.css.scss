@@ -27,23 +27,13 @@ width:130px;
 border-color:red;
 }
 
-div.flash-notice.hidden {
+div.alert.hidden {
  display:none;
 }
 
-div.flash-notice.flash-success.visible {
+div.alert.visible {
  display:inherit;
- background-color: #dff0d8;
- color: #468847;
- border-color: #d6e9c6;
 }
-
-div.flash-notice.flash-error.visible {
- display:inherit;
- background-color: #f2dede;
- border-color: #eed3d7;
- color: #b94a48;
- }
 
 div {
  min-height: 1px;

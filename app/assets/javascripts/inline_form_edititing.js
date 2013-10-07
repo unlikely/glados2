@@ -34,12 +34,21 @@ $(".myformelement").change(function(event){
             dataType: "json",
             error: function(xhr){
               var err = $.parseJSON(xhr.responseText).errors
-              var errors = err['name'];
-              $('div.flash-notice.hidden').text(errors).attr('class', "div flash-notice flash-error visible");
+              console.log(err);
+                for (i in err){
+                  console.log(i)
+                  for(n in err[i]){
+                    console.log(err[i][n])
+                    $('div.some_alert').append('<div class="alert alert-error">' + i + ': ' + err[i][n] + '</div>');
+                  }
+                }
+
+
               $(event.target).addClass("myelement-error");// add red border and class name
             },
             success: function(message){
-              $('div.flash-notice.hidden').text("Your data was updated").attr('class', "div flash-notice flash-success visible");
+              $('div.alert').remove();
+              $('div.some_alert').append('<div class="alert alert-success"> Your data updated successfully</div>');
               $(event.target).removeClass("myelement-error"); // remove red border
               var parent = $(event.target).parent().removeClass("isvisible").addClass("ishidden");
               myhiddendiv.html(myvalue).removeClass("currentelement ishidden").addClass("isvisible"); // update value
@@ -55,7 +64,7 @@ $(".myformelement").change(function(event){
     $(".editable.isvisible").dblclick(function(event) {
         var myvalue = $(this).text();
         $('.myformelement').data("curr_element",myvalue);
-        $('div.flash-notice').attr('class', "flash-notice hidden");
+        $('div.alert').remove();
         $('.editable.isvisible.formelement').removeClass("isvisible").addClass("ishidden"); //hide any visible form elements
         $(event.target).removeClass("isvisible").addClass("currentelement ishidden"); // hide value and tag it current
         var newelement = $(event.target).siblings().removeClass("ishidden").addClass("isvisible formelement"); // make form element visible and tag it

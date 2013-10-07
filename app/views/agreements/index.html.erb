@@ -7,7 +7,7 @@
     <div class ="span1 submit"> Submit </div></b>
 </div>
 <% @agreement.each do |article| %>
-    <div class="row">
+    <div class="row mytable ">
       <%=form_for(article, :html => { :class => "editableform"} ) do |f| %>
           <div class ="span3"><div class= "editable isvisible"><%= article.name %></div><div class="editable ishidden"> <%=f.text_field :name, :class => "myformelement" %></div></div>
           <div class ="span3"><div class= "editable isvisible"><%= article.author %></div><div class="editable ishidden"> <%=f.select(:author, Agreement::ALL_AUTHOR_TYPES,{},{:class => "myformelement"}) %></div></div>

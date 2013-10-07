@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require Rails.root.join('spec','helpers.rb')
+require 'rubygems'           #so it can load gems
+require 'factory_girl_rails' #so it can run in development
+seed_data

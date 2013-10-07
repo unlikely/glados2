@@ -1,5 +1,5 @@
 <div class ="row"><div class="offset9 span3"><%= link_to "New Agreement Execution", new_agreement_execution_path %></div></div>
-<div class ="row">
+<div class ="row headingrow">
   <b>
   <div class ="span3">Associated Person</div>
   <div class ="span3">Associated Agreement</div>
@@ -12,6 +12,7 @@
 <% @agreement_executions.each do |agreement_execution| %>
   <div class ="row">
     <%=form_for(agreement_execution, :html => { :id => "agreement_execution_#{agreement_execution.id}", :class => "editableform"} ) do |f| %>
+        <div class ="span3">
         <div class ="editable isvisible"><%= agreement_execution.person.name %></div>
         <div class ="editable ishidden"><%= f.collection_select(:person_id, Person.all, :id, :name, {}, {:class => "myformelement"}) %></div>
          </div>
