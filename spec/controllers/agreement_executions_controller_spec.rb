@@ -119,13 +119,11 @@ describe AgreementExecutionsController do
   end
 
   describe "PUT #update" do
-    it "redirects to #index if :agreement_execution updated" do
-      #person = create(:person)
-      #agreement = create(:agreement)
+    it "resposne should be 204" do
       agreement_execution = create(:agreement_execution)
       agreement_execution_attr = agreement_execution.attributes.except("created_at", "updated_at", "id")
-      agreement_execution_attr["date_signed"] = Date.today.strftime('%m/%d/%Y')
-      put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr
+      agreement_execution_attr["date_signed"] = "2010-11-04"
+      xhr :put, :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr, :format => :json
       expect(response).to be_success
     end
 

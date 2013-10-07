@@ -11,7 +11,6 @@ describe AgreementExecution do
   describe "doesn't save when" do
     it "has non_existant :person" do
       agreement_execution = build(:agreement_execution, person_id: 99999999)
-      p agreement_execution
       agreement_execution.should_not be_valid
     end
 
@@ -46,7 +45,4 @@ describe AgreementExecution do
       agreement_execution1.should_not be_valid
     end
   end
-
 end
-
-

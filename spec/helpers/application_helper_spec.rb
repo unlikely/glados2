@@ -33,7 +33,6 @@ describe ApplicationHelper do
       pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "a lease", payment: 500, expires: '11/05/2013')
       pos_contract2 = PossessionContract.create(person: person2, equipment: equipment2, contract_type: "a lease",payment: 65, expires: '09/05/2013')
       people = [person, person2]
-      p pos_contract
       contracts = helper.aggregate_possession_contracts(people)
       contracts.should include pos_contract
       contracts.should include pos_contract2

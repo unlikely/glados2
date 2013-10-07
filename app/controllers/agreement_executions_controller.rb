@@ -39,7 +39,6 @@ class AgreementExecutionsController < ApplicationController
   def update
     @agreement_execution = AgreementExecution.find_by_id(params[:id])
     agreement_execution_attr = params[:agreement_execution]
-
     if @agreement_execution.present? && @agreement_execution.update_attributes(agreement_execution_attr)
       flash[:success] = "Agreement execution correctly updated"
     else

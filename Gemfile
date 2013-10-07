@@ -11,6 +11,7 @@ gem 'pg'
 gem 'yaml_db'
 
 group :test, :development do
+  gem 'webrick', '~> 1.3.1'
   gem 'sqlite3'
   gem 'rspec-rails', '>=2.11.0'
 end
