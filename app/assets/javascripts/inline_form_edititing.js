@@ -32,6 +32,7 @@ $(".myformelement").change(function(event){
             url: $(this).closest('form.editableform').attr('action'),
             data: valuesToSubmit,
             dataType: "json",
+
             error: function(xhr){
               var err = $.parseJSON(xhr.responseText).errors
                 for (i in err){
@@ -39,10 +40,9 @@ $(".myformelement").change(function(event){
                     $('div.some_alert').append('<div class="alert alert-error">' + i + ': ' + err[i][n] + '</div>');
                   }
                 }
-
-
               $(event.target).addClass("myelement-error");// add red border and class name
             },
+            
             success: function(message){
               $('div.alert').remove();
               $('div.some_alert').append('<div class="alert alert-success"> Your data updated successfully</div>');
