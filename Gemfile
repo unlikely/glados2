@@ -9,6 +9,7 @@ gem 'formtastic', :git => 'https://github.com/justinfrench/formtastic.git'
 gem 'jquery_datepicker'
 gem 'pg'
 gem 'yaml_db'
+gem 'will_paginate'
 
 group :test, :development do
   gem 'webrick', '~> 1.3.1'

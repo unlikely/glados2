@@ -2,7 +2,7 @@ class AgreementExecutionsController < ApplicationController
   respond_to :html, :json
 
   def index
-    @agreement_executions = AgreementExecution.all
+    @agreement_executions = AgreementExecution.paginate :page=>params[:page], :order => 'created_at desc', :per_page => 10
   end
 
   def show

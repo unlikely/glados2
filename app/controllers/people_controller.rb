@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   def index
-    @people = Person.all
+    @people = Person.paginate :page=>params[:page], :order => 'name desc', :per_page => 10
   end
 
   def new
@@ -98,7 +98,7 @@ class PeopleController < ApplicationController
         redirect_to people_equipment_path and return
       end
     end
-    @people = Person.joins(:possession_contracts).where("(expires >= ?) OR ( expires IS NULL)", @date).uniq(:person)
+    @people = Person.joins(:possession_contracts).where("(expires >= ?) OR ( expires IS NULL)", @date).uniq(:person).paginate :page=>params[:page], :order => 'name desc', :per_page => 10
     if @people.empty?
       flash[:error] = "No contracts in your database"
       render 'index_equipment_possession_on_date' and return

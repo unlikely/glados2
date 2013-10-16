@@ -24,3 +24,7 @@
     <div class="span1"><%= link_to "Delete", possession_contract_path(contract.id), :confirm => "Are you sure?", :method => :delete %></div>
 </div>
 <% end %>
+<br>
+<div class="digg_pagination">
+    <%= will_paginate @possession_contracts, :container => false %>
+</div>

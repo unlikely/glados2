@@ -1,6 +1,6 @@
 class PossessionContractsController < ApplicationController
   def index
-    @possession_contracts = PossessionContract.all
+    @possession_contracts = PossessionContract.paginate :page=>params[:page], :order => 'created_at desc', :per_page => 10
   end
 
   def show

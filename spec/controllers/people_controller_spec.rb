@@ -284,7 +284,7 @@ describe PeopleController do
                             equipment: equipment3, contract_type: "borrow",
                             expires: (expires + 20.days))
        get :index_equipment_possession_on_date
-       assigns(:people).should == [ person , person3]
+       assigns(:people).should == [ person3 , person]
     end
 
     it "flashes :error if no :people found" do

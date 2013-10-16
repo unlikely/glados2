@@ -19,3 +19,6 @@
     <td border="1"> Total <%= number_to_currency(lease_total_payments(aggregate_possession_contracts(@people)))  %> </td>
   </tr>
 </table>
+<div class="digg_pagination">
+    <%= will_paginate @people, :container => false %>
+  </div>

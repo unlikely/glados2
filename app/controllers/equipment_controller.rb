@@ -1,6 +1,6 @@
 class EquipmentController < ApplicationController
   def index
-    @equip = Equipment.all
+    @equip = Equipment.paginate :page=>params[:page], :order => 'make desc', :per_page => 10
   end
 
   def show

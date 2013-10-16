@@ -13,3 +13,7 @@
     <div class="span1"><%= link_to "Delete", person_path(person.id), :confirm => "Are you sure?", :method => :delete %></div>
 </div>
 <% end %>
+<br>
+<div class="digg_pagination">
+    <%= will_paginate @people, :container => false %>
+  </div>
