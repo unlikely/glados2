@@ -82,7 +82,7 @@ describe AgreementExecutionsController do
         :agreement_id => create(:agreement).id, :person_id => create(:person).id,
         :date_signed => Date.today }
       post :create, :agreement_execution => agreement_execution
-      expect(response).to redirect_to(new_agreement_execution_path)
+      expect(response).to render_template("new")
     end
 
     it "flashes :error if :agreement_execution not saved" do
@@ -90,7 +90,7 @@ describe AgreementExecutionsController do
         :agreement_id => create(:agreement).id, :person_id => create(:person).id,
         :date_signed => Date.today }
       post :create, :agreement_execution => agreement_execution
-      flash[:error].should_not be_nil
+      flash.now[:error].should_not be_nil
     end
   end
 
@@ -170,7 +170,7 @@ describe AgreementExecutionsController do
        agreement_execution_attr = agreement_execution.attributes.except("created_at", "updated_at", "id")
        agreement_execution_attr["date_signed"] = "23/23/2013" #dd/mm/yyyy
        put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution_attr
-       flash[:error].should_not be_nil
+       flash.now[:error].should_not be_nil
     end
 
     it "flash :error is not nil if :agreement_execution not updated" do
@@ -179,7 +179,7 @@ describe AgreementExecutionsController do
       agreement_execution = create(:agreement_execution, :agreement => agreement, :person => person)
       agreement_execution1 = { :agreement_url => "", :agreement_id => agreement.id, :person_id => person.id, :date_signed => Date.today.to_s }
       put :update, :id => agreement_execution.id, :agreement_execution => agreement_execution1
-      flash[:error].should_not be_nil
+      flash.now[:error].should_not be_nil
     end
 
     it "responds with JSON format request and fails" do

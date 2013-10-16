@@ -101,16 +101,16 @@ describe EquipmentController do
        Equipment.count.should == 1+mycount
      end
 
-     it "redirects to #new if :equipment not  saved" do
+     it "renders to #new if :equipment not saved" do
        equip = { :make => "", :model => "labadoodle"}
        post :create, :equipment => equip
-       expect(response).to redirect_to(new_equipment_path)
+       expect(response).to render_template('new')
      end
 
      it "flashes :error if :equipment not created" do
        equip = { :make => "doggy", :model => ""}
        post :create, :equipment => equip
-       flash[:error].should_not be_nil
+       flash.now[:error].should_not be_nil
      end
    end
 
@@ -138,11 +138,11 @@ describe EquipmentController do
        flash[:success].should_not be_nil
      end
 
-     it "redirect_to #edit if equipment not updated" do
+     it "render #edit if equipment not updated" do
        equipment = Equipment.create(make: "blah4", model: "new model")
        attr = { :make => "ota", :model => "" }
        put :update, :id =>equipment.id, :equipment => attr
-       response.should redirect_to(edit_equipment_path(equipment))
+       response.should render_template('edit')
      end
 
      it "flash.now :error not nil if equipment not updated" do

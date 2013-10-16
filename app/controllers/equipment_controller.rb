@@ -34,8 +34,8 @@ class EquipmentController < ApplicationController
       flash[:success] = "#{@equip.make} was successfully created"
       redirect_to equipment_index_path
     else
-      flash[:error] = "We were unable to save your equipment"
-      redirect_to new_equipment_path, :equip => @equip
+      flash.now[:error] = "We were unable to save your equipment"
+      render 'new'
     end
   end
 
@@ -46,7 +46,7 @@ class EquipmentController < ApplicationController
       redirect_to equipment_index_path
     else
       flash.now[:error] = "The equipment was not updated please try inputing again"
-      redirect_to edit_equipment_path(@equip)
+      render 'edit'
     end
   end
 

@@ -1,5 +1,4 @@
 class AgreementsController < ApplicationController
-  respond_to :html, :json
 
   def index
     @agreement = Agreement.all
@@ -23,8 +22,8 @@ class AgreementsController < ApplicationController
       flash[:success] = "Agreement #{@agreement.name} has been added"
       redirect_to agreements_path
     else
-      flash[:error] = "We were unable to save your agreement"
-      redirect_to new_agreement_path, :agreement => @agreement
+      flash.now[:error] = "Unable to save your agreement"
+      render 'new'
     end
   end
 
@@ -43,10 +42,11 @@ class AgreementsController < ApplicationController
     @agreement = Agreement.find_by_id(params[:id])
     if @agreement.present? && @agreement.update_attributes(params[:agreement])
       flash.now[:success] = "Your agreement was updated"
+      redirect_to agreements_path
     else
-      flash.now[:error] = "The agreement you are trying to update does not exist"
+      flash.now[:error] = "Unable to update agreement"
+      render 'edit'
     end
-      respond_with(@agreement, :location => agreements_path)
   end
 
   def destroy

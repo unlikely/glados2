@@ -10,10 +10,10 @@ class PossessionContract < ActiveRecord::Base
   belongs_to :person
   belongs_to :equipment
 
-  validates :contract_type,      :presence => true
-  validates :person,    :presence => true
-  validates :equipment_id, :presence => true, :uniqueness => true
-  validates_inclusion_of :contract_type, :in => ALL_CONTRACT_TYPES, :message => "Value not accepted"
+  validates :contract_type, :presence => { :message => "The type of contract needs to be present"}
+  validates :person,:presence => { :message => "A person needs to be associated"}
+  validates :equipment_id, :presence => { :message => "Equipment needs to be associated"}, :uniqueness => { :message => "This equipment is already associated, Please choose another"}
+  validates_inclusion_of :contract_type, :in => ALL_CONTRACT_TYPES, :message => "That is not an acceptable contract type"
   validates_numericality_of :payment_cents, :only_integer => true, :allow_blank => true
   validates :payment_cents, :presence => true,
     :numericality => {:only_integer => true, :greater_than => 0} , :if => :contract_type_is_lease?

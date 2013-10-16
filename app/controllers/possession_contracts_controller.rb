@@ -21,8 +21,8 @@ class PossessionContractsController < ApplicationController
       flash[:success] = "Contract was successfully updated."
       redirect_to possession_contracts_path
     else
-      flash[:error] = "We were unable to save your contract udpate"
-      redirect_to new_possession_contract_path, :possession_contract => @possession_contract
+      flash.now[:error] = "We were unable to save your contract udpate"
+      render 'new'
     end
   end
 
@@ -40,8 +40,8 @@ class PossessionContractsController < ApplicationController
       flash[:success] = "Contract sucessfully updated"
       redirect_to possession_contracts_path
     else
-      flash[:error] = "The contract was not updated please try again"
-      redirect_to edit_possession_contract_path(@possession_contract)
+      flash.now[:error] = "The contract was not updated please try again"
+      render 'edit'
     end
   end
 

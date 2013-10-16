@@ -23,8 +23,8 @@ class AgreementExecutionsController < ApplicationController
       flash[:success] = "Agreement successfully signed"
       redirect_to agreement_executions_path
     else
-      flash[:error] = "Agreement signature not correctly saved"
-      redirect_to new_agreement_execution_path, :agreement_execution => @agreement_execution
+      flash.now[:error] = "Agreement signature not correctly saved"
+      render 'new'
     end
   end
 
@@ -42,7 +42,7 @@ class AgreementExecutionsController < ApplicationController
     if @agreement_execution.present? && @agreement_execution.update_attributes(agreement_execution_attr)
       flash[:success] = "Agreement execution correctly updated"
     else
-      flash[:error] = "The agreement execution could not be updated"
+      flash.now[:error] = "The agreement execution could not be updated"
     end
       respond_with(@agreement_execution, :location => agreement_executions_path)
   end

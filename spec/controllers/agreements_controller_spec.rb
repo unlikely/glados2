@@ -71,16 +71,16 @@ describe AgreementsController do
       Agreement.count.should == 1 + mycount
     end
 
-    it "redirect to #new if :agreement not saved" do
+    it "renders to #new if :agreement not saved" do
       agreement = { :author => "Counsel", :version => "3", :name => "" }
       post :create, :agreement => agreement
-      expect(response).to redirect_to(new_agreement_path)
+      expect(response).to render_template('new')
     end
 
     it "flashes :error if :agreement not saved" do
       agreement = { :author => "Counsel", :version => "3", :name => "" }
       post :create, :agreement => agreement
-      flash[:error].should_not be_nil
+      flash.now[:error].should_not be_nil
     end
   end
 
@@ -125,53 +125,27 @@ describe AgreementsController do
       agreement.name.should == name
     end
 
-    it "flash :success is not nil if :agreement updated" do
+    it "flashes :success is not nil if :agreement updated" do
       agreement = create(:agreement)
       agreement1 = { :author => "Counsel", :version => "9", :name => "Jose"}
       put :update, :id => agreement.id, :agreement => agreement1
       flash[:success].should_not be_nil
     end
 
-    it "redirects to #edit if :agreement not updated" do
+    it "renders #edit if :agreement not updated" do
       agreement = create(:agreement)
       agreement1 = { :author => "Counsel", :version => "5", :name => ""}
       put :update, :id => agreement.id, :agreement => agreement1
-      expect(response).to be_success
+      expect(response).to render_template('edit')
     end
 
-    it "flash :error is not nil if :agreement not updated" do
+    it "flashes :error is not nil if :agreement not updated" do
       agreement = create(:agreement)
       agreement1 = { :author => "Counsel", :version => "1", :name => ""}
       put :update, :id => agreement.id, :agreement => agreement1
-      flash[:error].should_not be_nil
+      flash.now[:error].should_not be_nil
     end
 
-    it "responds to JSON format request and fails" do
-      agreement = create(:agreement)
-      name = ""
-      agreement_attributes = { :id => agreement.id, :format => 'json', :agreement => {
-        :author => agreement.author,
-        :version => agreement.version,
-        :name => name
-        }}
-      put :update, agreement_attributes
-      agreement.reload
-      response.should_not be_success
-    end
-
-    it "responds to JSON format request and has successful response" do
-      agreement = create(:agreement)
-      name = "a new name"
-      agreement_attributes = { :id => agreement.id, :format => 'json', :agreement => {
-        :author => agreement.author,
-        :version => agreement.version,
-        :name => name
-        }}
-      put :update, agreement_attributes
-      agreement.reload
-      agreement.name.should == name
-      response.should be_success
-    end
   end
 
   describe "DELETE #destroy" do

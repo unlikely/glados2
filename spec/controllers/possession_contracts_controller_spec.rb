@@ -91,7 +91,7 @@ describe PossessionContractsController do
       equipment = Equipment.create(make: "new make2", model: "run out of models2")
       possession = { :contract_type => "", :person_id => person.id.to_s, :equipment_id => equipment.id.to_s }
       post :create, :possession_contract => possession
-      expect(response).to redirect_to(new_possession_contract_path)
+      expect(response).to render_template('new')
     end
 
     it "flashes :error if :possession_contract not created" do
@@ -99,7 +99,7 @@ describe PossessionContractsController do
       equipment = Equipment.create(make: "new make3", model: "run out of models3")
       possession = { :contract_type => "", :person_id => person.id.to_s, :equipment_id => equipment.id.to_s }
       post :create, :possession_contract => possession
-      flash[:error].should_not be_nil
+      flash.now[:error].should_not be_nil
     end
   end
 
@@ -156,7 +156,7 @@ describe PossessionContractsController do
       possession_contract.contract_type.should == contract_type
     end
 
-    it "flash.now :success is not nil if :possession_contract is updated" do
+    it "flashes :success is not nil if :possession_contract is updated" do
       person = Person.new(name: "a new name4")
       equipment = Equipment.create(make: "hd", model: "ladder")
       possession_contract = PossessionContract.create(person: person, equipment:  equipment,
@@ -166,14 +166,14 @@ describe PossessionContractsController do
       flash[:success].should_not be_nil
     end
 
-    it "redirects to #edit if :possession_contract is not updated" do
+    it "renders to #edit if :possession_contract is not updated" do
       person = Person.new(name: "a new name5")
       equipment = Equipment.create(make: "new make", model: "new model")
       possession_contract = PossessionContract.create(person: person, equipment:  equipment,
                                 contract_type: "a lease", payment: 4677, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 998, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
-      expect(response).to redirect_to(edit_possession_contract_path(possession_contract))
+      expect(response).to render_template('edit')
     end
 
     it "flashes :error if :possession_contract is not udpated" do
@@ -183,7 +183,7 @@ describe PossessionContractsController do
                                contract_type: "a sale", payment: 657, expires: Date.today)
       attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 8887, :person_id => person.id, :equipment_id => equipment.id }
       put :update, :id => possession_contract.id, :possession_contract => attr
-      flash[:error].should_not be_nil
+      flash.now[:error].should_not be_nil
     end
   end
 
