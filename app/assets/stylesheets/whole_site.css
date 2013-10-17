@@ -7,3 +7,7 @@ div.row.headingrow {
 	padding-bottom: 5px;
 	padding-top: 2px;
 }
+
+input.search_class {
+	width:100px;
+}

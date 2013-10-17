@@ -1,4 +1,15 @@
-<div class ="row"><div class="offset9 span3"><%= link_to "Add Equipment", new_equipment_path %></div></div>
+<div class ="row">
+    <div class="span1">Search: </div>
+    <div class="span2">
+        <%= form_tag equipment_index_path, :method => 'get' do %>
+        <%= text_field_tag :search, params[:search], :class => "search_class" %>
+
+    </div>
+    <div class="span1"><%= submit_tag "Search", :name => nil %>
+        <% end %></p></div>
+    <div class="offset5 span3"><%= link_to "Add Equipment", new_equipment_path %></div>
+</div>
+
 <div class="row">
     <div class="span1"> ID </div>
     <div class="span2"> Make </div>

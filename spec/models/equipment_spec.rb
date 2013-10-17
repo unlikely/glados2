@@ -36,4 +36,22 @@ describe Equipment do
       pos_contract.equipment.should == equip
     end
   end
+
+  describe "search" do
+    it "returns equipment when make or model matches" do
+      equip = create(:equipment)
+      equip2 = create(:equipment, :model => "nodal")
+      equip3 = create(:equipment)
+      equip4 = create(:equipment)
+      equipment_search = Equipment.search("model")
+      equipment_search.should == [equip, equip3, equip4]
+    end
+
+    it "returns nothing if no make or model matches" do
+      equip = create(:equipment)
+      equip1 = create(:equipment)
+      equipment_search = Equipment.search("blahblah")
+      equipment_search.should == []
+    end
+  end
 end

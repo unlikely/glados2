@@ -1,6 +1,8 @@
 class EquipmentController < ApplicationController
+require 'will_paginate/array'
+
   def index
-    @equip = Equipment.paginate :page=>params[:page], :order => 'make desc', :per_page => 10
+    @equip = Equipment.search(params[:search]).paginate( :page=>params[:page], :order => ('make desc'), :per_page => 10)
   end
 
   def show
