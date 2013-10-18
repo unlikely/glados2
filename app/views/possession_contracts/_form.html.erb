@@ -6,6 +6,7 @@
     <div class="row"><div class="span2">Equipment: </div><div class="span5"><%= f.input :equipment, :as => :select, :collection => equipment_make_model_array , :label => false %></div></div>
      <div class="row"><div class="span2">Contract Type: </div><div class="span5"><%= f.input :contract_type, :as => :select, :collection => PossessionContract::ALL_CONTRACT_TYPES, :label => false %></div></div>
      <div class="row"><div class="span2">Payment ($): </div><div class ="span3"><%= f.input :payment, :label => false %></div></div>
+    <div class="row"><div class="span2">Start Date: </div><div class="span5"><%= f.input :start_date, :as => :date_picker, :label=> false %></div></div>
     <div class="row"><div class="span2">Expires: </div><div class="span5"><%= f.input :expires, :as => :date_picker, :label=> false %></div></div>
   <% end %>
   <%= f.actions %>
