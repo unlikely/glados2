@@ -42,13 +42,6 @@ describe Person do
       person.possession_contracts << [ pos_contract2 ]
       person.possession_contracts.should == [ pos_contract, pos_contract2 ]
     end
-
-    it ":has_many equipment through :possession_contract" do
-      person = Person.new(name: "another new name")
-      equipment = Equipment.create(model: "impact drill", make: "carbon fiber")
-      pos_contract = PossessionContract.create(person: person, equipment: equipment, contract_type: "a lease",payment: 35, expires: Date.today)
-      person.equipment.should == [ equipment ]
-    end
   end
 
 end

@@ -3,9 +3,7 @@ require 'spec_helper'
 describe PossessionContractsController do
   describe "GET #index" do
     it "populates :possession_contracts" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "person1"),
-                             equipment: Equipment.create(make: "apple", model: "macbook"),
-                             contract_type: "a lease", payment: 200093, expires: Date.today)
+      possession_contract = create(:possession_contract_with_lease)
       get :index
       assigns(:possession_contracts).should == [ possession_contract ]
     end
@@ -29,10 +27,7 @@ describe PossessionContractsController do
     end
 
     it "should take params :id and find a :possession_contract if valid person" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "person4"),
-                              equipment: Equipment.create(make: "microsoft2",
-                              model: "blahsurface"), contract_type: "a lease",
-                              payment: 2093, expires: Date.today)
+      possession_contract = create(:possession_contract_with_lease)
       get :show, :id => possession_contract.id
       assigns(:possession_contract).should == possession_contract
     end
@@ -62,10 +57,9 @@ describe PossessionContractsController do
 
   describe "POST #create" do
     it "redirect_to #index :possession_contract successfully created" do
-      person = Person.create(name: "jon doe")
-      equipment = Equipment.create(make: "dewalt", model: "driver")
-      possession = { :contract_type => "a lease", :payment => "500", :expires => "11/06/2014", :person_id => person.id, :equipment_id => equipment.id }
-      post :create, :possession_contract => possession
+      possession_contract = build(:possession_contract_with_lease)
+      possession_contract_attr = possession_contract.attributes.except("updated_at", "created_at")
+      post :create, :possession_contract => possession_contract_attr
       expect(response).to redirect_to(possession_contracts_path)
     end
 
@@ -135,12 +129,9 @@ describe PossessionContractsController do
 
   describe "PUT #update" do
     it "redirects to #index if :possessession_contract updated" do
-      person = Person.new(name: "a new name")
-      equipment = Equipment.create(make: "lowes", model: "belter")
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment,
-                               contract_type: "a lease", payment: 780, expires: Date.today)
-      attr = { :expires => Date.today.to_s, :contract_type => "a lease", :payment => 100, :person_id => person.id, :equipment_id => equipment.id }
-      put :update, :id => possession_contract.id, :possession_contract => attr
+      possession_contract = create(:possession_contract_with_lease)
+      possession_contract_attr = possession_contract.attributes.except("updated_at", "created_at")
+      put :update, :id => possession_contract.id, :possession_contract => possession_contract_attr
       expect(response).to redirect_to(possession_contracts_path)
     end
 
@@ -157,22 +148,17 @@ describe PossessionContractsController do
     end
 
     it "flashes :success is not nil if :possession_contract is updated" do
-      person = Person.new(name: "a new name4")
-      equipment = Equipment.create(make: "hd", model: "ladder")
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment,
-                              contract_type: "a sale", payment: 9978665, expires: Date.today)
-      attr = { :expires => Date.today.to_s, :contract_type => "a lease", :payment => 1000, :person_id => person.id, :equipment_id => equipment.id }
-      put :update, :id => possession_contract.id, :possession_contract => attr
+      possession_contract = create(:possession_contract_with_lease)
+      possession_contract_attr = possession_contract.attributes.except("updated_at", "created_at")
+      put :update, :id => possession_contract.id, :possession_contract => possession_contract_attr
       flash[:success].should_not be_nil
     end
 
     it "renders to #edit if :possession_contract is not updated" do
-      person = Person.new(name: "a new name5")
-      equipment = Equipment.create(make: "new make", model: "new model")
-      possession_contract = PossessionContract.create(person: person, equipment:  equipment,
-                                contract_type: "a lease", payment: 4677, expires: Date.today)
-      attr = { :expires => Date.today.to_s, :contract_type => "", :payment => 998, :person_id => person.id, :equipment_id => equipment.id }
-      put :update, :id => possession_contract.id, :possession_contract => attr
+      possession_contract = create(:possession_contract_with_lease)
+      possession_contract_attr = possession_contract.attributes.except("updated_at", "created_at")
+      possession_contract_attr = { :payment => "" }
+      put :update, :id => possession_contract.id, :possession_contract => possession_contract_attr
       expect(response).to render_template('edit')
     end
 
@@ -189,18 +175,13 @@ describe PossessionContractsController do
 
   describe "DELETE #destroy" do
     it "redirects to #index if successfully deleted" do
-      possession_contract = PossessionContract.create(person: Person.new(name: "YAN3"),
-                               equipment: Equipment.create(make: "another make", model: "another model"),
-                               contract_type: "a lease", payment: 666, expires: Date.today)
+      possession_contract = create(:possession_contract_with_lease)
       delete :destroy, :id => possession_contract.id
       expect(response).to redirect_to(possession_contracts_path)
     end
 
     it "successfully deleted possession_contract for that id" do
-      possession_contract = PossessionContract.create(
-        person: Person.new(name: "YAN2"),
-        equipment: Equipment.create(make: "chicita", model: "banana"),
-        contract_type: "a lease", payment: 4995, expires: Date.today)
+      possession_contract = create(:possession_contract_with_lease)
       delete :destroy, :id => possession_contract.id
       PossessionContract.find_by_id(possession_contract.id).should be_nil
     end

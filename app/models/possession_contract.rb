@@ -6,7 +6,7 @@ class PossessionContract < ActiveRecord::Base
     SALE     = 'a sale'
   ]
 
-  attr_accessible :contract_type, :payment, :person,:equipment, :equipment_id, :payment_cents, :expires, :person_id, :equipment_id
+  attr_accessible :contract_type, :start_date, :payment, :person,:equipment, :equipment_id, :payment_cents, :expires, :person_id, :equipment_id
   belongs_to :person
   belongs_to :equipment
 
@@ -18,6 +18,7 @@ class PossessionContract < ActiveRecord::Base
   validates :payment_cents, :presence => true,
     :numericality => {:only_integer => true, :greater_than => 0} , :if => :contract_type_is_lease?
   validates_presence_of :expires, :if => :contract_type_is_lease?
+  validates_presence_of :start_date, :if => :contract_type_is_lease?
 
   def payment=(value)
     if value.to_i == 0

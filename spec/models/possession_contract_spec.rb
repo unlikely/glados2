@@ -2,18 +2,15 @@ require 'spec_helper'
 
 describe PossessionContract do
   describe "should save when" do
-    it "has non_empty :contract_type, :person and :equipment, integer :payment, :expires" do
-      pos_contract = PossessionContract.create(contract_type: "a sale", payment: 10,
-                                            expires: Date.today, person: Person.new(name: "tarti"),
-                                            equipment: Equipment.create(model: "phillips", make: "norelco"))
+    it "has non_empty :contract_type, :start_date, :person and :equipment, integer :payment, :expires" do
+      pos_contract = build(:possession_contract_with_lease)
+      pos_contract.valid?
       pos_contract.should be_valid
     end
 
     it "has all non_empty fields AND :contract_type is lease and has :expires, :payments filled" do
-      pos_contract = PossessionContract.new(contract_type: "a lease", payment: 500,
-                                            expires: Date.today,
-                                            person: Person.new(name: "ssarti"),
-                                            equipment: Equipment.create(model: "some companys", make: "razor"))
+      pos_contract = build(:possession_contract_with_lease)
+      pos_contract.valid?
       pos_contract.should be_valid
      end
   end
@@ -48,6 +45,12 @@ describe PossessionContract do
                                                    equipment: equipment, contract_type: "a lease",
                                                    payment: 500)
       possession_contract.should_not be_valid
+    end
+
+    it "has :contract_type lease but no :start_date" do
+      possession_contract = build(:possession_contract_with_lease, start_date: "")
+      possession_contract.valid?
+      possession_contract.errors.has_key?(:start_date).should be_true
     end
 
     it "has :contract_type lease but no :payment" do

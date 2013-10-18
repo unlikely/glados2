@@ -1,5 +1,5 @@
 <div class= "row">
-	<div style="display:none" id="get_current_date"><%=@date.strftime "%m/%d/%Y"%></div>
+	<div style="display:none" id="get_current_date"><%=@date.strftime "%m-%d-%Y"%></div>
 	<div style="display:none" id="get_current_path"><%=request.env['PATH_INFO']%></div>
 	<div class="span3">Report for: <%= @date %></div>
 	<div class="offset8 span2" id="my_datepicker" ></div>
