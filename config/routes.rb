@@ -17,12 +17,13 @@ Glados2::Application.routes.draw do
   root :to => 'welcome#index'
   get 'people/:id/equipment', to: 'people#show_equipment_possession_on_date', as: 'show_person_equipment'
   get 'people/equipment', to: 'people#index_equipment_possession_on_date'
-  resources :doors
   resources :people
   resources :equipment
   resources :possession_contracts
   resources :agreements
   resources :agreement_executions
+  resources :doors
+  resources :fobs
   match '/open' => 'door_security#open'
 
   # Sample resource route with options:

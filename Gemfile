@@ -10,6 +10,7 @@ gem 'jquery_datepicker'
 gem 'pg'
 gem 'yaml_db'
 gem 'will_paginate'
+gem 'haml-rails'
 
 group :test, :development do
   gem 'webrick', '~> 1.3.1'

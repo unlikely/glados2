@@ -1,0 +1,7 @@
+=semantic_form_for @door do |f|
+  =f.semantic_errors :base
+  =f.inputs do
+    .row
+      .span1 Name
+      .span3=f.input :name, :input_html => { :size => 20 }, :label => false
+  =f.actions

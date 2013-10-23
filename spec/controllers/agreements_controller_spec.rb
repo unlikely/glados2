@@ -33,7 +33,7 @@ describe AgreementsController do
       expect(response).to redirect_to(agreements_path)
     end
 
-    it "flases :error if agreement not found" do
+    it "flashes :error if agreement not found" do
       get :show, :id => "999333332"
       flash[:error].should_not be_nil
     end
@@ -71,7 +71,7 @@ describe AgreementsController do
       Agreement.count.should == 1 + mycount
     end
 
-    it "renders to #new if :agreement not saved" do
+    it "renders #new if :agreement not saved" do
       agreement = { :author => "Counsel", :version => "3", :name => "" }
       post :create, :agreement => agreement
       expect(response).to render_template('new')

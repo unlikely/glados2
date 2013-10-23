@@ -1,0 +1,5 @@
+.row
+  .span2= door.id
+  .span3= link_to door.name, door_url(door.id)
+  .span3= link_to 'Edit', edit_door_url(door.id)
+  .span3= link_to 'Delete', door_url(door.id), {:confirm => "Are you sure", :method => :delete }

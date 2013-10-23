@@ -1,0 +1,15 @@
+.row
+  .offset10.span2= link_to "New Fob", new_fob_path
+.row
+  .span3 ID
+  .span3 Key
+  .span3 Edit
+  .span3 Delete
+- @fobs.each do |fob|
+  .row
+    .span3= fob.id
+    .span3= link_to fob.key, fob_url(fob.id)
+    .span3= link_to 'Edit', edit_fob_url(fob.id)
+    .span3= link_to 'Delete', fob_url(fob.id), {:confirm => "Are you sure", :method => :delete }
+
+.digg_patination= will_paginate @fobs, {:container => false}

@@ -1,0 +1,8 @@
+.row
+  .offset10.span2= link_to "New Fob", new_fob_path
+.row
+  .span3 ID
+  .span3 Key
+  .span3 Edit
+  .span3 Delete
+= render :partial => "show", :locals => { :fob => @fob }

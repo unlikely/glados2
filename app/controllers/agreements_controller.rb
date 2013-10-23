@@ -38,7 +38,6 @@ class AgreementsController < ApplicationController
   end
 
   def update
-    Rails.logger.info("PARAMS: #{params.inspect}")
     @agreement = Agreement.find_by_id(params[:id])
     if @agreement.present? && @agreement.update_attributes(params[:agreement])
       flash.now[:success] = "Your agreement was updated"
