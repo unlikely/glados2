@@ -1,5 +1,5 @@
 class DoorKey <ActiveRecord::Base
-  attr_accessible :person, :door
+  attr_accessible :person, :door, :door_id, :person_id
 
   belongs_to :door
   belongs_to :person

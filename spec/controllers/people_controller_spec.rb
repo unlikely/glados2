@@ -268,10 +268,10 @@ describe PeopleController do
 
     it "assigns :people with correct contracts on default date" do
        possession_contract = create(:possession_contract)
-       possession_contract2 = create(:possession_contract)
+       possession_contract2 = create(:possession_contract, :expires => (Date.today - 6.days))
        possession_contract3 = create(:possession_contract)
        get :index_equipment_possession_on_date
-       assigns(:people).should == [ person3 , person]
+       assigns(:people).should == [ possession_contract3.person , possession_contract.person]
     end
 
     it "flashes :error if no :people found" do

@@ -33,7 +33,7 @@ describe AgreementExecutionsController do
       expect(response).to redirect_to(agreement_executions_path)
     end
 
-    it "flases :error if agreement_execution not found" do
+    it "flashes :error if agreement_execution not found" do
       get :show, :id => 888777888888
       flash[:error].should_not be_nil
     end
@@ -147,7 +147,7 @@ describe AgreementExecutionsController do
       flash[:success].should_not be_nil
     end
 
-    it "redirects to #edit if :agreement_execution not updated" do
+    it "response is success if updated" do
       person = create(:person)
       agreement = create(:agreement)
       agreement_execution = create(:agreement_execution, :agreement => agreement, :person => person)

@@ -21,6 +21,7 @@ Glados2::Application.routes.draw do
   resources :equipment
   resources :possession_contracts
   resources :agreements
+  resources :door_keys
   resources :agreement_executions
   resources :doors
   resources :fobs

@@ -2,7 +2,7 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :door_key do
-    association :user
+    association :person
     association :door
   end
 end

@@ -1,0 +1,10 @@
+= semantic_form_for @door_key do |f|
+  = f.semantic_errors :base
+  =f.inputs do
+    .row
+      .span1 Person*
+      .span3=f.input :person, :as => :select, :collection => Person.find(:all, :order => :name), :label => false
+    .row
+      .span1 Door*
+      .span3=f.input :door, :as => :select, :collection => Door.find(:all, :order => :name), :label => false
+  =f.actions

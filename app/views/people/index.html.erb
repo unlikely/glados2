@@ -2,16 +2,13 @@
   <div class="row"><b>
     <div class ="span1"> ID </div>
     <div class ="span3"> Name </div>
+    <div class ="span3"> Fobs </div>
+    <div class ="span3"> Doors </div>
     <div class ="span3"> Edit </div>
     <div class ="span1"> Delete </div>
 </b></div>
 <% @people.each do |person| %>
-<div class="row">
-    <div class="span1"><%= person.id =%></div>
-    <div class="span3"><%= person.name =%></div>
-    <div class="span3"><%= link_to "Edit", edit_person_path(person.id)  %></div>
-    <div class="span1"><%= link_to "Delete", person_path(person.id), :confirm => "Are you sure?", :method => :delete %></div>
-</div>
+<%= render :partial => "show", :locals => { :person => person } %>
 <% end %>
 <br>
 <div class="digg_pagination">
