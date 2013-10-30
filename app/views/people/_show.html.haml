@@ -1,0 +1,15 @@
+.row
+  .span1= link_to person.id, person_path(person.id)
+  .span3= person.name
+  .span3
+    - if person.fobs.count > 0
+      %ul.fobs
+        - person.fobs.each do |fob|
+          %li= link_to fob.key, fob_path(fob.id)
+  .span3
+    - if person.doors.count > 0
+      %ul.doors
+        - person.doors.each do |door|
+          %li= link_to door.name, door_path(door.id)
+  .span1= link_to "Edit", edit_person_path(person.id)
+  .span1= link_to "Delete", person_path(person.id)

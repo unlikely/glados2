@@ -4,4 +4,7 @@
     .row
       .span1 Key
       .span9=f.input :key, :input_html => { :size => 20 }, :label => false
+    .row
+      .span1 Person (optional)
+      .span3=f.input :person, :as => :select, :collection => Person.find(:all, :order => :name), :label => false
   =f.actions

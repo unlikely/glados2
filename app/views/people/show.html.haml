@@ -1,0 +1,38 @@
+.row
+  .offset9.span3= link_to "Add a Person", new_person_path
+%b.row
+  .span3 Name
+  .span2 Fobs
+  .span2 Doors
+  .span2 Door Keys
+  .span2 Agreements
+  .span2 Ownership Report
+  .span1 Edit
+  .span1 Delete
+.row
+  .span3= @person.name
+  .span2
+    - if @person.fobs.count > 0
+      %ul.fobs
+        - @person.fobs.each do |fob|
+          %li= link_to fob.key, fob_path(fob.id)
+  .span2
+    - if @person.doors.count > 0
+      %ul.doors
+        - @person.doors.each do |door|
+          %li= link_to door.name, door_path(door.id)
+  .span2
+    - if @person.door_keys.count > 0
+      %ul.door_keys
+        - @person.door_keys.each do |door_key|
+          %li= link_to door_key.id, door_key_path(door_key.id)
+  .span2
+    - if @person.agreements.count > 0
+      %ul.agreements
+        - @person.agreements.each do |agreement|
+          %li= link_to agreement.name, agreement_path(agreement.id)
+  .span2
+    - if @person.possession_contracts.count > 0
+      .possession_contracts= link_to 'Ownership Contract', show_person_equipment_path(@person.id)
+  .span1= link_to "Edit", edit_person_path(@person.id)
+  .span1= link_to "Delete", person_path(@person.id)

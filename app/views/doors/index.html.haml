@@ -8,4 +8,4 @@
 - @doors.each do |door|
   = render :partial => "show", :locals => { :door => door }
 
-.digg_patination= will_paginate @doors, {:container => false}
+.digg_pagination= will_paginate @doors, {:container => false}

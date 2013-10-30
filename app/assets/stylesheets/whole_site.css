@@ -11,3 +11,25 @@ div.row.headingrow {
 input.search_class {
 	width:100px;
 }
+
+div {
+  content:'.';
+}
+
+ul.doors {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.fobs {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.door_keys {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

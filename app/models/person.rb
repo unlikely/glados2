@@ -6,6 +6,8 @@ class Person <ActiveRecord::Base
   has_many :door_keys
   has_many :doors, through: :door_keys
   has_many :fobs
+  has_many :agreement_executions
+  has_many :agreements, through: :agreement_executions
   validates :name, :presence => true
 
 end

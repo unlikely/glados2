@@ -1,14 +1,16 @@
 .row
   .offset10.span2= link_to "New Fob", new_fob_path
 .row
-  .span3 ID
+  .span1 ID
   .span3 Key
+  .span2 Person
   .span3 Edit
   .span3 Delete
 - @fobs.each do |fob|
   .row
-    .span3= fob.id
+    .span1= fob.id
     .span3= link_to fob.key, fob_url(fob.id)
+    .span2= link_to fob.person.name, person_url(fob.person.id)
     .span3= link_to 'Edit', edit_fob_url(fob.id)
     .span3= link_to 'Delete', fob_url(fob.id), {:confirm => "Are you sure", :method => :delete }
 
