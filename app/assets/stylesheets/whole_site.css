@@ -33,3 +33,15 @@ ul.door_keys {
   padding: 0;
   margin: 0;
 }
+
+ul.agreements {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.possession_contracts {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
