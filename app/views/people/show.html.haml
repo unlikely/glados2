@@ -1,16 +1,17 @@
 .row
   .offset9.span3= link_to "Add a Person", new_person_path
-%b.row
-  .span2 Name
-  .span2 Fobs
-  .span2 Doors
-  .span1 Edit
-  .span1 Delete
-  .span2 Keys
-  .span2 Agreements
-  .span3 Possession Contracts
-  .span2 Ownership Report
-%b.row
+%br
+.row
+  %strong.span2 Name
+  %strong.span2 Fobs
+  %strong.span2 Doors
+  %strong.span1 Edit
+  %strong.span1 Delete
+  %strong.span2 Keys
+  %strong.span2 Agreements
+  %strong.span3 Possession Contracts
+  %strong.span2 Ownership Report
+.row
   .span2= @person.name
   .span2
     - if @person.fobs.count > 0
@@ -42,5 +43,5 @@
   .span2
     - if @person.equipment.count > 0
       %ul.ownership_report
-        %li= link_to "Ownership Contract", show_person_equipment(person.id)
+        %li= link_to "Ownership Contract", show_person_equipment_path(@person.id)
 
