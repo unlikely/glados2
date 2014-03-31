@@ -1,21 +1,19 @@
 #search
-.row
-  .span4 
-    %h2 Search:
+.row  
+  .offset9.span2= link_to "Add Equipment", new_equipment_path  
+  .offset12 
     = form_tag equipment_index_path, method: 'get' do
       = text_field_tag :search, params[:search], class: 'search_class' 
-      = submit_tag "Search", name: nil
-  .span2.offset2
-    = link_to "Add Equipment", new_equipment_path  
-%b.row
-  .span1 ID   
-  .span2 Make 
-  .span2 Model
-  .span2 Replacement Cost 
-  .span2 Serial Number 
-  .span1 Edit 
-  .span1 Delete 
- 
+      = submit_tag "Search", name: nil 
+.row
+  %strong.span1 ID   
+  %strong.span2 Make 
+  %strong.span2 Model
+  %strong.span2 Replacement Cost 
+  %strong.span2 Serial Number 
+  %strong.span1 Edit 
+  %strong.span1 Delete 
+
 - @equip.each do |piece| 
   .row
     .span1= piece.id 
