@@ -40,7 +40,7 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-
+gem "dropbox-api"
 
 
 # To use ActiveModel has_secure_password

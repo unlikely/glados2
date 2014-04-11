@@ -1,6 +1,7 @@
 class AgreementExecutionsController < ApplicationController
   respond_to :html, :json
 
+
   def index
     @agreement_executions = AgreementExecution.paginate :page=>params[:page], :order => 'created_at desc', :per_page => 10
   end
@@ -19,6 +20,10 @@ class AgreementExecutionsController < ApplicationController
 
   def create
     @agreement_execution = AgreementExecution.new(params[:agreement_execution])
+    @client = Dropbox::API::Client.new(:token  => 'nqwavyitn2wvab9k', :secret => '0o5isnlrhjcodi2')
+    @client_file = @client.upload("@agreement_execution.date_signed.strftime('%Y-%m-%d')_+#{People.find_by_id(@agreement_execution.person_id).name}", params[:picture])
+    @agreement_execution.agreement_url = @client_file.direct_url.url
+
     if @agreement_execution.save
       flash[:success] = "Agreement successfully signed"
       redirect_to agreement_executions_path

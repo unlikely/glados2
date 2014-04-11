@@ -11,6 +11,10 @@
       .span2 Date*: 
       .span5= f.input :date_signed, :as => :date_picker, :label=> false 
     .row
+      /.span5= f.check_box
       .span2 Dropbox URL*: 
-      .span5= f.input :agreement_url, :as => :url, :label=> false 
+      .span5= f.input :agreement_url, :as => :url, :label=> false
+    .row 
+      .span2 Upload File:
+      .span5= f.file_field :picture
   =f.action :submit, :label => "Create Agreement Executions"
