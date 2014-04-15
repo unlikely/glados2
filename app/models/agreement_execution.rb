@@ -1,5 +1,5 @@
 class AgreementExecution < ActiveRecord::Base
-  attr_accessible :person, :agreement_id, :person_id, :agreement, :date_signed, :agreement_url
+  attr_accessible :person, :agreement_id, :person_id, :agreement, :date_signed, :agreement_url, :picture
   belongs_to :person
   belongs_to :agreement
 
