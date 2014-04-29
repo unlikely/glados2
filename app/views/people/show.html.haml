@@ -24,7 +24,7 @@
         - @person.doors.each do |door|
           %li= link_to door.name, door_path(door.id)
   .span1= link_to "Edit", edit_person_path(@person.id)
-  .span1= link_to "Delete", person_path(@person.id)
+  .span1= link_to "Delete", person_path(@person.id), {:confirm => "Are you sure", :method => :delete }
   .span2
     - if @person.door_keys.count > 0
       %ul.door_keys

@@ -2,6 +2,9 @@
   = f.semantic_errors
   = f.inputs do
     .row 
-      .span Name:* 
+      .span First Name:* 
+      .span2= f.input :name , :input_html => { :size => 20, :class => "override-width" }, :label => false 
+    .row 
+      .span Last Name:* 
       .span2= f.input :name , :input_html => { :size => 20, :class => "override-width" }, :label => false 
   = f.actions 
