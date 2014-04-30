@@ -4,4 +4,8 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+require "dropbox-api"
+require "dropbox-api/tasks"
+Dropbox::API::Tasks.install
+
 Glados2::Application.load_tasks

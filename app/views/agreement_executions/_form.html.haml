@@ -1,0 +1,24 @@
+=semantic_form_for @agreement_execution do |f| 
+  -f.semantic_errors :base
+  =f.inputs do
+    .row
+      .span2 Person*: 
+      .span5= f.input :person, :as => :select, :collection => Person.  find(:all, :order => :name), :label=> false
+    .row
+      .span2 Agreement*: 
+      .span5= f.input :agreement, :as => :select, :collection =>Agreement.find(:all, :order => :name), :label=> false 
+    .row
+      .span2 Date*: 
+      .span5= f.input :date_signed, :as => :date_picker, :label=> false 
+    .row
+      .span2 DropBox URL*:
+      .span2= f.input :agreement_url, :as => :url, :label => false
+    .row
+      .offset2.span5 -or- 
+    %br
+    .row
+      .span2 Upload:
+      .span5= f.file_field :picture, :label => false 
+    %br
+    %br
+  =f.action :submit, :label => "Create Agreement Executions"

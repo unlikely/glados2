@@ -52,6 +52,10 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     diff-lcs (1.2.4)
+    dropbox-api (0.4.2)
+      hashie
+      multi_json
+      oauth
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.1.0)
@@ -66,6 +70,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -84,6 +89,7 @@ GEM
     multi_json (1.8.2)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    oauth (0.4.7)
     pg (0.17.0)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -157,6 +163,7 @@ DEPENDENCIES
   bootstrap-sass (= 2.1)
   capybara
   coffee-rails (~> 3.2.1)
+  dropbox-api
   factory_girl_rails (= 4.1.0)
   formtastic!
   haml-rails
